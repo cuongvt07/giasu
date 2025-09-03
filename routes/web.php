@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Student\StudentJobController;
 use App\Http\Controllers\TutorController;
 use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\AiAdvisorController;
@@ -82,6 +83,9 @@ Route::get('/payment/vnpay/callback', [PaymentController::class, 'handleCallback
     Route::get('/tutors/{tutor}/edit', [TutorController::class, 'edit'])->name('tutors.edit');
     Route::patch('/tutors/{tutor}', [TutorController::class, 'update'])->name('tutors.update');
 
+    // Routes chợ tin đăng tuyển gia sư dành cho các gia sư
+    Route::get('/tutors/jobs', [TutorController::class, 'postJob'])->name('tutors.jobs.post');
+
     // Booking Routes
     Route::post('/tutors/{tutor}/book', [TutorController::class, 'book'])->name('tutors.book');
     Route::get('/bookings', [TutorController::class, 'bookings'])->name('tutors.bookings');
@@ -151,6 +155,9 @@ Route::prefix('student')->name('student.')->middleware(['auth'])->group(function
     Route::get('/reschedules', [App\Http\Controllers\Student\RescheduleController::class, 'index'])->name('reschedules.index');
     Route::get('/reschedules/{rescheduleRequest}', [App\Http\Controllers\Student\RescheduleController::class, 'show'])->name('reschedules.show');
     Route::post('/reschedules/{rescheduleRequest}/respond', [App\Http\Controllers\Student\RescheduleController::class, 'respond'])->name('reschedules.respond');
+
+    // Đăng tin tuyển dụng job gia sư cho tk người dùng
+    Route::post('/jobs', [App\Http\Controllers\Student\StudentJobController::class, 'store'])->name('jobs.store');
 });
 
 // Tutor Routes

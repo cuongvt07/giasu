@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Tutor;
 use App\Models\Subject;
 use App\Models\ClassLevel;
+use DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
@@ -397,4 +398,63 @@ class TutorController extends Controller
     {
         return view('pages.tutors.register');
     }
+
+    public function postJob(Request $request)
+    {
+        $query = DB::table('tutor_posts')
+            ->join('subjects', 'tutor_posts.subject_id', '=', 'subjects.id')
+            ->leftJoin('class_levels', 'tutor_posts.class_level_id', '=', 'class_levels.id')
+            ->select(
+                'tutor_posts.*',
+                'subjects.name as subject_name',
+                'class_levels.name as class_level_name'
+            )
+            ->where('tutor_posts.status', '=', 'published');
+
+        // Filter môn học
+        if ($request->filled('subject')) {
+            // dd($request->filled('subject'));
+            $query->where('subject', $request->subject);
+        }
+
+        // Filter hình thức học
+        if ($request->filled('mode')) {
+            $query->where('mode', $request->mode);
+        }
+
+        // Filter ngân sách
+        if ($request->filled('budget_min')) {
+            $query->where('budget_min', '>=', $request->budget_min);
+        }
+        if ($request->filled('budget_max')) {
+            $query->where('budget_max', '<=', $request->budget_max);
+        }
+
+        // Sort dữ liệu
+        if ($request->filled('sort_by')) {
+            switch ($request->sort_by) {
+                case 'latest':
+                    $query->orderByDesc('published_at');
+                    break;
+                case 'budget':
+                    $query->orderByDesc('budget_max');
+                    break;
+                case 'deadline':
+                    $query->orderBy('deadline_at', 'asc');
+                    break;
+            }
+        } else {
+            // Mặc định sort
+            $query->orderByDesc('published_at');
+        }
+
+        $dataJobs = $query->paginate(10)->withQueryString();
+
+        return view('pages.jobs-tutor.index', [
+            'dataJobs'    => $dataJobs,
+            'subjects'    => Subject::where('is_active', true)->get(),
+            'classLevels' => ClassLevel::where('is_active', true)->get(),
+        ]);
+    }
+
 }

@@ -1,4 +1,11 @@
 {{-- Modal Đăng tin tìm gia sư --}}
+@php
+    use App\Models\Subject;
+    use App\Models\ClassLevel;
+
+    $subjects = Subject::where('is_active', true)->get();
+    $classLevels = ClassLevel::where('is_active', true)->get();
+@endphp
 <div x-show="openPost"
      x-transition:enter="transition-all ease-out duration-300"
      x-transition:enter-start="opacity-0"
@@ -91,58 +98,74 @@
 
         {{-- Form Content --}}
         <div class="p-6 overflow-y-auto" style="max-height: calc(90vh - 200px);">
-            <form method="POST" action="" class="space-y-6">
+            <form method="POST" action="{{ route('student.jobs.store') }}" class="space-y-6">
                 @csrf
 
                 {{-- Bước 1: Thông tin môn học --}}
                 <div x-show="currentStep === 1" 
-                     x-transition:enter="transition-all ease-out duration-300"
-                     x-transition:enter-start="opacity-0 translate-x-4"
-                     x-transition:enter-end="opacity-100 translate-x-0"
-                     class="space-y-6">
+                    x-transition:enter="transition-all ease-out duration-300"
+                    x-transition:enter-start="opacity-0 translate-x-4"
+                    x-transition:enter-end="opacity-100 translate-x-0"
+                    class="space-y-6">
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        {{-- Môn học --}}
                         <div class="relative">
                             <label class="block text-sm font-semibold text-gray-700 mb-2">
                                 <i class="fas fa-book text-indigo-500 mr-2"></i>Môn học *
                             </label>
-                            <input name="subject" 
-                                   x-model="formData.subject"
-                                   required
-                                   class="w-full border-2 border-gray-200 rounded-lg px-4 py-3 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all"
-                                   placeholder="VD: Toán, Văn, Tiếng Anh, IELTS..." />
+                            <select name="subject_id"
+                                    x-model="formData.subject_id"
+                                    required
+                                    class="w-full border-2 border-gray-200 rounded-lg px-4 py-3 
+                                        focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all">
+                                <option value="">-- Chọn môn học --</option>
+                                @foreach ($subjects as $s)
+                                    <option value="{{ $s->id }}">{{ $s->name }}</option>
+                                @endforeach
+                            </select>
                         </div>
 
+                        {{-- Lớp/Trình độ --}}
                         <div class="relative">
                             <label class="block text-sm font-semibold text-gray-700 mb-2">
                                 <i class="fas fa-graduation-cap text-indigo-500 mr-2"></i>Lớp/Trình độ
                             </label>
-                            <input name="grade_level" 
-                                   x-model="formData.grade_level"
-                                   class="w-full border-2 border-gray-200 rounded-lg px-4 py-3 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all"
-                                   placeholder="VD: Lớp 7, Cấp 2, Đại học..." />
+                            <select name="class_level_id"
+                                    x-model="formData.class_level_id"
+                                    class="w-full border-2 border-gray-200 rounded-lg px-4 py-3 
+                                        focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all">
+                                <option value="">-- Chọn lớp/trình độ --</option>
+                                @foreach ($classLevels as $cl)
+                                    <option value="{{ $cl->id }}">{{ $cl->name }}</option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
 
+                    {{-- Mục tiêu học tập --}}
                     <div class="relative">
                         <label class="block text-sm font-semibold text-gray-700 mb-2">
                             <i class="fas fa-target text-indigo-500 mr-2"></i>Mục tiêu học tập
                         </label>
                         <input name="goal" 
-                               x-model="formData.goal"
-                               class="w-full border-2 border-gray-200 rounded-lg px-4 py-3 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all"
-                               placeholder="VD: Thi vào 10, IELTS 6.5, Nâng cao điểm số..." />
+                            x-model="formData.goal"
+                            class="w-full border-2 border-gray-200 rounded-lg px-4 py-3 
+                                    focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all"
+                            placeholder="VD: Thi vào 10, IELTS 6.5, Nâng cao điểm số..." />
                     </div>
 
+                    {{-- Mô tả --}}
                     <div class="relative">
                         <label class="block text-sm font-semibold text-gray-700 mb-2">
                             <i class="fas fa-align-left text-indigo-500 mr-2"></i>Mô tả chi tiết
                         </label>
                         <textarea name="description" 
-                                  x-model="formData.description"
-                                  rows="4"
-                                  class="w-full border-2 border-gray-200 rounded-lg px-4 py-3 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all resize-none"
-                                  placeholder="Mô tả về trình độ hiện tại của học sinh, mong muốn cụ thể..."></textarea>
+                                x-model="formData.description"
+                                rows="4"
+                                class="w-full border-2 border-gray-200 rounded-lg px-4 py-3 
+                                        focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all resize-none"
+                                placeholder="Mô tả về trình độ hiện tại của học sinh, mong muốn cụ thể..."></textarea>
                     </div>
 
                     {{-- Ngân sách --}}
@@ -154,24 +177,27 @@
                             <div>
                                 <label class="block text-sm font-medium text-gray-600 mb-1">Tối thiểu</label>
                                 <input type="number" 
-                                       name="budget_min" 
-                                       x-model="formData.budget_min"
-                                       class="w-full border border-gray-200 rounded-lg px-3 py-2 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
-                                       placeholder="150000" />
+                                    name="budget_min" 
+                                    x-model="formData.budget_min"
+                                    class="w-full border border-gray-200 rounded-lg px-3 py-2 
+                                            focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                                    placeholder="150000" />
                             </div>
                             <div>
                                 <label class="block text-sm font-medium text-gray-600 mb-1">Tối đa</label>
                                 <input type="number" 
-                                       name="budget_max" 
-                                       x-model="formData.budget_max"
-                                       class="w-full border border-gray-200 rounded-lg px-3 py-2 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
-                                       placeholder="200000" />
+                                    name="budget_max" 
+                                    x-model="formData.budget_max"
+                                    class="w-full border border-gray-200 rounded-lg px-3 py-2 
+                                            focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                                    placeholder="200000" />
                             </div>
                             <div class="col-span-2">
                                 <label class="block text-sm font-medium text-gray-600 mb-1">Đơn vị</label>
                                 <select name="budget_unit" 
                                         x-model="formData.budget_unit"
-                                        class="w-full border border-gray-200 rounded-lg px-3 py-2 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+                                        class="w-full border border-gray-200 rounded-lg px-3 py-2 
+                                            focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
                                     <option value="buoi">/ buổi học</option>
                                     <option value="gio">/ giờ học</option>
                                     <option value="thang">/ tháng</option>
@@ -441,7 +467,7 @@
                     </div>
                 </div>
 
-                <input type="hidden" name="status" value="published">
+                <input type="hidden" name="status" value="draft">
 
                 {{-- Error messages --}}
                 @if ($errors->any())
