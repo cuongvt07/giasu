@@ -16,7 +16,7 @@
     
     @yield('head')
 </head>
-<body class="font-sans antialiased bg-gray-100">
+<body x-data="{ openPost:false }" class="font-sans antialiased bg-gray-100">
     <div class="min-h-screen">
         <!-- Navigation -->
         <nav class="bg-white border-b border-gray-200">
@@ -268,6 +268,8 @@
             </div>
         </footer>
     </div>
+
+    <x-tutor-post-modal />
 
     @livewireScripts
     @stack('scripts')
