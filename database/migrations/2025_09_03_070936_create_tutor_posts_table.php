@@ -26,7 +26,7 @@ return new class extends Migration
             // Ngân sách
             $table->decimal('budget_min', 12, 2)->nullable();
             $table->decimal('budget_max', 12, 2)->nullable();
-            $table->enum('budget_unit', ['buoi', 'gio', 'thang', 'khoa'])->default('buoi');
+            $table->enum('budget_unit', ['buổi','giờ','tháng','khóa'])->default('buổi');
 
             // Lịch học
             $table->tinyInteger('sessions_per_week')->unsigned()->nullable();

@@ -85,6 +85,7 @@ Route::get('/payment/vnpay/callback', [PaymentController::class, 'handleCallback
 
     // Routes chợ tin đăng tuyển gia sư dành cho các gia sư
     Route::get('/tutors/jobs', [TutorController::class, 'postJob'])->name('tutors.jobs.post');
+    Route::post('/tutors/apply', [TutorController::class, 'applyJob'])->name('tutors.jobs.apply');
 
     // Booking Routes
     Route::post('/tutors/{tutor}/book', [TutorController::class, 'book'])->name('tutors.book');

@@ -26,7 +26,7 @@ class StudentJobController extends Controller
             'description' => 'nullable|string',
             'budget_min' => 'nullable|numeric',
             'budget_max' => 'nullable|numeric',
-            'budget_unit' => 'required|string|in:buoi,gio,thang,khoa',
+            'budget_unit' => 'required|string|in:buổi,giờ,tháng,khóa',
             'sessions_per_week' => 'nullable|integer',
             'session_length_min' => 'nullable|integer',
             'schedule_notes' => 'nullable|string',

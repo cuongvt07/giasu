@@ -232,12 +232,16 @@
                             <label class="block text-sm font-semibold text-gray-700 mb-2">
                                 <i class="fas fa-clock text-indigo-500 mr-2"></i>Thời lượng (phút/buổi)
                             </label>
-                            <input type="number" 
-                                   name="session_length_min" 
-                                   x-model="formData.session_length_min"
-                                   min="30"
-                                   class="w-full border-2 border-gray-200 rounded-lg px-4 py-3 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all"
-                                   placeholder="90" />
+                            <select name="session_length_min" 
+                                    x-model="formData.session_length_min"
+                                    class="w-full border-2 border-gray-200 rounded-lg px-4 py-3 
+                                        focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all">
+                                <option value="">-- Chọn thời lượng --</option>
+                                <option value="30">30 phút</option>
+                                <option value="45">45 phút</option>
+                                <option value="60">60 phút</option>
+                                <option value="90">90 phút</option>
+                            </select>
                         </div>
                     </div>
 
@@ -423,7 +427,7 @@
                                 <p><strong>Mục tiêu học tập:</strong> <span x-text="formData.goal || 'Chưa nhập'"></span></p>
                                 <p><strong>Mô tả chi tiết:</strong> <span x-text="formData.description || 'Chưa nhập'"></span></p>
                                 <p><strong>Ngân sách:</strong> 
-                                    <span x-text="(formData.budget_min ? formData.budget_min + ' - ' : '') + (formData.budget_max || 'Chưa nhập') + ' /' + (formData.budget_unit === 'buoi' ? 'buổi' : formData.budget_unit === 'gio' ? 'giờ' : formData.budget_unit === 'thang' ? 'tháng' : 'khóa')"></span>
+                                    <span x-text="(formData.budget_min ? formData.budget_min + ' - ' : '') + (formData.budget_max || 'Chưa nhập') + ' /' + (formData.budget_unit === 'buổi' ? 'buổi' : formData.budget_unit === 'giờ' ? 'giờ' : formData.budget_unit === 'tháng' ? 'tháng' : 'khóa')"></span>
                                 </p>
                             </div>
 
