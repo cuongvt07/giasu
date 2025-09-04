@@ -404,57 +404,98 @@ class TutorController extends Controller
         $query = DB::table('tutor_posts')
             ->join('subjects', 'tutor_posts.subject_id', '=', 'subjects.id')
             ->leftJoin('class_levels', 'tutor_posts.class_level_id', '=', 'class_levels.id')
+            ->leftJoin('tutor_applications as applications', 'tutor_posts.id', '=', 'applications.tutor_post_id')
             ->select(
                 'tutor_posts.*',
                 'subjects.name as subject_name',
-                'class_levels.name as class_level_name'
+                'class_levels.name as class_level_name',
+                DB::raw('GROUP_CONCAT(applications.tutor_id) as applied_tutor_ids')
             )
-            ->where('tutor_posts.status', '=', 'published');
+            ->where('tutor_posts.status', '=', 'published')
+            ->groupBy('tutor_posts.id', 'subjects.name', 'class_levels.name'); // cần groupBy hết các field không aggregate
 
         // Filter môn học
         if ($request->filled('subject')) {
-            // dd($request->filled('subject'));
-            $query->where('subject', $request->subject);
+            $query->where('subjects.name', $request->subject); 
         }
 
         // Filter hình thức học
         if ($request->filled('mode')) {
-            $query->where('mode', $request->mode);
+            $query->where('tutor_posts.mode', $request->mode);
         }
 
         // Filter ngân sách
         if ($request->filled('budget_min')) {
-            $query->where('budget_min', '>=', $request->budget_min);
+            $query->where('tutor_posts.budget_min', '>=', $request->budget_min);
         }
         if ($request->filled('budget_max')) {
-            $query->where('budget_max', '<=', $request->budget_max);
+            $query->where('tutor_posts.budget_max', '<=', $request->budget_max);
         }
 
         // Sort dữ liệu
         if ($request->filled('sort_by')) {
             switch ($request->sort_by) {
                 case 'latest':
-                    $query->orderByDesc('published_at');
+                    $query->orderByDesc('tutor_posts.published_at');
                     break;
                 case 'budget':
-                    $query->orderByDesc('budget_max');
+                    $query->orderByDesc('tutor_posts.budget_max');
                     break;
                 case 'deadline':
-                    $query->orderBy('deadline_at', 'asc');
+                    $query->orderBy('tutor_posts.deadline_at', 'asc');
                     break;
             }
         } else {
-            // Mặc định sort
-            $query->orderByDesc('published_at');
+            $query->orderByDesc('tutor_posts.published_at');
         }
 
         $dataJobs = $query->paginate(10)->withQueryString();
+
+        // Convert chuỗi "1,2,3" thành array [1,2,3]
+        $dataJobs->getCollection()->transform(function ($post) {
+            $post->applied_tutor_ids = $post->applied_tutor_ids
+                ? array_map('intval', explode(',', $post->applied_tutor_ids))
+                : [];
+            return $post;
+        });
 
         return view('pages.jobs-tutor.index', [
             'dataJobs'    => $dataJobs,
             'subjects'    => Subject::where('is_active', true)->get(),
             'classLevels' => ClassLevel::where('is_active', true)->get(),
         ]);
+    }
+
+    public function applyJob(Request $request)
+    {
+        $request->validate([
+            'job_id' => 'required|exists:tutor_posts,id',
+        ]);
+
+        $job = DB::table('tutor_posts')->where('id', $request->job_id)->first();
+        if (!$job) {
+            return response()->json(['message' => 'Tin tuyển gia sư không tồn tại.'], 404);
+        }
+
+        $existing = DB::table('tutor_applications')
+            ->where('tutor_post_id', $request->job_id)
+            ->where('tutor_id', Auth::id())
+            ->first();
+
+        if ($existing) {
+            return response()->json(['message' => 'Bạn đã ứng tuyển bài này rồi!'], 409);
+        }
+
+        DB::table('tutor_applications')->insert([
+            'tutor_post_id' => $request->job_id,
+            'tutor_id'      => Auth::id(),
+            'status'        => 'pending',
+            'note'          => $request->note,
+            'created_at'    => now(),
+            'updated_at'    => now(),
+        ]);
+
+        return response()->json(['message' => 'Ứng tuyển thành công! Vui lòng chờ thông báo từ quản lý.'], 200);
     }
 
 }

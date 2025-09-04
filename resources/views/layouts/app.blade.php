@@ -103,6 +103,9 @@
                                         <x-dropdown-link :href="route('student.bookings.tutors')">
                                             {{ __('Gia Sư Của Tôi') }}
                                         </x-dropdown-link>
+                                        <x-dropdown-link :href="route('student.manager.jobs')">
+                                            {{ __('Quản lý tin đăng tuyển') }}
+                                        </x-dropdown-link>
                                     @endif
                                     
                                     <x-dropdown-link :href="route('profile.edit')">

@@ -139,6 +139,11 @@ Route::prefix('student')->name('student.')->middleware(['auth'])->group(function
     Route::post('/bookings/{booking}/confirm-completion', [StudentBookingController::class, 'confirmCompletion'])->name('bookings.confirm-completion');
     Route::post('/bookings/{booking}/rate', [StudentBookingController::class, 'rateBooking'])->name('bookings.rate');
     
+    Route::get('/manager/jobs', [StudentJobController::class, 'jobsUser'])->name('manager.jobs');
+    Route::post('/jobs/accept-tutor', [StudentJobController::class, 'acceptTutor'])->name('jobs.acceptTutor');
+    
+
+
     // Quản lý lịch rảnh học sinh
     Route::get('/availability', [App\Http\Controllers\Student\AvailabilityController::class, 'index'])->name('availability.index');
     Route::get('/availability/create', [App\Http\Controllers\Student\AvailabilityController::class, 'create'])->name('availability.create');
@@ -211,6 +216,9 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
     Route::post('tutors/{tutor}/approve', [AdminTutorController::class, 'approve'])->name('tutors.approve');
     Route::resource('subjects', AdminSubjectController::class);
     Route::resource('bookings', AdminBookingController::class);
+
+    //Quản lý tin đăng tuyển gia sư
+    Route::get('jobs', [App\Http\Controllers\Admin\AdminJobController::class, 'index'])->name('jobs.index');
     
     // Quản lý thu nhập và thanh toán cho gia sư
     Route::get('earnings', [App\Http\Controllers\Admin\TutorEarningController::class, 'index'])->name('earnings.index');
