@@ -219,6 +219,8 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
 
     //Quản lý tin đăng tuyển gia sư
     Route::get('jobs', [App\Http\Controllers\Admin\AdminJobController::class, 'index'])->name('jobs.index');
+    Route::post('jobs/accept-and-complete', [\App\Http\Controllers\Admin\AdminJobController::class, 'acceptAndComplete'])
+    ->name('jobs.acceptAndComplete');
     
     // Quản lý thu nhập và thanh toán cho gia sư
     Route::get('earnings', [App\Http\Controllers\Admin\TutorEarningController::class, 'index'])->name('earnings.index');

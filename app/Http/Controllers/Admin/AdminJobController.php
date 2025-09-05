@@ -10,7 +10,6 @@ class AdminJobController extends Controller
 {
     public function index()
     {
-        // Lấy danh sách tin tuyển gia sư và map tên môn + lớp, người đăng tin, người apply
         $statuses = ['pending', 'published', 'closed'];
         $jobsByStatus = [];
 
@@ -51,60 +50,35 @@ class AdminJobController extends Controller
         ]);
     }
 
-    public function show($id)
-    {
-        $job = DB::table('tutor_posts')->where('id', $id)->first();
-
-        if (!$job) {
-            abort(404);
-        }
-
-        // Lấy danh sách gia sư ứng tuyển
-        $applications = DB::table('tutor_applications')
-            ->join('tutors', 'tutor_applications.tutor_id', '=', 'tutors.id')
-            ->join('users', 'tutors.user_id', '=', 'users.id')
-            ->select('tutor_applications.*', 'users.name as tutor_name', 'users.avatar')
-            ->where('tutor_post_id', $id)
-            ->get();
-
-        return view('admin.manageJobs.show', compact('job', 'applications'));
-    }
-
-    public function update(Request $request, $id)
+    public function acceptAndComplete(Request $request)
     {
         $validated = $request->validate([
-            'status' => ['required', 'in:pending,published,closed,rejected'],
-        ], [
-            'status.required' => 'Trạng thái không được bỏ trống',
-            'status.in' => 'Trạng thái không hợp lệ',
+            'job_id' => 'required|integer|exists:tutor_posts,id',
+            'application_id' => 'required|integer|exists:tutor_applications,id',
+            'tutor_id' => 'required|integer|exists:tutors,id',
         ]);
 
-        $job = DB::table('tutor_posts')->where('id', $id)->first();
+        DB::transaction(function () use ($validated) {
+            DB::table('tutor_applications')
+                ->where('id', $validated['application_id'])
+                ->update(['status' => 'accepted', 'updated_at' => now()]);
 
-        if (!$job) {
-            return back()->with('error', 'Không tìm thấy tin tuyển này');
-        }
+            DB::table('tutor_applications')
+                ->where('tutor_post_id', $validated['job_id'])
+                ->where('id', '!=', $validated['application_id'])
+                ->update(['status' => 'rejected', 'updated_at' => now()]);
 
-        DB::table('tutor_posts')
-            ->where('id', $id)
-            ->update(['status' => $validated['status']]);
+            DB::table('tutor_posts')
+                ->where('id', $validated['job_id'])
+                ->update([
+                    'status'            => 'closed',
+                    'updated_at'        => now(),
+                ]);
+        });
 
-        return redirect()->route('admin.manageJobs.show', $id)
-            ->with('success', 'Cập nhật trạng thái job thành công.');
-    }
-
-    public function destroy($id)
-    {
-        $job = DB::table('tutor_posts')->where('id', $id)->first();
-
-        if (!$job) {
-            return back()->with('error', 'Không tìm thấy job để xóa');
-        }
-
-        // Admin có thể xóa bất kỳ job nào
-        DB::table('tutor_posts')->where('id', $id)->delete();
-
-        return redirect()->route('admin.jobs.index')
-            ->with('success', 'Đã xóa job thành công.');
+        return response()->json([
+            'success' => true,
+            'message' => 'Đã xác nhận hợp tác và hoàn tất phân công.',
+        ]);
     }
 }

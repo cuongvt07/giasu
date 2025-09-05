@@ -90,7 +90,10 @@ class StudentJobController extends Controller
                 't.major',
                 't.teaching_experience',
                 't.hourly_rate',
-                't.rating'
+                't.rating',
+                'u.email',
+                't.bio',
+                't.education_level',
             )
             ->get()
             ->groupBy('tutor_post_id');
