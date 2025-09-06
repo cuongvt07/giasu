@@ -178,7 +178,10 @@ Route::middleware(['auth', 'tutor'])->prefix('tutor')->name('tutor.')->group(fun
     Route::patch('/bookings/{booking}/status', [TutorBookingController::class, 'updateStatus'])->name('bookings.update-status');
     Route::post('/bookings/{booking}/confirm-completion', [TutorBookingController::class, 'confirmCompletion'])->name('bookings.confirm-completion');
     Route::post('/bookings/{booking}/report-issue', [TutorBookingController::class, 'reportIssue'])->name('bookings.report-issue');
-    
+
+    // quản lý tin đăng tuyển gia sư
+    Route::get('/my-jobs', [App\Http\Controllers\Tutor\MyJobsController::class, 'index'])->name('jobs.index');
+
     // Lịch rảnh - Sử dụng AvailabilityController
     Route::get('/schedule', [App\Http\Controllers\Tutor\AvailabilityController::class, 'index'])->name('schedule.index');
     Route::get('/schedule/quick', [App\Http\Controllers\Tutor\AvailabilityController::class, 'quickCreate'])->name('schedule.quick');
@@ -219,7 +222,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
 
     //Quản lý tin đăng tuyển gia sư
     Route::get('jobs', [App\Http\Controllers\Admin\AdminJobController::class, 'index'])->name('jobs.index');
-    Route::post('jobs/accept-and-complete', [\App\Http\Controllers\Admin\AdminJobController::class, 'acceptAndComplete'])
+    Route::post('jobs/accept-and-complete', [\App\Http\Controllers\Admin\AdminJobController::class, 'updateStatus'])
     ->name('jobs.acceptAndComplete');
     
     // Quản lý thu nhập và thanh toán cho gia sư
@@ -236,3 +239,16 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
     Route::post('bookings/{booking}/confirm-payment', [AdminBookingController::class, 'confirmPayment'])->name('bookings.confirm-payment');
     Route::post('bookings/{booking}/process-refund', [AdminBookingController::class, 'processRefund'])->name('bookings.process-refund');
 });
+
+// Danh sách hợp đồng của user/tutor hiện tại
+Route::get('/my-contracts', [App\Http\Controllers\ContractController::class, 'myContracts'])
+    ->name('contracts.my');
+
+// Xem chi tiết hợp đồng
+Route::get('/contracts/{id}', [App\Http\Controllers\ContractController::class, 'show'])
+    ->name('contracts.show');
+
+// Accept hợp đồng
+Route::post('/contracts/{id}/accept', [App\Http\Controllers\ContractController::class, 'accept'])
+    ->name('contracts.accept');
+

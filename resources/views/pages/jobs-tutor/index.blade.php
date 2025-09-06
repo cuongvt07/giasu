@@ -34,6 +34,7 @@
             this.showMessage('Ứng tuyển thành công!', 'success');
             this.applyJob = null;
             this.selectedJob = null;
+            window.location.reload();
         })
         .catch(err => {
             this.showMessage('Đã xảy ra lỗi khi ứng tuyển.', 'error');
@@ -201,29 +202,36 @@
                                 Xem chi tiết
                             </button>
 
-                        @auth
-                            @if(in_array(auth()->id(), $post->applied_tutor_ids ?? []))
-                                <span class="inline-flex items-center px-3 py-1.5 rounded-lg bg-gray-200 text-gray-600 text-sm shadow">
-                                    Đã ứng tuyển
-                                </span>
-                            @else
-                                <button 
-                                    @click="applyToJob(@js($post))"
-                                    x-bind:disabled="isApplying && applyJob?.id === {{ $post->id }}"
-                                    class="inline-flex items-center px-3 py-1.5 rounded-lg bg-gradient-to-r from-indigo-600 to-purple-600 text-white hover:from-indigo-700 hover:to-purple-700 text-sm shadow">
-                                    <span x-show="!(isApplying && applyJob?.id === {{ $post->id }})">Ứng tuyển</span>
-                                    <span x-show="isApplying && applyJob?.id === {{ $post->id }}" class="inline-flex items-center gap-1">
-                                        <svg class="h-3.5 w-3.5 animate-spin" viewBox="0 0 24 24" fill="none">
-                                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                                            <path class="opacity-75" fill="currentColor"
-                                                d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
-                                        </svg>
-                                        Đang gửi...
-                                    </span>
-                                </button>
-                            @endif
-                        @endauth
+                            @php
+                                $user = auth()->user();
+                                $tutorId = $user?->tutor?->user_id; // Lấy ID gia sư nếu có
+                                $appliedIds = $post->applied_tutor_ids ?? [];
+                            @endphp
 
+                            @if($tutorId)
+                                @if(in_array($tutorId, $appliedIds))
+                                    <span class="inline-flex items-center px-3 py-1.5 rounded-lg bg-gray-200 text-gray-600 text-sm shadow">
+                                        Đã ứng tuyển
+                                    </span>
+                                @else
+                                    <button 
+                                        @click="applyToJob(@js($post))"
+                                        x-bind:disabled="isApplying && applyJob?.id === {{ $post->id }}"
+                                        class="inline-flex items-center px-3 py-1.5 rounded-lg bg-gradient-to-r from-indigo-600 to-purple-600 text-white hover:from-indigo-700 hover:to-purple-700 text-sm shadow">
+                                        
+                                        <span x-show="!(isApplying && applyJob?.id === {{ $post->id }})">Ứng tuyển</span>
+                                        
+                                        <span x-show="isApplying && applyJob?.id === {{ $post->id }}" class="inline-flex items-center gap-1">
+                                            <svg class="h-3.5 w-3.5 animate-spin" viewBox="0 0 24 24" fill="none">
+                                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                                <path class="opacity-75" fill="currentColor"
+                                                    d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
+                                            </svg>
+                                            Đang gửi...
+                                        </span>
+                                    </button>
+                                @endif
+                            @endif
                         </div>
 
                     </div>

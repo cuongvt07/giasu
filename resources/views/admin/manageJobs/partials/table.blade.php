@@ -4,10 +4,8 @@
             <tr>
                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Người đăng tin</th>
                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Môn học</th>
-                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Thời gian yêu cầu</th>
-                @if($showStatus)
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Trạng thái</th>
-                @endif
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Ngày đăng</th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Trạng thái</th>
                 <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">Thao tác</th>
             </tr>
         </thead>
@@ -15,24 +13,34 @@
             @forelse($bookings as $booking)
                 <!-- Main Row -->
                 <tr class="hover:bg-gray-50">
-                    <td class="px-6 py-4 whitespace-nowrap">
+                    <td class="px-6 py-4">
                         <div class="text-sm font-medium text-gray-900">{{ $booking->poster_name }}</div>
                         <div class="text-sm text-gray-500">{{ $booking->poster_email }}</div>
                     </td>
-                    <td class="px-6 py-4 text-sm text-gray-800">{{ $booking->subject_grade }}</td>
-                    <td class="px-6 py-4 text-sm text-gray-700">
-                        {{ $booking->created_at instanceof \DateTime ? $booking->created_at->format('d/m/Y H:i') : $booking->created_at }}
+                    <td class="px-6 py-4 text-sm">{{ $booking->subject_grade }}</td>
+                    <td class="px-6 py-4 text-sm">{{ \Carbon\Carbon::parse($booking->created_at)->format('d/m/Y H:i') }}</td>
+                    <td class="px-6 py-4">
+                        @if($statusLabel === 'Published')
+                            @php
+                                $studentSigned = $booking->signed_student_at ?? false;
+                                $tutorSigned = $booking->signed_tutor_at ?? false;
+                                $systemVerified = $booking->system_verified_at ?? false;
+                            @endphp
+                            @if(!$studentSigned && !$tutorSigned)
+                                <span class="px-2 inline-flex text-xs font-semibold rounded-full bg-red-100 text-red-800">Chưa ký</span>
+                            @elseif($studentSigned xor $tutorSigned)
+                                <span class="px-2 inline-flex text-xs font-semibold rounded-full bg-yellow-100 text-yellow-800">Một bên ký</span>
+                            @elseif($studentSigned && $tutorSigned && !$systemVerified)
+                                <span class="px-2 inline-flex text-xs font-semibold rounded-full bg-green-100 text-green-800">Hai bên ký đầy đủ</span>
+                            @elseif($studentSigned && $tutorSigned && $systemVerified)
+                                <span class="px-2 inline-flex text-xs font-semibold rounded-full bg-blue-100 text-blue-800">Đã ký & Admin chốt</span>
+                            @endif
+                        @else
+                            <span class="px-2 inline-flex text-xs font-semibold rounded-full {{ $statusColor }}">{{ $statusLabel }}</span>
+                        @endif
                     </td>
-                    @if($showStatus)
-                        <td class="px-6 py-4">
-                            <span class="px-2 inline-flex text-xs font-semibold rounded-full {{ $statusColor }}">
-                                {{ $statusLabel }}
-                            </span>
-                        </td>
-                    @endif
-                    <td class="px-6 py-4 text-right text-sm font-medium space-x-2">
-                        <button @click="openDropdowns[{{ $booking->id }}] = !openDropdowns[{{ $booking->id }}]"
-                                class="text-indigo-600 hover:text-indigo-900">
+                    <td class="px-6 py-4 text-right text-sm">
+                        <button @click="openDropdowns[{{ $booking->id }}] = !openDropdowns[{{ $booking->id }}]" class="text-indigo-600 hover:text-indigo-900">
                             Xem
                         </button>
                     </td>
@@ -40,46 +48,66 @@
 
                 <!-- Details Row -->
                 <tr x-show="openDropdowns[{{ $booking->id }}]" x-transition>
-                    <td colspan="{{ $showStatus ? 5 : 4 }}" class="bg-gray-50 px-6 py-6 text-sm text-gray-700 rounded-b-xl shadow-inner">
+                    <td colspan="5" class="bg-gray-50 px-6 py-6 text-sm text-gray-700">
                         <div class="grid sm:grid-cols-2 gap-4 border-b pb-4 mb-4">
-                            <div><strong>Mục tiêu:</strong> {{ $booking->goal ?? '—' }}</div>
                             <div><strong>Ngân sách:</strong> {{ number_format($booking->budget_min) }} - {{ number_format($booking->budget_max) }} {{ $booking->budget_unit }}</div>
+                            <div><strong>Mục tiêu:</strong> {{ $booking->goal ?? '—' }}</div>
                             <div><strong>Mô tả:</strong> {{ $booking->description ?? '—' }}</div>
                             <div><strong>Địa chỉ:</strong> {{ $booking->address_line ?? '—' }}</div>
-                            <div><strong>Thời gian yêu cầu:</strong> {{ $booking->created_at instanceof \DateTime ? $booking->created_at->format('d/m/Y H:i') : $booking->created_at }}</div>
-                            <div><strong>Hạn chót:</strong> {{ $booking->deadline_at instanceof \DateTime ? $booking->deadline_at->format('d/m/Y') : ($booking->deadline_at ?? '—') }}</div>
-                            <div><strong>Trạng thái:</strong> {{ $statusLabel }}</div>
+
+                            @if($statusLabel === 'Published')
+                                <div>
+                                    <strong>Ký bên Student:</strong>
+                                    @if($studentSigned)
+                                        <span class="px-2 py-1 bg-green-100 text-green-800 text-xs rounded">✅</span>
+                                    @else
+                                        <span class="px-2 py-1 bg-red-100 text-red-800 text-xs rounded">❌</span>
+                                    @endif
+                                </div>
+                                <div>
+                                    <strong>Ký bên Tutor:</strong>
+                                    @if($tutorSigned)
+                                        <span class="px-2 py-1 bg-green-100 text-green-800 text-xs rounded">✅</span>
+                                    @else
+                                        <span class="px-2 py-1 bg-red-100 text-red-800 text-xs rounded">❌</span>
+                                    @endif
+                                </div>
+                                @if($systemVerified)
+                                    <div>
+                                        <strong>Admin chốt:</strong>
+                                        <span class="px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded">✅</span>
+                                    </div>
+                                @endif
+                            @endif
                         </div>
 
-                        <!-- Applicants -->
+                        <!-- Danh sách ứng tuyển -->
                         <div>
                             <h3 class="font-semibold mb-2 text-gray-800">Danh sách ứng tuyển:</h3>
                             <ul class="space-y-4">
                                 @forelse($booking->applications as $application)
                                     <li class="border-t pt-2">
-                                        <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3">
+                                        <div class="flex justify-between items-center">
                                             <div>
                                                 <p><strong>Gia sư:</strong> {{ $application->applicant_name }} ({{ $application->applicant_email }})</p>
                                                 <p><strong>Trạng thái:</strong> {{ ucfirst($application->status) }}</p>
-                                                <p><strong>Ghi chú:</strong> {{ $application->note ?? '—' }}</p>
                                             </div>
-                                            <div class="mt-2 sm:mt-0">
-                                                @if($application->status === 'requested')
-                                                    <button
-                                                        id="btn-{{ $booking->id }}-{{ $application->id }}"
-                                                        @click="acceptAndComplete({{ $booking->id }}, {{ $application->id }}, {{ $application->tutor_id }})"
-                                                        class="px-3 py-1 bg-green-600 text-white text-sm rounded hover:bg-green-700"
-                                                        :disabled="accepting">
-                                                        ✔ Xác nhận và hoàn tất
-                                                    </button>
+                                            <div>
+                                                @if($statusLabel === 'Pending' && $application->status === 'requested')
+                                                    <form method="POST" action="{{ route('admin.jobs.acceptAndComplete') }}">
+                                                        @csrf
+                                                        <input type="hidden" name="job_id" value="{{ $booking->id }}">
+                                                        <input type="hidden" name="status" value="published">
+                                                        <input type="hidden" name="application_id" value="{{ $application->id }}">
+                                                        <input type="hidden" name="tutor_id" value="{{ $application->tutor_id }}">
+                                                        <button class="px-3 py-1 bg-green-600 text-white text-sm rounded hover:bg-green-700">
+                                                            ✔ Chọn gia sư
+                                                        </button>
+                                                    </form>
                                                 @elseif($application->status === 'accepted')
-                                                    <span class="px-3 py-1 text-sm bg-blue-100 text-blue-800 rounded">
-                                                        ✅ Đã xác nhận
-                                                    </span>
+                                                    <span class="px-3 py-1 text-sm bg-blue-100 text-blue-800 rounded">✅ Đã chọn</span>
                                                 @elseif($application->status === 'rejected')
-                                                    <span class="px-3 py-1 text-sm bg-gray-200 text-gray-600 rounded">
-                                                        ❌ Đã từ chối
-                                                    </span>
+                                                    <span class="px-3 py-1 text-sm bg-gray-200 text-gray-600 rounded">❌ Từ chối</span>
                                                 @endif
                                             </div>
                                         </div>
@@ -89,20 +117,36 @@
                                 @endforelse
                             </ul>
                         </div>
+
+                        <!-- Actions admin -->
+                        <div class="mt-4 space-x-2">
+                            @if($statusLabel === 'Draft')
+                                <button 
+                                    id="btn-{{ $booking->id }}"
+                                    @click.prevent="acceptAndComplete({{ $booking->id }}, 'pending')"
+                                    :disabled="accepting"
+                                    class="px-3 py-1 bg-yellow-500 text-white text-sm rounded hover:bg-yellow-600">
+                                    ⬆ Đẩy tin
+                                </button>
+                            @elseif($statusLabel === 'Published' && $studentSigned && $tutorSigned && !$systemVerified)
+                                <button 
+                                    id="btn-{{ $booking->id }}"
+                                    @click.prevent="acceptAndComplete({{ $booking->id }})"
+                                    :disabled="accepting"
+                                    class="px-3 py-1 bg-blue-600 text-white text-sm rounded hover:bg-blue-700 disabled:opacity-50">
+                                    ✅ Hoàn tất (Closed)
+                                </button>
+                            @endif
+                        </div>
                     </td>
                 </tr>
             @empty
                 <tr>
-                    <td colspan="{{ $showStatus ? 5 : 4 }}" class="px-6 py-4 text-center text-sm text-gray-500">
-                        Không có tin tuyển nào
-                    </td>
+                    <td colspan="5" class="px-6 py-4 text-center text-sm text-gray-500">Không có tin tuyển nào</td>
                 </tr>
             @endforelse
         </tbody>
     </table>
 
-    <!-- Pagination -->
-    <div class="mt-4">
-        {{ $bookings->links() }}
-    </div>
+    <div class="mt-4">{{ $bookings->links() }}</div>
 </div>

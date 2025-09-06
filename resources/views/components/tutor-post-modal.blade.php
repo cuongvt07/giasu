@@ -114,16 +114,16 @@
                             <label class="block text-sm font-semibold text-gray-700 mb-2">
                                 <i class="fas fa-book text-indigo-500 mr-2"></i>Môn học *
                             </label>
-                            <select name="subject_id"
-                                    x-model="formData.subject_id"
-                                    required
-                                    class="w-full border-2 border-gray-200 rounded-lg px-4 py-3 
-                                        focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all">
-                                <option value="">-- Chọn môn học --</option>
-                                @foreach ($subjects as $s)
-                                    <option value="{{ $s->id }}">{{ $s->name }}</option>
-                                @endforeach
-                            </select>
+                        <select name="subject_id"
+                                x-model="formData.subject_id"
+                                @change="formData.subject_name = $event.target.options[$event.target.selectedIndex].text"
+                                required
+                                class="w-full border-2 border-gray-200 rounded-lg px-4 py-3">
+                            <option value="">-- Chọn môn học --</option>
+                            @foreach ($subjects as $s)
+                                <option value="{{ $s->id }}">{{ $s->name }}</option>
+                            @endforeach
+                        </select>
                         </div>
 
                         {{-- Lớp/Trình độ --}}
@@ -131,15 +131,15 @@
                             <label class="block text-sm font-semibold text-gray-700 mb-2">
                                 <i class="fas fa-graduation-cap text-indigo-500 mr-2"></i>Lớp/Trình độ
                             </label>
-                            <select name="class_level_id"
-                                    x-model="formData.class_level_id"
-                                    class="w-full border-2 border-gray-200 rounded-lg px-4 py-3 
-                                        focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all">
-                                <option value="">-- Chọn lớp/trình độ --</option>
-                                @foreach ($classLevels as $cl)
-                                    <option value="{{ $cl->id }}">{{ $cl->name }}</option>
-                                @endforeach
-                            </select>
+                                <select name="class_level_id"
+                                        x-model="formData.class_level_id"
+                                        @change="formData.class_level_name = $event.target.options[$event.target.selectedIndex].text"
+                                        class="w-full border-2 border-gray-200 rounded-lg px-4 py-3">
+                                    <option value="">-- Chọn lớp/trình độ --</option>
+                                    @foreach ($classLevels as $cl)
+                                        <option value="{{ $cl->id }}">{{ $cl->name }}</option>
+                                    @endforeach
+                                </select>
                         </div>
                     </div>
 
@@ -239,8 +239,9 @@
                                 <option value="">-- Chọn thời lượng --</option>
                                 <option value="30">30 phút</option>
                                 <option value="45">45 phút</option>
-                                <option value="60">60 phút</option>
-                                <option value="90">90 phút</option>
+                                <option value="60">60 phút (1 giờ)</option>
+                                <option value="90">90 phút (1 giờ 30 phút)</option>
+                                <option value="120">120 phút (2 giờ)</option>
                             </select>
                         </div>
                     </div>
@@ -422,8 +423,8 @@
                                 <h5 class="font-semibold text-gray-700 flex items-center">
                                     <i class="fas fa-book text-indigo-500 mr-2"></i>Thông tin môn học
                                 </h5>
-                                <p><strong>Môn học:</strong> <span x-text="formData.subject || 'Chưa nhập'"></span></p>
-                                <p><strong>Lớp/Trình độ:</strong> <span x-text="formData.grade_level || 'Chưa nhập'"></span></p>
+                                <p><strong>Môn học:</strong> <span x-text="formData.subject_name || 'Chưa nhập'"></span></p>
+                                <p><strong>Lớp/Trình độ:</strong> <span x-text="formData.class_level_name || 'Chưa nhập'"></span></p>
                                 <p><strong>Mục tiêu học tập:</strong> <span x-text="formData.goal || 'Chưa nhập'"></span></p>
                                 <p><strong>Mô tả chi tiết:</strong> <span x-text="formData.description || 'Chưa nhập'"></span></p>
                                 <p><strong>Ngân sách:</strong> 

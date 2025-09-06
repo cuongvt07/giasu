@@ -411,7 +411,7 @@ class TutorController extends Controller
                 'class_levels.name as class_level_name',
                 DB::raw('GROUP_CONCAT(applications.tutor_id) as applied_tutor_ids')
             )
-            ->where('tutor_posts.status', '=', 'published')
+            ->where('tutor_posts.status', '=', 'pending')
             ->groupBy('tutor_posts.id', 'subjects.name', 'class_levels.name'); // cần groupBy hết các field không aggregate
 
         // Filter môn học
