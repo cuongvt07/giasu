@@ -14,24 +14,25 @@ class AdminJobController extends Controller
         $jobsByStatus = [];
 
         foreach ($statuses as $status) {
-                $jobs = DB::table('tutor_posts as tp')
-                    ->leftJoin('subjects as s', 'tp.subject_id', '=', 's.id')
-                    ->leftJoin('class_levels as cl', 'tp.class_level_id', '=', 'cl.id')
-                    ->leftJoin('users as u', 'tp.user_id', '=', 'u.id')
-                    ->leftJoin('contracts as c', function($join) {
-                        $join->on('tp.id', '=', 'c.tutor_post_id');                    })
-                    ->where('tp.status', $status)
-                    ->select(
-                        'tp.*',
-                        's.name as subject_name',
-                        'cl.name as class_level_name',
-                        'u.name as poster_name',
-                        'u.email as poster_email',
-                        'c.signed_student_at',
-                        'c.signed_tutor_at',
-                        'c.system_verified_at',
-                        'c.id as contract_id'
-                    )
+            $jobs = DB::table('tutor_posts as tp')
+                ->leftJoin('subjects as s', 'tp.subject_id', '=', 's.id')
+                ->leftJoin('class_levels as cl', 'tp.class_level_id', '=', 'cl.id')
+                ->leftJoin('users as u', 'tp.user_id', '=', 'u.id')
+                ->leftJoin('contracts as c', function ($join) {
+                    $join->on('tp.id', '=', 'c.tutor_post_id');
+                })
+                ->where('tp.status', $status)
+                ->select(
+                    'tp.*',
+                    's.name as subject_name',
+                    'cl.name as class_level_name',
+                    'u.name as poster_name',
+                    'u.email as poster_email',
+                    'c.signed_student_at',
+                    'c.signed_tutor_at',
+                    'c.system_verified_at',
+                    'c.id as contract_id'
+                )
                 ->latest('tp.created_at')
                 ->paginate(10, ['*'], $status);
 
@@ -52,21 +53,21 @@ class AdminJobController extends Controller
         }
 
         return view('admin.manageJobs.index', [
-            'draftJobs'     => $jobsByStatus['draft'],
-            'pendingJobs'   => $jobsByStatus['pending'],
+            'draftJobs' => $jobsByStatus['draft'],
+            'pendingJobs' => $jobsByStatus['pending'],
             'publishedJobs' => $jobsByStatus['published'],
-            'closedJobs'    => $jobsByStatus['closed'],
+            'closedJobs' => $jobsByStatus['closed'],
         ]);
     }
 
     public function updateStatus(Request $request)
     {
         $validated = $request->validate([
-            'status'         => 'nullable|string|in:draft,pending,published,closed',
+            'status' => 'nullable|string|in:draft,pending,published,closed,reset,delete',
             'application_id' => 'nullable|integer|exists:tutor_applications,id',
-            'tutor_id'       => 'nullable|integer|exists:tutors,id',
-            'job_id'         => 'required|integer|exists:tutor_posts,id',
-            'confirm'        => 'nullable|boolean',
+            'tutor_id' => 'nullable|integer|exists:tutors,id',
+            'job_id' => 'required|integer|exists:tutor_posts,id',
+            'confirm' => 'nullable|boolean',
         ]);
 
         $id = $validated['job_id'];
@@ -75,51 +76,113 @@ class AdminJobController extends Controller
             DB::transaction(function () use ($validated, $id) {
                 $status = $validated['status'] ?? null;
 
+                // ----------------- Published -----------------
                 if ($status === 'published') {
                     if (empty($validated['application_id']) || empty($validated['tutor_id'])) {
                         throw new \Exception('Thiếu thông tin để chọn gia sư');
                     }
 
+                    // Accept 1 tutor
                     DB::table('tutor_applications')
                         ->where('id', $validated['application_id'])
                         ->update(['status' => 'accepted', 'updated_at' => now()]);
 
+                    // Reject các tutor khác
                     DB::table('tutor_applications')
                         ->where('tutor_post_id', $id)
                         ->where('id', '!=', $validated['application_id'])
                         ->update(['status' => 'rejected', 'updated_at' => now()]);
 
+                    // Update job
                     DB::table('tutor_posts')
                         ->where('id', $id)
                         ->update([
-                            'status'       => 'published',
+                            'status' => 'published',
                             'published_at' => now(),
-                            'updated_at'   => now(),
+                            'updated_at' => now(),
                         ]);
-                    
+
+                    // Tạo contract nếu chưa có
                     $job = DB::table('tutor_posts')->where('id', $id)->first();
                     if ($job) {
                         $exists = DB::table('contracts')->where('tutor_post_id', $id)->exists();
                         if (!$exists) {
                             DB::table('contracts')->insert([
                                 'tutor_post_id' => $id,
-                                'student_id'    => $job->user_id,
-                                'tutor_id'      => $validated['tutor_id'],
-                                'status'        => 'pending',
-                                'created_at'    => now(),
-                                'updated_at'    => now(),
+                                'student_id' => $job->user_id,
+                                'tutor_id' => $validated['tutor_id'],
+                                'status' => 'pending',
+                                'created_at' => now(),
+                                'updated_at' => now(),
                             ]);
                         }
                     }
+
+                    // ----------------- Reset -----------------
+                } elseif ($status === 'reset') {
+                    if (empty($validated['application_id']) && empty($validated['tutor_id'])) {
+                        throw new \Exception('Thiếu thông tin để reset tin đăng');
+                    }
+
+                    // Xoá contract của tutor đó
+                    if (!empty($validated['tutor_id'])) {
+                        DB::table('contracts')
+                            ->where('tutor_post_id', $id)
+                            ->where('tutor_id', $validated['tutor_id'])
+                            ->delete();
+                    }
+
+                    // Xoá application của tutor đó
+                    if (!empty($validated['application_id'])) {
+                        DB::table('tutor_applications')
+                            ->where('id', $validated['application_id'])
+                            ->delete();
+                    } elseif (!empty($validated['tutor_id'])) {
+                        DB::table('tutor_applications')
+                            ->where('tutor_post_id', $id)
+                            ->where('tutor_id', $validated['tutor_id'])
+                            ->delete();
+                    }
+
+                    // Reset lại các tutor khác từ rejected → pending
+                    DB::table('tutor_applications')
+                        ->where('tutor_post_id', $id)
+                        ->where('status', 'rejected')
+                        ->update([
+                            'status' => 'pending',
+                            'updated_at' => now(),
+                        ]);
+
+                    // Reset job về pending
+                    DB::table('tutor_posts')
+                        ->where('id', $id)
+                        ->update([
+                            'status' => 'pending',
+                            'updated_at' => now(),
+                        ]);
+
+                    // ----------------- Delete -----------------
+                } elseif ($status === 'delete') {
+                    // Xoá contracts
+                    DB::table('contracts')->where('tutor_post_id', $id)->delete();
+
+                    // Xoá applications
+                    DB::table('tutor_applications')->where('tutor_post_id', $id)->delete();
+
+                    // Xoá job
+                    DB::table('tutor_posts')->where('id', $id)->delete();
+
+                    // ----------------- Draft, Pending, Closed -----------------
                 } elseif ($status) {
                     DB::table('tutor_posts')
                         ->where('id', $id)
                         ->update([
-                            'status'     => $status,
+                            'status' => $status,
                             'updated_at' => now(),
                         ]);
                 }
 
+                // ----------------- Confirm contract -----------------
                 if (!empty($validated['confirm'])) {
                     $contract = DB::table('contracts')->where('tutor_post_id', $id)->first();
                     if ($contract) {

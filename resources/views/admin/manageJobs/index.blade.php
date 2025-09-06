@@ -1,18 +1,22 @@
 @extends('layouts.admin')
 
 @section('content')
-    <div x-data="{
+        <div x-data="{
             flashMessage: null,
             flashType: 'success',
             openDropdowns: {},
             accepting: false,
+
             showMessage(msg, type = 'success') {
                 this.flashMessage = msg;
                 this.flashType = type;
                 setTimeout(() => this.flashMessage = null, 4000);
             },
-                acceptAndComplete(jobId, status = null, confirm = false, applicationId = null, tutorId = null) {
-                if (confirm && !window.confirm('Bạn có chắc muốn thực hiện hành động này?')) return;
+
+            // Gom các thao tác vào 1 hàm
+            acceptAndComplete(jobId, status = null, requireConfirm = false, applicationId = null, tutorId = null) {
+                if (requireConfirm && !window.confirm('Bạn có chắc muốn thực hiện hành động này?')) return;
+
                 this.accepting = true;
 
                 fetch('{{ route('admin.jobs.acceptAndComplete') }}', {
@@ -25,9 +29,9 @@
                     body: JSON.stringify({
                         job_id: jobId,
                         status: status,
-                        confirm: confirm,
                         application_id: applicationId,
-                        tutor_id: tutorId
+                        tutor_id: tutorId,
+                        confirm: status === null // chỉ khi hoàn tất (Closed) mới gửi confirm = true
                     })
                 })
                 .then(res => res.json())

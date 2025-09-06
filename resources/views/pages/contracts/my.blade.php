@@ -27,7 +27,7 @@
                     <h2 class="text-xl font-semibold text-gray-800 mb-6 flex items-center gap-2">
                         <i class="fas fa-file-contract text-indigo-500"></i> Danh sách hợp đồng
                     </h2>
-
+                    <p class="text-xl text-red-500">Bất kì yêu cầu xử lý liên quan đến hợp đồng cần phải liên hệ trực tiếp đến hệ thống!</p>
                     <div class="overflow-x-auto">
                         <table class="min-w-full border rounded-lg text-sm">
                             <thead class="bg-gray-50">

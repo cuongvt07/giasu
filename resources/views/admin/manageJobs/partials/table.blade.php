@@ -113,7 +113,6 @@
                                 @endforelse
                             </ul>
                         </div>
-
                         <!-- Actions admin -->
                         <div class="mt-4 space-x-2">
                             @if($statusLabel === 'Draft')
@@ -127,10 +126,32 @@
                             @elseif($statusLabel === 'Published' && $studentSigned && $tutorSigned && !$systemVerified)
                                 <button 
                                     id="btn-{{ $booking->id }}"
-                                    @click.prevent="acceptAndComplete({{ $booking->id }})"
+                                    @click.prevent="acceptAndComplete({{ $booking->id }}, null, true)"
                                     :disabled="accepting"
                                     class="px-3 py-1 bg-blue-600 text-white text-sm rounded hover:bg-blue-700 disabled:opacity-50">
                                     ✅ Hoàn tất (Closed)
+                                </button>
+                            @endif
+
+                            @if($statusLabel === 'Published' || $statusLabel === 'Closed')
+                                <button 
+                                    @click.prevent="acceptAndComplete(
+                                        {{ $booking->id }},
+                                        'reset',
+                                        true,
+                                        {{ optional($booking->applications->firstWhere('status','accepted'))->id ?? 'undefined' }},
+                                        {{ optional($booking->applications->firstWhere('status','accepted'))->tutor_id ?? 'undefined' }}
+                                    )"
+                                    :disabled="accepting"
+                                    class="px-3 py-1 bg-orange-500 text-white text-sm rounded hover:bg-orange-600">
+                                    🔄 Reset tin đăng
+                                </button>
+
+                                <button 
+                                    @click.prevent="acceptAndComplete({{ $booking->id }}, 'delete', true)"
+                                    :disabled="accepting"
+                                    class="px-3 py-1 bg-red-600 text-white text-sm rounded hover:bg-red-700">
+                                    ❌ Huỷ toàn bộ
                                 </button>
                             @endif
                         </div>
