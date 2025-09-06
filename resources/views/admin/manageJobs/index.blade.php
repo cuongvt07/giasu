@@ -11,7 +11,7 @@
                 this.flashType = type;
                 setTimeout(() => this.flashMessage = null, 4000);
             },
-            acceptAndComplete(jobId, status = null, confirm = false) {
+                acceptAndComplete(jobId, status = null, confirm = false, applicationId = null, tutorId = null) {
                 if (confirm && !window.confirm('Bạn có chắc muốn thực hiện hành động này?')) return;
                 this.accepting = true;
 
@@ -22,7 +22,13 @@
                         'Accept': 'application/json',
                         'X-CSRF-TOKEN': '{{ csrf_token() }}'
                     },
-                    body: JSON.stringify({ job_id: jobId, status: status, confirm: confirm })
+                    body: JSON.stringify({
+                        job_id: jobId,
+                        status: status,
+                        confirm: confirm,
+                        application_id: applicationId,
+                        tutor_id: tutorId
+                    })
                 })
                 .then(res => res.json())
                 .then(data => {

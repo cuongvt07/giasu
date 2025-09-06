@@ -106,6 +106,9 @@
                                         <x-dropdown-link :href="route('student.manager.jobs')">
                                             {{ __('Quản lý tin đăng tuyển') }}
                                         </x-dropdown-link>
+                                        <x-dropdown-link :href="route('contracts.my')">
+                                            {{ __('Quản lý hợp đồng') }}
+                                        </x-dropdown-link>
                                     @endif
                                     
                                     <x-dropdown-link :href="route('profile.edit')">

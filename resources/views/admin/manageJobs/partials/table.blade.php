@@ -94,16 +94,12 @@
                                             </div>
                                             <div>
                                                 @if($statusLabel === 'Pending' && $application->status === 'requested')
-                                                    <form method="POST" action="{{ route('admin.jobs.acceptAndComplete') }}">
-                                                        @csrf
-                                                        <input type="hidden" name="job_id" value="{{ $booking->id }}">
-                                                        <input type="hidden" name="status" value="published">
-                                                        <input type="hidden" name="application_id" value="{{ $application->id }}">
-                                                        <input type="hidden" name="tutor_id" value="{{ $application->tutor_id }}">
-                                                        <button class="px-3 py-1 bg-green-600 text-white text-sm rounded hover:bg-green-700">
-                                                            ✔ Chọn gia sư
-                                                        </button>
-                                                    </form>
+                                                    <button
+                                                        @click.prevent="acceptAndComplete({{ $booking->id }}, 'published', true, {{ $application->id }}, {{ $application->tutor_id }})"
+                                                        :disabled="accepting"
+                                                        class="px-3 py-1 bg-green-600 text-white text-sm rounded hover:bg-green-700">
+                                                        ✔ Chọn gia sư
+                                                    </button>
                                                 @elseif($application->status === 'accepted')
                                                     <span class="px-3 py-1 text-sm bg-blue-100 text-blue-800 rounded">✅ Đã chọn</span>
                                                 @elseif($application->status === 'rejected')
