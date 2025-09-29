@@ -369,21 +369,30 @@
                         Đóng
                     </button>
 
+                    @php
+                        $user = auth()->user();
+                        $tutorId = $user?->tutor?->user_id;
+                    @endphp
                     @auth
                         <template x-if="selectedJob">
-                            <button @click="applyToJob(selectedJob)" x-ref="applyBtn" x-bind:disabled="isApplying"
-                                class="inline-flex items-center px-4 py-2 rounded-lg bg-gradient-to-r from-indigo-600 to-purple-600 text-white hover:from-indigo-700 hover:to-purple-700 transition-all font-medium shadow-lg">
-                                <span x-show="!isApplying" class="inline">Ứng tuyển</span>
-                                <span x-show="isApplying" class="inline-flex items-center gap-2">
-                                    <svg class="h-4 w-4 animate-spin" viewBox="0 0 24 24" fill="none">
-                                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor"
-                                            stroke-width="4"></circle>
-                                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z">
-                                        </path>
-                                    </svg>
-                                    Đang gửi...
-                                </span>
-                            </button>
+                            <template x-if="selectedJob && $tutorId && (selectedJob.applied_tutor_ids && selectedJob.applied_tutor_ids.includes($tutorId))">
+                                <span class="inline-flex items-center px-4 py-2 rounded-lg bg-gray-200 text-gray-600 text-sm font-medium shadow-lg">Đã ứng tuyển</span>
+                            </template>
+                            <template x-if="selectedJob && (!$tutorId || !(selectedJob.applied_tutor_ids && selectedJob.applied_tutor_ids.includes($tutorId)))">
+                                <button @click="applyToJob(selectedJob)" x-ref="applyBtn" x-bind:disabled="isApplying"
+                                    class="inline-flex items-center px-4 py-2 rounded-lg bg-gradient-to-r from-indigo-600 to-purple-600 text-white hover:from-indigo-700 hover:to-purple-700 transition-all font-medium shadow-lg">
+                                    <span x-show="!isApplying" class="inline">Ứng tuyển</span>
+                                    <span x-show="isApplying" class="inline-flex items-center gap-2">
+                                        <svg class="h-4 w-4 animate-spin" viewBox="0 0 24 24" fill="none">
+                                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor"
+                                                stroke-width="4"></circle>
+                                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z">
+                                            </path>
+                                        </svg>
+                                        Đang gửi...
+                                    </span>
+                                </button>
+                            </template>
                         </template>
                     @endauth
                 </div>

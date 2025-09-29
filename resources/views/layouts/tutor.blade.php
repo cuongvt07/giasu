@@ -63,7 +63,7 @@
                         <svg class="mr-3 h-5 w-5 {{ request()->routeIs('tutor.schedule.*') ? 'text-white' : 'text-gray-500 group-hover:text-indigo-500' }}" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
                         </svg>
-                        Lịch Rảnh
+                        ca dạy
                     </a>
 
                     <a href="{{ route('tutor.jobs.index') }}" class="group flex items-center py-3 px-4 text-sm font-medium rounded-lg {{ request()->routeIs('tutor.schedule.*') ? 'text-white bg-gradient-to-r from-indigo-600 to-purple-600 shadow-md' : 'text-gray-700 hover:bg-gray-50' }}">
@@ -174,7 +174,7 @@
                                 <svg class="mr-3 h-5 w-5 {{ request()->routeIs('tutor.schedule.*') ? 'text-white' : 'text-gray-500 group-hover:text-indigo-500' }}" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
                                 </svg>
-                                Lịch Rảnh
+                                ca dạy
                             </a>
 
                             <a href="{{ route('tutor.earnings.index') }}" class="group flex items-center py-3 px-4 text-sm font-medium rounded-lg {{ request()->routeIs('tutor.earnings.*') ? 'text-white bg-gradient-to-r from-indigo-600 to-purple-600 shadow-md' : 'text-gray-700 hover:bg-gray-50' }}">
@@ -237,7 +237,7 @@
                         @elseif(request()->routeIs('tutor.bookings.*'))
                             <h1 class="text-lg font-semibold text-gray-800">Lịch Dạy</h1>
                         @elseif(request()->routeIs('tutor.schedule.*'))
-                            <h1 class="text-lg font-semibold text-gray-800">Lịch Rảnh</h1>
+                            <h1 class="text-lg font-semibold text-gray-800">ca dạy</h1>
                         @elseif(request()->routeIs('tutor.earnings.*'))
                             <h1 class="text-lg font-semibold text-gray-800">Thu Nhập</h1>
                         @elseif(request()->routeIs('tutor.profile.*'))

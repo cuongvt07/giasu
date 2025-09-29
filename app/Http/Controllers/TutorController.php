@@ -99,7 +99,7 @@ class TutorController extends Controller
         // Lấy lịch dạy của gia sư
         $schedules = $tutor->schedules()->get();
         
-        // Lấy lịch rảnh của gia sư (cả lịch rảnh cụ thể và lịch lặp lại)
+        // Lấy ca dạy của gia sư (cả ca dạy cụ thể và lịch lặp lại)
         $availabilities = $tutor->availabilities()
             ->where(function ($query) {
                 $query->where('start_time', '>', now())
@@ -368,7 +368,7 @@ class TutorController extends Controller
     public function book(Request $request, Tutor $tutor)
     {
         // TODO: Implement booking logic
-        return back()->with('success', 'Yêu cầu đặt lịch của bạn đã được gửi đến gia sư.');
+        return back()->with('success', 'Yêu cầu Đặt Lịch Ca Dạy GS của bạn đã được gửi đến gia sư.');
     }
 
     public function bookings()

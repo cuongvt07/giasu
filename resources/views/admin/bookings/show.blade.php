@@ -1,12 +1,12 @@
 @extends('layouts.admin')
 
-@section('page_title', 'Chi Tiết Đặt Lịch')
+@section('page_title', 'Chi Tiết Đặt Lịch Ca Dạy GS')
 
 @section('content')
 <div class="max-w-5xl mx-auto">
     <div class="bg-white shadow rounded-lg">
         <div class="px-6 py-4 border-b border-gray-200 flex justify-between items-center">
-            <h2 class="text-xl font-semibold text-gray-900">Chi Tiết Đặt Lịch #{{ $booking->id }}</h2>
+            <h2 class="text-xl font-semibold text-gray-900">Chi Tiết Đặt Lịch Ca Dạy GS #{{ $booking->id }}</h2>
             <div class="flex space-x-3">
                 <a href="{{ route('admin.bookings.edit', $booking) }}" class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                     <svg class="-ml-1 mr-2 h-5 w-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
@@ -18,7 +18,7 @@
                 <form action="{{ route('admin.bookings.destroy', $booking) }}" method="POST" class="inline-block">
                     @csrf
                     @method('DELETE')
-                    <button type="submit" onclick="return confirm('Bạn có chắc chắn muốn xóa đặt lịch này?')" class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
+                    <button type="submit" onclick="return confirm('Bạn có chắc chắn muốn xóa Đặt Lịch Ca Dạy GS này?')" class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
                         <svg class="-ml-1 mr-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                             <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd" />
                         </svg>
@@ -63,7 +63,7 @@
                             </div>
                         </div>
                         <div>
-                            <h4 class="text-sm font-medium text-gray-500">Thời gian đặt lịch</h4>
+                            <h4 class="text-sm font-medium text-gray-500">Thời gian Đặt Lịch Ca Dạy GS</h4>
                             <p class="mt-1 text-sm text-gray-900">{{ $booking->created_at->format('d/m/Y H:i') }}</p>
                         </div>
                         <div>

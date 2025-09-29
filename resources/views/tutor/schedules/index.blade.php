@@ -4,11 +4,11 @@
 <div class="bg-white shadow rounded-lg">
     <div class="px-4 py-5 border-b border-gray-200 sm:px-6">
         <h3 class="text-lg leading-6 font-medium text-gray-900">
-            Quản Lý Lịch Rảnh
+            Quản Lý ca dạy
         </h3>
     </div>
     <div class="px-4 py-5 sm:p-6">
-        <!-- Form thêm lịch rảnh -->
+        <!-- Form thêm ca dạy -->
         <form action="{{ route('tutor.schedule.store') }}" method="POST" class="space-y-4">
             @csrf
             <div class="grid grid-cols-1 gap-4 sm:grid-cols-3">
@@ -35,12 +35,12 @@
             </div>
             <div class="pt-4">
                 <button type="submit" class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                    Thêm lịch rảnh
+                    Thêm ca dạy
                 </button>
             </div>
         </form>
 
-        <!-- Hiển thị danh sách lịch rảnh -->
+        <!-- Hiển thị danh sách ca dạy -->
         <div class="mt-8">
             <div class="overflow-x-auto">
                 <table class="min-w-full divide-y divide-gray-200">
@@ -84,7 +84,7 @@
                                     <form action="{{ route('tutor.schedule.destroy', $schedule) }}" method="POST" class="inline">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="text-red-600 hover:text-red-900" onclick="return confirm('Bạn có chắc chắn muốn xóa lịch rảnh này?')">
+                                        <button type="submit" class="text-red-600 hover:text-red-900" onclick="return confirm('Bạn có chắc chắn muốn xóa ca dạy này?')">
                                             Xóa
                                         </button>
                                     </form>
@@ -93,7 +93,7 @@
                         @empty
                             <tr>
                                 <td colspan="4" class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">
-                                    Chưa có lịch rảnh nào được thiết lập
+                                    Chưa có ca dạy nào được thiết lập
                                 </td>
                             </tr>
                         @endforelse

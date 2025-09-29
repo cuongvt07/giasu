@@ -3,10 +3,10 @@
 @section('content')
 <div class="bg-white shadow rounded-lg">
     <div class="p-6">
-        <h2 class="text-xl font-semibold text-gray-900">Danh Sách Đặt Lịch</h2>
+        <h2 class="text-xl font-semibold text-gray-900">Danh Sách Đặt Lịch Ca Dạy GS</h2>
     </div>
 
-    <!-- Đặt lịch chờ xác nhận -->
+    <!-- Đặt Lịch Ca Dạy GS chờ xác nhận -->
     <div class="p-6 border-t border-gray-200">
         <h3 class="text-lg font-medium text-gray-900 mb-4">Chờ Xác Nhận</h3>
     <div class="overflow-x-auto">
@@ -73,7 +73,7 @@
         </div>
     </div>
 
-    <!-- Đặt lịch đã xác nhận -->
+    <!-- Đặt Lịch Ca Dạy GS đã xác nhận -->
     <div class="p-6 border-t border-gray-200">
         <h3 class="text-lg font-medium text-gray-900 mb-4">Đã Xác Nhận</h3>
         <div class="overflow-x-auto">
@@ -134,7 +134,7 @@
         </div>
     </div>
 
-    <!-- Đặt lịch đang chờ hoàn thành -->
+    <!-- Đặt Lịch Ca Dạy GS đang chờ hoàn thành -->
     <div class="p-6 border-t border-gray-200">
         <h3 class="text-lg font-medium text-gray-900 mb-4">Chờ Hoàn Thành</h3>
         <div class="overflow-x-auto">
@@ -204,7 +204,7 @@
         </div>
     </div>
 
-    <!-- Đặt lịch đã hoàn thành -->
+    <!-- Đặt Lịch Ca Dạy GS đã hoàn thành -->
     <div class="p-6 border-t border-gray-200">
         <h3 class="text-lg font-medium text-gray-900 mb-4">Đã Hoàn Thành</h3>
         <div class="overflow-x-auto">

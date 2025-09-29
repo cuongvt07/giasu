@@ -93,7 +93,7 @@ class BookingController extends Controller
         }
 
         return redirect()->route('admin.bookings.show', $booking)
-            ->with('success', 'Đã cập nhật trạng thái đặt lịch thành công.');
+            ->with('success', 'Đã cập nhật trạng thái Đặt Lịch Ca Dạy GS thành công.');
     }
     
     /**
@@ -192,14 +192,14 @@ class BookingController extends Controller
 
     public function destroy(Booking $booking)
     {
-        // Chỉ cho phép xóa các đặt lịch đã hoàn thành hoặc đã hủy
+        // Chỉ cho phép xóa các Đặt Lịch Ca Dạy GS đã hoàn thành hoặc đã hủy
         if (!in_array($booking->status, [Booking::STATUS_COMPLETED, Booking::STATUS_CANCELLED])) {
-            return back()->with('error', 'Chỉ có thể xóa các đặt lịch đã hoàn thành hoặc đã hủy.');
+            return back()->with('error', 'Chỉ có thể xóa các Đặt Lịch Ca Dạy GS đã hoàn thành hoặc đã hủy.');
         }
 
         $booking->delete();
 
         return redirect()->route('admin.bookings.index')
-            ->with('success', 'Đặt lịch đã được xóa thành công.');
+            ->with('success', 'Đặt Lịch Ca Dạy GS đã được xóa thành công.');
     }
 } 

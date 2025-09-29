@@ -31,10 +31,10 @@ class StudentBookingController extends Controller
     {
         $subjects = $tutor->subjects;
         
-        // Lấy lịch rảnh của gia sư (cả lịch cụ thể và lịch lặp lại)
+        // Lấy ca dạy của gia sư (cả lịch cụ thể và lịch lặp lại)
         $availabilities = $tutor->availabilities()
             ->where(function ($query) {
-                $query->where('start_time', '>', now()) // Lịch rảnh cụ thể trong tương lai
+                $query->where('start_time', '>', now()) // ca dạy cụ thể trong tương lai
                     ->orWhere('is_recurring', true); // Hoặc lịch lặp lại
             })
             ->where('status', 'active')
@@ -146,7 +146,7 @@ class StudentBookingController extends Controller
         $totalAmount = $pricePerHour * $hours;
         
         // Log để kiểm tra
-        \Illuminate\Support\Facades\Log::info('Tính toán đặt lịch', [
+        \Illuminate\Support\Facades\Log::info('Tính toán Đặt Lịch Ca Dạy GS', [
             'start_time' => $startTime->format('H:i'),
             'end_time' => $endTime->format('H:i'),
             'minutes' => $minutes,
@@ -170,7 +170,7 @@ class StudentBookingController extends Controller
         
         // Chuyển hướng đến trang thanh toán
         return redirect()->route('payment.create', $booking)
-            ->with('success', 'Đã tạo đặt lịch thành công, vui lòng hoàn tất thanh toán');
+            ->with('success', 'Đã tạo Đặt Lịch Ca Dạy GS thành công, vui lòng hoàn tất thanh toán');
     }
 
     public function show(Booking $booking)

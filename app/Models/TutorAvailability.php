@@ -49,7 +49,7 @@ class TutorAvailability extends Model
     ];
 
     /**
-     * Lấy gia sư sở hữu lịch rảnh này
+     * Lấy gia sư sở hữu ca dạy này
      */
     public function tutor()
     {
@@ -57,7 +57,7 @@ class TutorAvailability extends Model
     }
 
     /**
-     * Kiểm tra xem một lịch rảnh có trùng với lịch học đã đặt không
+     * Kiểm tra xem một ca dạy có trùng với lịch học đã đặt không
      */
     public function hasBookingConflicts()
     {
@@ -66,7 +66,7 @@ class TutorAvailability extends Model
         $query = Booking::where('tutor_id', $tutor->id)
             ->where('status', '!=', 'cancelled');
             
-        // Nếu lịch rảnh có ngày cụ thể, chỉ kiểm tra lịch học cho ngày đó
+        // Nếu ca dạy có ngày cụ thể, chỉ kiểm tra lịch học cho ngày đó
         if ($this->date) {
             $query->whereDate('start_time', $this->date);
         }
@@ -108,7 +108,7 @@ class TutorAvailability extends Model
     }
     
     /**
-     * Kiểm tra xem lịch rảnh có khả dụng không (active)
+     * Kiểm tra xem ca dạy có khả dụng không (active)
      */
     public function isAvailable()
     {

@@ -130,7 +130,7 @@
             </div>
         </div>
 
-        <!-- Danh sách đặt lịch cho môn này -->
+        <!-- Danh sách Đặt Lịch Ca Dạy GS cho môn này -->
         <div class="mt-8 bg-white shadow overflow-hidden sm:rounded-lg">
             <div class="px-4 py-5 sm:px-6">
                 <h3 class="text-lg leading-6 font-medium text-gray-900">

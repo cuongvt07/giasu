@@ -5,7 +5,7 @@
     <div class="pb-6">
         <h1 class="text-2xl font-semibold text-gray-900">Thanh toán buổi học</h1>
         <p class="mt-2 text-sm text-gray-600">
-            Vui lòng kiểm tra thông tin và hoàn tất thanh toán để đặt lịch học với gia sư.
+            Vui lòng kiểm tra thông tin và hoàn tất thanh toán để Đặt Lịch Ca Dạy GS học với gia sư.
         </p>
     </div>
 

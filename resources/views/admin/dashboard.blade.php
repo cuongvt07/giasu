@@ -19,6 +19,36 @@
         </div>
     </div>
 
+    <!-- Thống kê tin đăng phụ huynh đã duyệt -->
+    <div class="bg-white rounded-lg shadow p-6">
+        <div class="flex items-center">
+            <div class="p-3 rounded-full bg-pink-600 bg-opacity-75">
+                <svg class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-6a2 2 0 012-2h2a2 2 0 012 2v6m-6 0h6"/>
+                </svg>
+            </div>
+            <div class="ml-4">
+                <p class="mb-2 text-sm font-medium text-gray-600">Tin Đăng Tuyển dụng</p>
+                <p class="text-lg font-semibold text-gray-700">{{ $totalApprovedPosts }}</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Thống kê hợp đồng đã tạo -->
+    <div class="bg-white rounded-lg shadow p-6">
+        <div class="flex items-center">
+            <div class="p-3 rounded-full bg-orange-600 bg-opacity-75">
+                <svg class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                </svg>
+            </div>
+            <div class="ml-4">
+                <p class="mb-2 text-sm font-medium text-gray-600">Tổng Hợp Đồng GS-PH</p>
+                <p class="text-lg font-semibold text-gray-700">{{ $totalContracts }}</p>
+            </div>
+        </div>
+    </div>
+
     <!-- Thống kê gia sư -->
     <div class="bg-white rounded-lg shadow p-6">
         <div class="flex items-center">
@@ -51,7 +81,7 @@
         </div>
     </div>
 
-    <!-- Thống kê đặt lịch -->
+    <!-- Thống kê Đặt Lịch Ca Dạy GS -->
     <div class="bg-white rounded-lg shadow p-6">
         <div class="flex items-center">
             <div class="p-3 rounded-full bg-red-600 bg-opacity-75">
@@ -60,16 +90,12 @@
                 </svg>
             </div>
             <div class="ml-4">
-                <p class="mb-2 text-sm font-medium text-gray-600">Tổng Đặt Lịch</p>
+                <p class="mb-2 text-sm font-medium text-gray-600">Tổng Đặt Lịch Ca Dạy GS Ca Học Gia Sư</p>
                 <p class="text-lg font-semibold text-gray-700">{{ $totalBookings }}</p>
             </div>
         </div>
     </div>
-</div>
-
-<!-- Thống kê doanh thu và thanh toán -->
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8 mt-8">
-    <!-- Tổng doanh thu -->
+        <!-- Tổng doanh thu -->
     <div class="bg-white rounded-lg shadow p-6">
         <div class="flex items-center">
             <div class="p-3 rounded-full bg-blue-600 bg-opacity-75">
@@ -128,15 +154,88 @@
             </div>
         </div>
     </div>
+        <!-- Hiệu quả kết nối: Lượt ứng tuyển/tin đăng -->
+    <div class="bg-white rounded-lg shadow p-6">
+        <div class="flex items-center">
+            <div class="p-3 rounded-full bg-cyan-600 bg-opacity-75">
+                <svg class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                </svg>
+            </div>
+            <div class="ml-4">
+                <p class="mb-2 text-sm font-medium text-gray-600">Lượt Ứng Tuyển / Tin Đăng</p>
+                <p class="text-lg font-semibold text-gray-700">{{ $applicationPerPost }} <span class="text-xs text-gray-500">({{ $totalApplications }} / {{ $totalApprovedPosts }})</span></p>
+            </div>
+        </div>
+    </div>
+    <!-- Hiệu quả kết nối: Lượt HĐ chốt/tin đăng -->
+    <div class="bg-white rounded-lg shadow p-6">
+        <div class="flex items-center">
+            <div class="p-3 rounded-full bg-emerald-600 bg-opacity-75">
+                <svg class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                </svg>
+            </div>
+            <div class="ml-4">
+                <p class="mb-2 text-sm font-medium text-gray-600">HĐ Chốt / Tin Đăng</p>
+                <p class="text-lg font-semibold text-gray-700">{{ $closedContractPerPost }} <span class="text-xs text-gray-500">({{ $totalClosedContracts }} / {{ $totalApprovedPosts }})</span></p>
+            </div>
+        </div>
+    </div>
 </div>
 
-<!-- Đặt lịch hôm nay -->
+<!-- Đặt Lịch Ca Dạy GS hôm nay -->
+<!-- Báo cáo tình trạng hợp đồng -->
 <div class="bg-white rounded-lg shadow mb-8">
     <div class="px-6 py-4 border-b border-gray-200">
-        <h2 class="text-lg font-medium text-gray-900">Đặt Lịch Hôm Nay</h2>
+        <h2 class="text-lg font-medium text-gray-900">Báo Cáo Hợp Đồng Gia Sư - Phụ Huynh</h2>
+        <ul class="flex space-x-4 mt-4" id="contractTabs">
+            <li><a href="#" class="tab-link font-semibold text-blue-600 border-b-2 border-blue-600" data-tab="student">Bên A (Phụ huynh) ký <span class="ml-1 text-xs bg-gray-200 rounded px-2">{{ $count_signed_student }}</span></a></li>
+            <li><a href="#" class="tab-link text-gray-600" data-tab="tutor">Bên B (Gia sư) ký <span class="ml-1 text-xs bg-gray-200 rounded px-2">{{ $count_signed_tutor }}</span></a></li>
+            <li><a href="#" class="tab-link text-gray-600" data-tab="both">Cả 2 bên đã ký <span class="ml-1 text-xs bg-gray-200 rounded px-2">{{ $count_both_signed }}</span></a></li>
+            <li><a href="#" class="tab-link text-gray-600" data-tab="admin">Hợp đồng được QTV xác nhận <span class="ml-1 text-xs bg-gray-200 rounded px-2">{{ $count_admin_signed }}</span></a></li>
+        </ul>
     </div>
     <div class="overflow-x-auto">
-        <table class="min-w-full divide-y divide-gray-200">
+        <div class="tab-content" id="tab-student">
+            @include('admin.partials.contracts_table', ['contracts' => $contracts_signed_student, 'label' => 'Bên A (Phụ huynh) đã ký'])
+        </div>
+        <div class="tab-content hidden" id="tab-tutor">
+            @include('admin.partials.contracts_table', ['contracts' => $contracts_signed_tutor, 'label' => 'Bên B (Gia sư) đã ký'])
+        </div>
+        <div class="tab-content hidden" id="tab-both">
+            @include('admin.partials.contracts_table', ['contracts' => $contracts_both_signed, 'label' => 'Cả 2 bên đã ký'])
+        </div>
+        <div class="tab-content hidden" id="tab-admin">
+            @include('admin.partials.contracts_table', ['contracts' => $contracts_admin_signed, 'label' => 'Hợp đồng được QTV xác nhận'])
+        </div>
+    </div>
+</div>
+
+@push('scripts')
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const tabs = document.querySelectorAll('.tab-link');
+        const contents = document.querySelectorAll('.tab-content');
+        tabs.forEach(tab => {
+            tab.addEventListener('click', function(e) {
+                e.preventDefault();
+                tabs.forEach(t => t.classList.remove('font-semibold', 'text-blue-600', 'border-b-2', 'border-blue-600'));
+                this.classList.add('font-semibold', 'text-blue-600', 'border-b-2', 'border-blue-600');
+                contents.forEach(c => c.classList.add('hidden'));
+                document.getElementById('tab-' + this.dataset.tab).classList.remove('hidden');
+            });
+        });
+    });
+</script>
+@endpush
+<div class="bg-white rounded-lg shadow mb-8">
+    <div class="px-6 py-4 border-b border-gray-200">
+        <h2 class="text-lg font-medium text-gray-900">Đặt Lịch Ca Dạy GS Hôm Nay</h2>
+    </div>
+    <div class="overflow-x-auto">
+    <div style="max-height: 480px; overflow-y: auto;">
+    <table class="min-w-full divide-y divide-gray-200">
             <thead class="bg-gray-50">
                 <tr>
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Học Sinh</th>
@@ -180,12 +279,13 @@
                 @empty
                 <tr>
                     <td colspan="5" class="px-6 py-4 text-center text-gray-500">
-                        Không có đặt lịch nào hôm nay
+                        Không có Đặt Lịch Ca Dạy GS nào hôm nay
                     </td>
                 </tr>
                 @endforelse
             </tbody>
-        </table>
+    </table>
+    </div>
     </div>
 </div>
 
@@ -196,7 +296,8 @@
         <a href="{{ route('admin.earnings.index') }}" class="text-sm font-medium text-indigo-600 hover:text-indigo-500">Xem tất cả</a>
     </div>
     <div class="overflow-x-auto">
-        <table class="min-w-full divide-y divide-gray-200">
+    <div style="max-height: 480px; overflow-y: auto;">
+    <table class="min-w-full divide-y divide-gray-200">
             <thead class="bg-gray-50">
                 <tr>
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Mã</th>
@@ -235,7 +336,8 @@
                 </tr>
                 @endforelse
             </tbody>
-        </table>
+    </table>
+    </div>
     </div>
 </div>
 
@@ -251,10 +353,10 @@
         </div>
     </div>
 
-    <!-- Biểu đồ đặt lịch theo môn học -->
+    <!-- Biểu đồ Đặt Lịch Ca Dạy GS theo môn học -->
     <div class="bg-white rounded-lg shadow">
         <div class="px-6 py-4 border-b border-gray-200">
-            <h2 class="text-lg font-medium text-gray-900">Đặt Lịch Theo Môn Học</h2>
+            <h2 class="text-lg font-medium text-gray-900">Đặt Lịch Ca Dạy GS Theo Môn Học</h2>
         </div>
         <div class="p-6">
             <canvas id="bookingsBySubjectChart"></canvas>
@@ -291,14 +393,14 @@
         }
     });
 
-    // Biểu đồ đặt lịch theo môn học
+    // Biểu đồ Đặt Lịch Ca Dạy GS theo môn học
     const bookingsBySubjectCtx = document.getElementById('bookingsBySubjectChart').getContext('2d');
     new Chart(bookingsBySubjectCtx, {
         type: 'bar',
         data: {
             labels: {!! json_encode($bookingsBySubjectChart['labels']) !!},
             datasets: [{
-                label: 'Số lượng đặt lịch',
+                label: 'Số lượng Đặt Lịch Ca Dạy GS',
                 data: {!! json_encode($bookingsBySubjectChart['data']) !!},
                 backgroundColor: 'rgba(79, 70, 229, 0.2)',
                 borderColor: 'rgb(79, 70, 229)',

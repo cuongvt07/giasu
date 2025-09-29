@@ -63,7 +63,7 @@
         <!-- CHỜ XÁC NHẬN -->
         <!-- DRAFT -->
         <div class="p-6 border-t border-gray-200">
-            <h3 class="text-lg font-medium text-gray-900 mb-4">Chờ Xác Nhận (Draft)</h3>
+            <h3 class="text-lg font-medium text-gray-900 mb-4">Chờ Xác Nhận (Được đăng tin lên hệ thống)</h3>
             @include('admin.manageJobs.partials.table', [
                 'bookings' => $draftJobs,
                 'statusLabel' => 'Draft',
@@ -93,7 +93,7 @@
 
         <!-- CLOSED -->
         <div class="p-6 border-t border-gray-200">
-            <h3 class="text-lg font-medium text-gray-900 mb-4">Đã Hoàn Thành (Closed)</h3>
+            <h3 class="text-lg font-medium text-gray-900 mb-4">Đã Hoàn Thành (Hợp đồng có hiệu lực)</h3>
             @include('admin.manageJobs.partials.table', [
                 'bookings' => $closedJobs,
                 'statusLabel' => 'Closed',

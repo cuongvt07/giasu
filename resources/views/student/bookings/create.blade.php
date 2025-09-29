@@ -3,7 +3,7 @@
 @section('content')
 <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
     <div class="pb-6">
-        <h1 class="text-2xl font-semibold text-gray-900">Đặt lịch học với {{ $tutor->user->name }}</h1>
+        <h1 class="text-2xl font-semibold text-gray-900">Đặt Lịch Ca Dạy GS học với {{ $tutor->user->name }}</h1>
         <p class="mt-2 text-sm text-gray-600">
             Vui lòng chọn một trong những khung giờ rảnh của gia sư dưới đây.
         </p>
@@ -19,7 +19,7 @@
             </div>
             <div class="ml-3">
                 <p class="text-sm text-blue-700">
-                    <strong>Lưu ý:</strong> Chỉ được đặt lịch trong các khung giờ rảnh đã được hiển thị dưới đây. Hệ thống đã tự động lọc bỏ các khung giờ đã có lịch học hoặc đã qua.
+                    <strong>Lưu ý:</strong> Chỉ được Đặt Lịch Ca Dạy GS trong các khung giờ rảnh đã được hiển thị dưới đây. Hệ thống đã tự động lọc bỏ các khung giờ đã có lịch học hoặc đã qua.
                 </p>
             </div>
         </div>
@@ -65,7 +65,7 @@
                             </button>
                         @empty
                             <div class="py-4 text-center text-gray-500">
-                                Gia sư chưa cấu hình lịch rảnh trong 14 ngày tới. Vui lòng liên hệ gia sư hoặc quay lại sau.
+                                Gia sư chưa cấu hình ca dạy trong 14 ngày tới. Vui lòng liên hệ gia sư hoặc quay lại sau.
                             </div>
                         @endforelse
                     </div>
@@ -205,7 +205,7 @@
         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" viewBox="0 0 20 20" fill="currentColor">
             <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd" />
         </svg>
-        Đặt lịch và thanh toán
+        Đặt Lịch Ca Dạy GS và thanh toán
     </button>
 </div>
                         </form>
@@ -217,8 +217,8 @@
                         <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                         </svg>
-                        <h3 class="mt-2 text-sm font-medium text-gray-900">Không có lịch rảnh</h3>
-                        <p class="mt-1 text-sm text-gray-500">Gia sư chưa cấu hình lịch rảnh trong 14 ngày tới.</p>
+                        <h3 class="mt-2 text-sm font-medium text-gray-900">Không có ca dạy</h3>
+                        <p class="mt-1 text-sm text-gray-500">Gia sư chưa cấu hình ca dạy trong 14 ngày tới.</p>
                         <div class="mt-6">
                             <a href="{{ route('tutors.show', $tutor) }}" class="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                                 Quay lại trang gia sư
@@ -233,7 +233,7 @@
 
 @push('scripts')
 <script>
-    // Hệ thống quản lý tab đặt lịch và tính giá tiền - sử dụng JavaScript thuần, không dùng Alpine.js
+    // Hệ thống quản lý tab Đặt Lịch Ca Dạy GS và tính giá tiền - sử dụng JavaScript thuần, không dùng Alpine.js
     const bookingTabSystem = {
         // Biến lưu trạng thái hiện tại
         activeTab: null,          // Tab đang active
@@ -413,7 +413,7 @@
                 if (hourDetailElement) hourDetailElement.textContent = `${duration} giờ x ${new Intl.NumberFormat('vi-VN').format(this.selectedSubject.price)}đ`;
                 if (totalAmountElement) totalAmountElement.textContent = new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(total).replace('₫', 'đ');
                 
-                // Kích hoạt nút đặt lịch
+                // Kích hoạt nút Đặt Lịch Ca Dạy GS
                 if (submitButton) {
                     submitButton.disabled = false;
                     submitButton.classList.remove('bg-indigo-400');
@@ -429,7 +429,7 @@
         
         // Khởi tạo hệ thống
         init: function() {
-            console.log('Khởi tạo hệ thống đặt lịch');
+            console.log('Khởi tạo hệ thống Đặt Lịch Ca Dạy GS');
             
             // Tìm tab đầu tiên và kích hoạt
             const firstTabButton = document.querySelector('.tab-button');
@@ -440,13 +440,13 @@
                 }
             }
             
-            console.log('Đã khởi tạo xong hệ thống đặt lịch');
+            console.log('Đã khởi tạo xong hệ thống Đặt Lịch Ca Dạy GS');
         }
     };
     
     // Chạy khi trang đã tải xong
     document.addEventListener('DOMContentLoaded', function() {
-        console.log('Trang đã tải xong, khởi tạo hệ thống đặt lịch...');
+        console.log('Trang đã tải xong, khởi tạo hệ thống Đặt Lịch Ca Dạy GS...');
         bookingTabSystem.init();
     });
 </script>

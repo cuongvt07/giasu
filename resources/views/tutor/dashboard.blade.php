@@ -182,7 +182,7 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                     </svg>
                     <h3 class="mt-2 text-sm font-medium text-gray-900">Không có lịch dạy nào sắp tới</h3>
-                    <p class="mt-1 text-sm text-gray-500">Khi có học sinh đặt lịch, thông tin sẽ xuất hiện ở đây.</p>
+                    <p class="mt-1 text-sm text-gray-500">Khi có học sinh Đặt Lịch Ca Dạy GS, thông tin sẽ xuất hiện ở đây.</p>
                 </div>
                 @endforelse
             </div>
@@ -283,7 +283,7 @@
 
         <div class="mt-6">
             <a href="{{ route('tutor.schedule.index') }}" class="block w-full text-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                Quản lý lịch rảnh
+                Quản lý ca dạy
             </a>
         </div>
     </div>

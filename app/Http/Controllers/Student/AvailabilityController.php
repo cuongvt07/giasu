@@ -13,7 +13,7 @@ use Carbon\Carbon;
 class AvailabilityController extends Controller
 {
     /**
-     * Hiển thị danh sách lịch rảnh của học sinh
+     * Hiển thị danh sách ca dạy của học sinh
      */
     public function index()
     {
@@ -24,7 +24,7 @@ class AvailabilityController extends Controller
     }
 
     /**
-     * Hiển thị form tạo lịch rảnh mới
+     * Hiển thị form tạo ca dạy mới
      */
     public function create()
     {
@@ -32,12 +32,12 @@ class AvailabilityController extends Controller
     }
 
     /**
-     * Lưu lịch rảnh mới vào database
+     * Lưu ca dạy mới vào database
      */
     public function store(Request $request)
     {
         // Ghi log thông tin input 
-        Log::info('Thêm lịch rảnh mới cho học sinh: ', [
+        Log::info('Thêm ca dạy mới cho học sinh: ', [
             'student_id' => Auth::user()->student->id,
             'input' => $request->all()
         ]);
@@ -82,7 +82,7 @@ class AvailabilityController extends Controller
                 ->get();
 
             if ($existingSlots->count() > 0) {
-                Log::warning('Phát hiện lịch rảnh trùng lặp:', [
+                Log::warning('Phát hiện ca dạy trùng lặp:', [
                     'student_id' => $studentId,
                     'day' => $request->day_of_week,
                     'date' => $request->date,
@@ -91,7 +91,7 @@ class AvailabilityController extends Controller
                     'existing_slots' => $existingSlots
                 ]);
                 
-                return redirect()->back()->with('error', 'Bạn đã có lịch rảnh trong khoảng thời gian này!');
+                return redirect()->back()->with('error', 'Bạn đã có ca dạy trong khoảng thời gian này!');
             }
 
             // Tạo bản ghi mới
@@ -105,20 +105,20 @@ class AvailabilityController extends Controller
             $availability->status = $request->input('status', 'active');
             
             if ($availability->save()) {
-                Log::info('Đã thêm lịch rảnh thành công', [
+                Log::info('Đã thêm ca dạy thành công', [
                     'availability_id' => $availability->id, 
                     'student_id' => $studentId
                 ]);
-                return redirect()->route('student.availability.index')->with('success', 'Đã thêm lịch rảnh thành công!');
+                return redirect()->route('student.availability.index')->with('success', 'Đã thêm ca dạy thành công!');
             } else {
-                Log::error('Không thể lưu lịch rảnh', [
+                Log::error('Không thể lưu ca dạy', [
                     'student_id' => $studentId, 
                     'availability_data' => $availability->toArray()
                 ]);
-                return redirect()->back()->with('error', 'Có lỗi xảy ra khi lưu lịch rảnh!');
+                return redirect()->back()->with('error', 'Có lỗi xảy ra khi lưu ca dạy!');
             }
         } catch (\Exception $e) {
-            Log::error('Lỗi khi thêm lịch rảnh:', [
+            Log::error('Lỗi khi thêm ca dạy:', [
                 'message' => $e->getMessage(),
                 'trace' => $e->getTraceAsString()
             ]);
@@ -128,7 +128,7 @@ class AvailabilityController extends Controller
     }
 
     /**
-     * Hiển thị form sửa lịch rảnh
+     * Hiển thị form sửa ca dạy
      */
     public function edit($id)
     {
@@ -142,12 +142,12 @@ class AvailabilityController extends Controller
     }
 
     /**
-     * Cập nhật lịch rảnh vào database
+     * Cập nhật ca dạy vào database
      */
     public function update(Request $request, $id)
     {
         // Ghi log thông tin input
-        Log::info('Cập nhật lịch rảnh học sinh:', [
+        Log::info('Cập nhật ca dạy học sinh:', [
             'availability_id' => $id,
             'input' => $request->all()
         ]);
@@ -165,17 +165,17 @@ class AvailabilityController extends Controller
         try {
             $studentId = Auth::user()->student->id;
             
-            // Tìm lịch rảnh cần cập nhật
+            // Tìm ca dạy cần cập nhật
             $availability = StudentAvailability::where('id', $id)
                 ->where('student_id', $studentId)
                 ->first();
                 
             if (!$availability) {
-                Log::warning('Không tìm thấy lịch rảnh để cập nhật', [
+                Log::warning('Không tìm thấy ca dạy để cập nhật', [
                     'availability_id' => $id,
                     'student_id' => $studentId
                 ]);
-                return redirect()->back()->with('error', 'Không tìm thấy lịch rảnh');
+                return redirect()->back()->with('error', 'Không tìm thấy ca dạy');
             }
             
             // Định dạng thời gian
@@ -206,7 +206,7 @@ class AvailabilityController extends Controller
                 ->get();
 
             if ($existingSlots->count() > 0) {
-                Log::warning('Phát hiện lịch rảnh trùng lặp khi cập nhật:', [
+                Log::warning('Phát hiện ca dạy trùng lặp khi cập nhật:', [
                     'availability_id' => $id,
                     'student_id' => $studentId,
                     'day' => $request->day_of_week,
@@ -216,7 +216,7 @@ class AvailabilityController extends Controller
                     'existing_slots' => $existingSlots
                 ]);
                 
-                return redirect()->back()->with('error', 'Bạn đã có lịch rảnh trong khoảng thời gian này!');
+                return redirect()->back()->with('error', 'Bạn đã có ca dạy trong khoảng thời gian này!');
             }
 
             // Cập nhật thông tin
@@ -228,19 +228,19 @@ class AvailabilityController extends Controller
             $availability->status = $request->input('status', 'active');
             
             if ($availability->save()) {
-                Log::info('Đã cập nhật lịch rảnh học sinh thành công', [
+                Log::info('Đã cập nhật ca dạy học sinh thành công', [
                     'availability_id' => $availability->id
                 ]);
-                return redirect()->route('student.availability.index')->with('success', 'Đã cập nhật lịch rảnh thành công!');
+                return redirect()->route('student.availability.index')->with('success', 'Đã cập nhật ca dạy thành công!');
             } else {
-                Log::error('Không thể cập nhật lịch rảnh học sinh', [
+                Log::error('Không thể cập nhật ca dạy học sinh', [
                     'availability_id' => $id,
                     'availability_data' => $availability->toArray()
                 ]);
-                return redirect()->back()->with('error', 'Có lỗi xảy ra khi cập nhật lịch rảnh!');
+                return redirect()->back()->with('error', 'Có lỗi xảy ra khi cập nhật ca dạy!');
             }
         } catch (\Exception $e) {
-            Log::error('Lỗi khi cập nhật lịch rảnh học sinh:', [
+            Log::error('Lỗi khi cập nhật ca dạy học sinh:', [
                 'availability_id' => $id,
                 'message' => $e->getMessage(),
                 'trace' => $e->getTraceAsString()
@@ -251,12 +251,12 @@ class AvailabilityController extends Controller
     }
 
     /**
-     * Xóa lịch rảnh
+     * Xóa ca dạy
      */
     public function destroy($id)
     {
         // Ghi log thông tin
-        Log::info('Đang thực hiện xóa lịch rảnh học sinh', [
+        Log::info('Đang thực hiện xóa ca dạy học sinh', [
             'availability_id' => $id,
             'student_id' => Auth::user()->student->id
         ]);
@@ -264,20 +264,20 @@ class AvailabilityController extends Controller
         try {
             $studentId = Auth::user()->student->id;
             
-            // Tìm lịch rảnh cần xóa
+            // Tìm ca dạy cần xóa
             $availability = StudentAvailability::where('id', $id)
                 ->where('student_id', $studentId)
                 ->first();
             
             if (!$availability) {
-                Log::warning('Không tìm thấy lịch rảnh học sinh để xóa', [
+                Log::warning('Không tìm thấy ca dạy học sinh để xóa', [
                     'availability_id' => $id,
                     'student_id' => $studentId
                 ]);
-                return redirect()->back()->with('error', 'Không tìm thấy lịch rảnh');
+                return redirect()->back()->with('error', 'Không tìm thấy ca dạy');
             }
             
-            // Kiểm tra xem lịch rảnh có đang được sử dụng không
+            // Kiểm tra xem ca dạy có đang được sử dụng không
             $hasBookings = Booking::where('student_id', $studentId)
                 ->where('day_of_week', $availability->day_of_week)
                 ->where('status', '!=', 'cancelled')
@@ -296,28 +296,28 @@ class AvailabilityController extends Controller
             }
             
             if ($hasBookings->exists()) {
-                Log::warning('Không thể xóa lịch rảnh học sinh vì đang có lịch học', [
+                Log::warning('Không thể xóa ca dạy học sinh vì đang có lịch học', [
                     'availability_id' => $id,
                     'related_bookings' => $hasBookings->get()->pluck('id')
                 ]);
                 
-                return redirect()->back()->with('error', 'Không thể xóa lịch rảnh đang được sử dụng cho buổi học');
+                return redirect()->back()->with('error', 'Không thể xóa ca dạy đang được sử dụng cho buổi học');
             }
             
             // Thực hiện xóa
             if ($availability->delete()) {
-                Log::info('Đã xóa lịch rảnh học sinh thành công', [
+                Log::info('Đã xóa ca dạy học sinh thành công', [
                     'availability_id' => $id
                 ]);
-                return redirect()->route('student.availability.index')->with('success', 'Đã xóa lịch rảnh thành công!');
+                return redirect()->route('student.availability.index')->with('success', 'Đã xóa ca dạy thành công!');
             } else {
-                Log::error('Không thể xóa lịch rảnh học sinh', [
+                Log::error('Không thể xóa ca dạy học sinh', [
                     'availability_id' => $id
                 ]);
-                return redirect()->back()->with('error', 'Có lỗi xảy ra khi xóa lịch rảnh!');
+                return redirect()->back()->with('error', 'Có lỗi xảy ra khi xóa ca dạy!');
             }
         } catch (\Exception $e) {
-            Log::error('Lỗi khi xóa lịch rảnh học sinh:', [
+            Log::error('Lỗi khi xóa ca dạy học sinh:', [
                 'availability_id' => $id,
                 'message' => $e->getMessage(),
                 'trace' => $e->getTraceAsString()
@@ -328,12 +328,12 @@ class AvailabilityController extends Controller
     }
 
     /**
-     * Thêm nhanh nhiều lịch rảnh cùng lúc
+     * Thêm nhanh nhiều ca dạy cùng lúc
      */
     public function quickStore(Request $request)
     {
         // Ghi log thông tin
-        Log::info('Thêm nhanh lịch rảnh mới cho học sinh:', [
+        Log::info('Thêm nhanh ca dạy mới cho học sinh:', [
             'student_id' => Auth::user()->student->id,
             'input' => $request->all()
         ]);
@@ -374,7 +374,7 @@ class AvailabilityController extends Controller
                     ->whereDate('date', $date)
                     ->delete();
                 
-                Log::info('Đã xóa lịch rảnh học sinh trùng lặp', [
+                Log::info('Đã xóa ca dạy học sinh trùng lặp', [
                     'student_id' => $studentId,
                     'date' => $date
                 ]);
@@ -439,14 +439,14 @@ class AvailabilityController extends Controller
 
                     if ($availability->save()) {
                         $count++;
-                        Log::info('Đã thêm lịch rảnh học sinh thành công', [
+                        Log::info('Đã thêm ca dạy học sinh thành công', [
                             'availability_id' => $availability->id, 
                             'day' => $day,
                             'time_slot' => $timeSlot
                         ]);
                     } else {
                         $errors[] = "Không thể lưu lịch cho {$day}, {$timeSlot}";
-                        Log::error('Không thể lưu lịch rảnh học sinh', [
+                        Log::error('Không thể lưu ca dạy học sinh', [
                             'day' => $day,
                             'time_slot' => $timeSlot
                         ]);
@@ -456,14 +456,14 @@ class AvailabilityController extends Controller
 
             if ($count > 0) {
                 return redirect()->route('student.availability.index')
-                    ->with('success', "Đã thêm $count lịch rảnh thành công!" . 
+                    ->with('success', "Đã thêm $count ca dạy thành công!" . 
                         (count($errors) > 0 ? " Có " . count($errors) . " lỗi xảy ra." : ""));
             } else {
                 return redirect()->back()
-                    ->with('error', 'Không thể thêm lịch rảnh. ' . implode(', ', $errors));
+                    ->with('error', 'Không thể thêm ca dạy. ' . implode(', ', $errors));
             }
         } catch (\Exception $e) {
-            Log::error('Lỗi khi thêm nhanh lịch rảnh học sinh:', [
+            Log::error('Lỗi khi thêm nhanh ca dạy học sinh:', [
                 'message' => $e->getMessage(),
                 'trace' => $e->getTraceAsString()
             ]);

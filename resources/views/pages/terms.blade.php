@@ -70,7 +70,7 @@
                         <h2 class="text-xl font-semibold text-gray-900 mt-8 mb-4">4. Học sinh và phụ huynh</h2>
                         <p class="mb-4">
                             <strong>4.1. Quyền và trách nhiệm</strong><br>
-                            Khi sử dụng Nền tảng để tìm và đặt lịch với gia sư, bạn đồng ý:
+                            Khi sử dụng Nền tảng để tìm và Đặt Lịch Ca Dạy GS với gia sư, bạn đồng ý:
                         </p>
                         <ul class="list-disc ml-6 mb-4">
                             <li>Cung cấp thông tin chính xác về nhu cầu học tập và mong đợi</li>
@@ -87,7 +87,7 @@
                             <li>Hủy trước 24 giờ: hoàn tiền 100%</li>
                             <li>Hủy trong vòng 12-24 giờ: hoàn tiền 50%</li>
                             <li>Hủy trong vòng dưới 12 giờ: không hoàn tiền</li>
-                            <li>Trường hợp gia sư hủy buổi học: hoàn tiền 100% hoặc đặt lịch lại mà không mất phí</li>
+                            <li>Trường hợp gia sư hủy buổi học: hoàn tiền 100% hoặc Đặt Lịch Ca Dạy GS lại mà không mất phí</li>
                         </ul>
                         
                         <h2 class="text-xl font-semibold text-gray-900 mt-8 mb-4">5. Thanh toán</h2>

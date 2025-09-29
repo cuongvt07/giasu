@@ -55,7 +55,7 @@
                         <h2 class="text-xl font-semibold text-gray-900 mt-8 mb-4">4. Chia sẻ thông tin</h2>
                         <p class="mb-3">Chúng tôi có thể chia sẻ thông tin của bạn trong các trường hợp sau:</p>
                         <ul class="list-disc ml-6 mb-4">
-                            <li><strong>Giữa gia sư và học sinh:</strong> Khi học sinh đặt lịch với gia sư, chúng tôi sẽ chia sẻ thông tin liên hệ và các chi tiết cần thiết khác.</li>
+                            <li><strong>Giữa gia sư và học sinh:</strong> Khi học sinh Đặt Lịch Ca Dạy GS với gia sư, chúng tôi sẽ chia sẻ thông tin liên hệ và các chi tiết cần thiết khác.</li>
                             <li><strong>Với nhà cung cấp dịch vụ:</strong> Chúng tôi có thể chia sẻ thông tin với các nhà cung cấp dịch vụ bên thứ ba giúp chúng tôi cung cấp dịch vụ (ví dụ: xử lý thanh toán, lưu trữ đám mây).</li>
                             <li><strong>Theo yêu cầu pháp lý:</strong> Chúng tôi có thể tiết lộ thông tin nếu được yêu cầu bởi pháp luật hoặc quy trình pháp lý.</li>
                             <li><strong>Với sự đồng ý của bạn:</strong> Chúng tôi có thể chia sẻ thông tin với bên thứ ba khi bạn cấp quyền rõ ràng cho chúng tôi.</li>

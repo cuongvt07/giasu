@@ -44,7 +44,7 @@
                             </div>
                             <div class="bg-indigo-50 p-6 rounded-lg">
                                 <h3 class="font-bold text-lg mb-2 text-indigo-700">Sự tiện lợi</h3>
-                                <p>Nền tảng của chúng tôi giúp việc tìm kiếm, đặt lịch và thanh toán cho gia sư trở nên đơn giản và thuận tiện.</p>
+                                <p>Nền tảng của chúng tôi giúp việc tìm kiếm, Đặt Lịch Ca Dạy GS và thanh toán cho gia sư trở nên đơn giản và thuận tiện.</p>
                             </div>
                             <div class="bg-indigo-50 p-6 rounded-lg">
                                 <h3 class="font-bold text-lg mb-2 text-indigo-700">Sự tin cậy</h3>
