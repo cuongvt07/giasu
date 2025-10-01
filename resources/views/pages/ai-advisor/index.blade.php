@@ -17,7 +17,7 @@
         .recommendation-section {
             transition: all 0.5s ease;
         }
-        
+
         .recommendation-section.highlight {
             box-shadow: 0 0 0 5px rgba(79, 70, 229, 0.4);
         }
@@ -27,6 +27,7 @@
                 opacity: 0;
                 transform: translateY(10px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -41,9 +42,11 @@
             0% {
                 box-shadow: 0 0 0 0 rgba(79, 70, 229, 0.4);
             }
+
             70% {
                 box-shadow: 0 0 0 10px rgba(79, 70, 229, 0);
             }
+
             100% {
                 box-shadow: 0 0 0 0 rgba(79, 70, 229, 0);
             }
@@ -52,15 +55,15 @@
 @endsection
 
 @section('content')
-    <div class="min-h-screen bg-gray-50">
-        <!-- Hero Section với gradient đẹp mắt -->
+    <div class="bg-gray-50">
+        <!-- Hero Section -->
         <div class="relative bg-gradient-to-r from-blue-600 to-indigo-600 py-16">
             <div class="absolute inset-0 bg-black/10"></div>
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
                 <div class="text-center">
-                    <h1 class="text-4xl tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-6xl">
-                        <span class="block xl:inline">Tìm Gia Sư</span>
-                        <span class="block text-indigo-600 xl:inline">Phù Hợp Nhất</span>
+                    <h1 class="text-4xl tracking-tight font-extrabold text-white sm:text-5xl md:text-6xl">
+                        <span class="block">Hệ Thống Chatbox AI</span>
+                        <span class="block">Tư Vấn Thông Minh</span>
                     </h1>
                 </div>
             </div>
@@ -77,9 +80,12 @@
                                 <!-- Welcome Message -->
                                 <div class="flex items-start space-x-4">
                                     <div class="flex-shrink-0">
-                                        <div class="h-10 w-10 rounded-xl bg-gradient-to-r from-blue-500 to-indigo-500 flex items-center justify-center">
-                                            <svg class="h-6 w-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                                        <div
+                                            class="h-10 w-10 rounded-xl bg-gradient-to-r from-blue-500 to-indigo-500 flex items-center justify-center">
+                                            <svg class="h-6 w-6 text-white" fill="none" stroke="currentColor"
+                                                viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                                             </svg>
                                         </div>
                                     </div>
@@ -92,27 +98,45 @@
                                                 Tôi có thể giúp bạn:
                                                 <ul class="mt-2 space-y-2">
                                                     <li class="flex items-center text-sm">
-                                                        <svg class="h-5 w-5 text-blue-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                                        <svg class="h-5 w-5 text-blue-500 mr-2" fill="none"
+                                                            stroke="currentColor" viewBox="0 0 24 24">
+                                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                                stroke-width="2"
+                                                                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                                                         </svg>
                                                         Tìm gia sư phù hợp với nhu cầu của bạn
                                                     </li>
                                                     <li class="flex items-center text-sm">
-                                                        <svg class="h-5 w-5 text-blue-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                                        <svg class="h-5 w-5 text-blue-500 mr-2" fill="none"
+                                                            stroke="currentColor" viewBox="0 0 24 24">
+                                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                                stroke-width="2"
+                                                                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                                                         </svg>
-                                                        Tư vấn phương pháp học tập hiệu quả
+                                                        Tìm tin đăng tuyển gia sư/lớp dạy
                                                     </li>
                                                     <li class="flex items-center text-sm">
-                                                        <svg class="h-5 w-5 text-blue-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                                        <svg class="h-5 w-5 text-blue-500 mr-2" fill="none"
+                                                            stroke="currentColor" viewBox="0 0 24 24">
+                                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                                stroke-width="2"
+                                                                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                                                         </svg>
-                                                        Gợi ý lộ trình học tập phù hợp
+                                                        Hướng dẫn giải bài tập
+                                                    </li>
+                                                    <li class="flex items-center text-sm">
+                                                        <svg class="h-5 w-5 text-blue-500 mr-2" fill="none"
+                                                            stroke="currentColor" viewBox="0 0 24 24">
+                                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                                stroke-width="2"
+                                                                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                                        </svg>
+                                                        Hỗ trợ và tư vấn
                                                     </li>
                                                 </ul>
                                             </div>
                                             <div class="mt-4 text-sm text-gray-600">
-                                                Hãy chia sẻ với tôi về nhu cầu học tập của bạn!
+                                                Hãy chia sẻ với tôi về nhu cầu của bạn!
                                             </div>
                                         </div>
                                     </div>
@@ -124,16 +148,22 @@
                                 <form id="chat-form" class="flex items-center space-x-3" onsubmit="return false;">
                                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                     <div class="flex-1 min-w-0">
-                                        <input type="text" id="message" name="message" class="block w-full rounded-xl border-0 px-4 py-3 bg-gray-50 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-500 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6" placeholder="Nhập tin nhắn của bạn...">
+                                        <input type="text" id="message" name="message"
+                                            class="block w-full rounded-xl border-0 px-4 py-3 bg-gray-50 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-500 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
+                                            placeholder="Nhập tin nhắn của bạn...">
                                     </div>
-                                    <button type="submit" class="inline-flex items-center justify-center rounded-xl bg-blue-600 px-4 py-3 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 transition-all duration-200">
+                                    <button type="submit"
+                                        class="inline-flex items-center justify-center rounded-xl bg-blue-600 px-4 py-3 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 transition-all duration-200">
                                         <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
                                         </svg>
                                     </button>
-                                    <button type="button" id="summarize-btn" class="inline-flex items-center justify-center rounded-xl bg-green-600 px-4 py-3 text-sm font-semibold text-white shadow-sm hover:bg-green-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600 transition-all duration-200">
+                                    <button type="button" id="summarize-btn"
+                                        class="inline-flex items-center justify-center rounded-xl bg-green-600 px-4 py-3 text-sm font-semibold text-white shadow-sm hover:bg-green-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600 transition-all duration-200">
                                         <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
                                         </svg>
                                         <span class="ml-2">Tổng kết</span>
                                     </button>
@@ -147,17 +177,21 @@
                 <div class="lg:col-span-1">
                     <div class="bg-white rounded-2xl shadow-lg overflow-hidden recommendation-section">
                         <div class="p-6">
-                            <h2 class="text-lg font-semibold text-gray-900 mb-4">Đề Xuất Gia Sư</h2>
+                            <h2 class="text-lg font-semibold text-gray-900 mb-4">Kết Quả</h2>
                             <div id="recommendations" class="space-y-4">
                                 <!-- Empty State -->
                                 <div class="text-center py-8 no-results">
-                                    <div class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-blue-100 mb-4">
-                                        <svg class="h-6 w-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                                    <div
+                                        class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-blue-100 mb-4">
+                                        <svg class="h-6 w-6 text-blue-600" fill="none" stroke="currentColor"
+                                            viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
                                         </svg>
                                     </div>
-                                    <h3 class="text-sm font-medium text-gray-900">Chưa có đề xuất</h3>
-                                    <p class="mt-1 text-sm text-gray-500">Hãy bắt đầu trò chuyện để nhận đề xuất phù hợp.</p>
+                                    <h3 class="text-sm font-medium text-gray-900">Chưa có kết quả</h3>
+                                    <p class="mt-1 text-sm text-gray-500">Hãy bắt đầu trò chuyện để nhận kết quả phù hợp.
+                                    </p>
                                 </div>
                             </div>
                         </div>
@@ -170,12 +204,16 @@
 
 @push('scripts')
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // Function to get CSRF token
+    document.addEventListener('DOMContentLoaded', function () {
+
+        window.App = {
+            user: @json($user),
+            tutorId: @json($tutorId),
+        };
         function getCSRFToken() {
             return document.querySelector('meta[name="csrf-token"]').getAttribute('content');
         }
-        
+
         // Reset conversation khi load trang
         fetch("{{ route('ai-advisor.reset') }}", {
             method: 'POST',
@@ -185,14 +223,14 @@
                 'Accept': 'application/json'
             }
         })
-        .then(response => response.json())
-        .then(data => {
-            console.log("Conversation reset successfully");
-        })
-        .catch(error => {
-            console.error("Error resetting conversation:", error);
-        });
-        
+            .then(response => response.json())
+            .then(data => {
+                console.log("Conversation reset successfully");
+            })
+            .catch(error => {
+                console.error("Error resetting conversation:", error);
+            });
+
         const chatForm = document.getElementById('chat-form');
         const chatMessages = document.getElementById('chat-messages');
         const messageInput = document.getElementById('message');
@@ -204,7 +242,6 @@
             return;
         }
 
-        // Hàm hiển thị loading
         function showLoading() {
             const loadingDiv = document.createElement('div');
             loadingDiv.className = 'flex items-start space-x-4 animate-fade-in loading-message';
@@ -237,7 +274,6 @@
             loadingMessages.forEach(msg => msg.remove());
         }
 
-        // Hàm hiển thị tin nhắn
         function appendMessage(message, isUser = false) {
             const messageDiv = document.createElement('div');
             messageDiv.className = 'flex items-start space-x-4 animate-fade-in';
@@ -254,7 +290,7 @@
                 </div>
                 <div class="flex-1">
                     <div class="bg-gray-50 rounded-2xl p-4 shadow-sm">
-                        <div class="text-gray-900">${message}</div>
+                        <div class="text-gray-900 whitespace-pre-line">${message}</div>
                     </div>
                 </div>
             `;
@@ -263,21 +299,16 @@
             chatMessages.scrollTop = chatMessages.scrollHeight;
         }
 
-        // Xử lý gửi tin nhắn
-        chatForm.addEventListener('submit', async function(e) {
+        chatForm.addEventListener('submit', async function (e) {
             e.preventDefault();
             e.stopPropagation();
-            
-            console.log('Form submitted');
-            
+
             const message = messageInput.value.trim();
             if (!message) return false;
 
-            // Hiển thị tin nhắn người dùng
             appendMessage(message, true);
             messageInput.value = '';
 
-            // Hiển thị loading
             const loadingElement = showLoading();
 
             try {
@@ -295,25 +326,38 @@
                     })
                 });
 
-                console.log('Response status:', response.status);
-                
                 if (!response.ok) {
                     const data = await response.json().catch(() => ({}));
-                    console.error('Error response:', data);
                     throw new Error(data.message || 'Network response was not ok');
                 }
 
-                const contentType = response.headers.get('content-type');
-                if (!contentType || !contentType.includes('application/json')) {
-                    console.error('Invalid response type:', contentType);
-                    throw new Error('Invalid response type');
-                }
-
                 const data = await response.json();
-                console.log('Response data:', data);
 
                 if (data.message) {
                     appendMessage(data.message, false);
+                }
+
+                if (data.recommendations && data.recommendations.length > 0) {
+                    updateRecommendations(data.recommendations);
+                    summarizeBtn.style.display = 'none';
+                } else {
+                    summarizeBtn.style.display = 'none';
+                    fetch('/ai-advisor/chat', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': getCSRFToken(),
+                            'Accept': 'application/json',
+                            'X-Requested-With': 'XMLHttpRequest'
+                        },
+                        body: JSON.stringify({ type: 'summarize' })
+                    })
+                        .then(res => res.json())
+                        .then(sumData => {
+                            if (sumData.recommendations && sumData.recommendations.length > 0) {
+                                updateRecommendations(sumData.recommendations);
+                            }
+                        });
                 }
             } catch (error) {
                 console.error('Error:', error);
@@ -328,59 +372,11 @@
             return false;
         });
 
-// Xử lý nút tổng kết
-summarizeBtn.addEventListener('click', async function() {
-    // Xóa danh sách gia sư cũ
-    updateRecommendations([]);
+        summarizeBtn.addEventListener('click', async function () {
+            updateRecommendations([]);
 
-    // Kiểm tra xem đã có kết quả hiển thị chưa
-    const existingRecommendationElements = document.querySelectorAll('.recommendation-card');
-    if (existingRecommendationElements.length > 0) {
-        // Nếu đã có kết quả, chỉ cần scroll để hiển thị kết quả đó
-        const recommendationSection = document.querySelector('.recommendation-section');
-        if (recommendationSection) {
-            recommendationSection.classList.add('highlight');
-            recommendationSection.scrollIntoView({ behavior: 'smooth' });
-            setTimeout(() => {
-                recommendationSection.classList.remove('highlight');
-            }, 3000);
-        }
-        return;
-    }
-
-    const loadingElement = showLoading();
-    appendMessage("Đang tìm kiếm gia sư phù hợp... Vui lòng đợi trong giây lát.", false);
-
-    try {
-        const token = getCSRFToken();
-        if (!token) {
-            throw new Error('CSRF token not found');
-        }
-
-        const response = await fetch('/ai-advisor/chat', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': token,
-                'Accept': 'application/json',
-                'X-Requested-With': 'XMLHttpRequest'
-            },
-            body: JSON.stringify({
-                type: 'summarize'
-            })
-        });
-
-        const data = await response.json();
-        console.log('Summarize response:', data);
-
-        if (data.summary) {
-            appendMessage(data.summary, false);
-        }
-
-        if (data.recommendations && data.recommendations.length > 0) {
-            // Remove loading class and show recommendations
-            console.log(`Found ${data.recommendations.length} recommendations`);
-            try {
+            const existingRecommendationElements = document.querySelectorAll('.recommendation-card');
+            if (existingRecommendationElements.length > 0) {
                 const recommendationSection = document.querySelector('.recommendation-section');
                 if (recommendationSection) {
                     recommendationSection.classList.add('highlight');
@@ -389,132 +385,309 @@ summarizeBtn.addEventListener('click', async function() {
                         recommendationSection.classList.remove('highlight');
                     }, 3000);
                 }
-            } catch (e) {
-                console.error('Error highlighting recommendation section:', e);
+                return;
+            }
+
+            const loadingElement = showLoading();
+            appendMessage("Đang tìm kiếm kết quả phù hợp... Vui lòng đợi trong giây lát.", false);
+
+            try {
+                const token = getCSRFToken();
+                if (!token) {
+                    throw new Error('CSRF token not found');
+                }
+
+                const response = await fetch('/ai-advisor/chat', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': token,
+                        'Accept': 'application/json',
+                        'X-Requested-With': 'XMLHttpRequest'
+                    },
+                    body: JSON.stringify({
+                        type: 'summarize'
+                    })
+                });
+
+                const data = await response.json();
+
+                if (data.summary) {
+                    appendMessage(data.summary, false);
+                }
+
+                if (data.recommendations && data.recommendations.length > 0) {
+                    const recommendationSection = document.querySelector('.recommendation-section');
+                    if (recommendationSection) {
+                        recommendationSection.classList.add('highlight');
+                        recommendationSection.scrollIntoView({ behavior: 'smooth' });
+                        setTimeout(() => {
+                            recommendationSection.classList.remove('highlight');
+                        }, 3000);
+                    }
+
+                    updateRecommendations(data.recommendations);
+                    appendMessage(`Đã tìm thấy ${data.recommendations.length} kết quả phù hợp với yêu cầu của bạn. Vui lòng xem bên phải.`, false);
+                } else {
+                    appendMessage("Không tìm thấy kết quả phù hợp trong hệ thống. Vui lòng thử lại với yêu cầu khác.", false);
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                appendMessage('Xin lỗi, đã có lỗi xảy ra khi tổng kết.', false);
+            } finally {
+                if (loadingElement) {
+                    loadingElement.remove();
+                }
+                removeLoading();
+            }
+        });
+
+        function updateRecommendations(recommendations) {
+            const recommendationsDiv = document.getElementById('recommendations');
+            if (!recommendationsDiv) {
+                console.error('Element #recommendations not found');
+                return;
+            }
+            recommendationsDiv.innerHTML = '';
+
+            if (!recommendations || recommendations.length === 0) {
+                recommendationsDiv.innerHTML = `
+                    <div class="text-center p-8">
+                        <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        <h3 class="mt-2 text-sm font-medium text-gray-900">Không tìm thấy kết quả phù hợp</h3>
+                        <p class="mt-1 text-sm text-gray-500">Vui lòng cung cấp thêm thông tin về nhu cầu của bạn.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            // Helper functions for rendering
+            function renderJobPost(item, currentTutorId) {
+                const isLoggedIn = !!window.App?.user;
+                const isTutor = !!currentTutorId;
+                const applied = Array.isArray(item.applied_tutor_ids) && item.applied_tutor_ids.includes(currentTutorId);
+
+                return `
+                    <div class="bg-white border border-gray-200 rounded-2xl shadow-sm hover:shadow-md transition p-6 flex flex-col">
+                        <div class="flex items-center justify-between mb-3">
+                            <h3 class="text-lg font-bold text-gray-900 font-serif">
+                                ${item.subject || 'Môn học'} - ${item.class_level || 'Cấp học'}
+                            </h3>
+                            <span class="px-3 py-1 text-xs rounded-full ${
+                                item.mode === 'online' ? 'bg-blue-50 text-blue-600' : 'bg-green-50 text-green-600'
+                            }">
+                                ${item.mode === 'online' ? 'Online' : 'Offline'}
+                            </span>
+                        </div>
+
+                        <p class="text-gray-600 text-sm mb-4 line-clamp-2 italic">
+                            "${item.goal || item.title || ''}"
+                        </p>
+
+                        <dl class="grid grid-cols-2 gap-x-4 gap-y-2 text-sm text-gray-700 flex-grow">
+                            <div><dt class="font-medium">Số buổi/tuần:</dt><dd>${item.sessions_per_week || 'N/A'} buổi</dd></div>
+                            <div><dt class="font-medium">Thời lượng:</dt><dd>${item.session_length_min || 'N/A'} phút</dd></div>
+                            <div>
+                                <dt class="font-medium">Ngân sách:</dt>
+                                <dd>${
+                                    item.budget_min
+                                        ? `${item.budget_min.toLocaleString()} - ${item.budget_max.toLocaleString()} / ${item.budget_unit || 'buổi'}`
+                                        : 'Thoả thuận'
+                                }</dd>
+                            </div>
+                            ${
+                                item.deadline_at
+                                    ? `<div><dt class="font-medium">Hạn chót:</dt><dd>${new Date(item.deadline_at).toLocaleDateString('vi-VN')}</dd></div>`
+                                    : ''
+                            }
+                        </dl>
+
+                        <div class="mt-6 flex justify-between items-center border-t pt-4 gap-3">
+                            <a href="/tutor-posts/${item.id}" class="text-sm font-medium text-indigo-600 hover:underline">
+                                Xem chi tiết
+                            </a>
+                            ${
+                                !isLoggedIn
+                                    ? `<a href="/login" class="text-sm text-gray-500 hover:underline">Đăng nhập để ứng tuyển</a>`
+                                    : !isTutor
+                                        ? `<span class="text-sm text-gray-500">Chỉ dành cho gia sư</span>`
+                                        : applied
+                                            ? `<span class="inline-flex items-center px-3 py-1.5 rounded-lg bg-gray-200 text-gray-600 text-sm shadow">
+                                                Đã ứng tuyển
+                                            </span>`
+                                            : `<button
+                                                onclick="applyToJob(${item.id})"
+                                                class="inline-flex items-center px-3 py-1.5 rounded-lg bg-gradient-to-r from-indigo-600 to-purple-600 text-white hover:from-indigo-700 hover:to-purple-700 text-sm shadow">
+                                                Ứng tuyển
+                                            </button>`
+                            }
+                        </div>
+                    </div>
+                `;
+            }
+
+            // Hàm gọi AJAX ứng tuyển
+            function applyToJob(jobId) {
+                if (!window.App?.user) {
+                    alert('Vui lòng đăng nhập để ứng tuyển.');
+                    window.location.href = '/login';
+                    return;
+                }
+
+                if (!window.App?.tutorId) {
+                    alert('Chỉ tài khoản gia sư mới có thể ứng tuyển.');
+                    return;
+                }
+
+                fetch('/tutors/apply', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                    },
+                    body: JSON.stringify({ job_id: jobId }),
+                })
+                .then(res => {
+                    if (!res.ok) throw new Error('Ứng tuyển thất bại');
+                    return res.json();
+                })
+                .then(data => {
+                    alert('Ứng tuyển thành công!');
+                    window.location.reload();
+                })
+                .catch(err => {
+                    console.error(err);
+                    alert('Đã xảy ra lỗi khi ứng tuyển. Vui lòng thử lại sau.');
+                });
+            }
+            window.applyToJob = applyToJob;
+
+            function renderSupport(item) {
+                return `
+                    <div class="flex items-center space-x-4">
+                        <div class="flex-shrink-0">
+                            <img src="${item.avatar || '/images/support.png'}" alt="Support" class="h-12 w-12 rounded-lg object-cover">
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <h4 class="text-sm font-semibold text-gray-900">${item.name}</h4>
+                        </div>
+                    </div>
+                    <div class="mt-3 text-sm text-gray-600 space-y-2">
+                        ${item.reason}
+                    </div>
+                `;
+            }
+
+            function renderAcademicAnswer(item) {
+                // Xác định avatar dựa trên môn học
+                const subjectAvatars = {
+                    'Toán': '/images/ai-math.png',
+                    'Lý': '/images/ai-physics.png',
+                    'Hóa': '/images/ai-chemistry.png',
+                    'Văn': '/images/ai-literature.png',
+                    'Anh': '/images/ai-english.png',
+                    'Lịch sử': '/images/ai-history.png',
+                    'khác': '/images/ai-academic.png'
+                };
+                const avatar = item.avatar || subjectAvatars[item.subject || 'khác'] || '/images/ai-academic.png';
+
+                // Xử lý nội dung reason để hỗ trợ Markdown và LaTeX
+                let reason = item.reason || '';
+                // Thay thế ký hiệu LaTeX (ví dụ: \(...\) hoặc $...$) để MathJax render
+                reason = reason.replace(/\\\((.*?)\\\)/g, '<span class="mathjax">\\($1\\)</span>');
+                // Chuyển các bước giải (1., 2., v.v.) thành danh sách HTML
+                reason = reason.replace(/^\d+\.\s/gm, '<li>').replace(/<li>(.*?)(<br>|$)/g, '<li>$1</li>');
+                // Thay thế các thẻ Markdown cơ bản (in đậm **...**)
+                reason = reason.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+                // Thay thế xuống dòng thành <br> để giữ định dạng
+                reason = reason.replace(/\n/g, '<br>');
+
+                // Tạo HTML với giao diện cải tiến
+                return `
+                    <div class="flex items-start space-x-4 p-4 bg-gray-50 rounded-lg shadow-sm">
+                        <div class="flex-shrink-0">
+                            <img src="${avatar}" alt="${item.subject || 'Academic'} Answer" class="h-12 w-12 rounded-lg object-cover">
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <h4 class="text-sm font-semibold text-gray-900">${item.name || 'AI Trả Lời Học Thuật'}</h4>
+                            <div class="mt-2 text-sm text-gray-600 whitespace-pre-line">
+                                ${reason}
+                            </div>
+                        </div>
+                    </div>
+                `;
             }
             
-            updateRecommendations(data.recommendations);
-            appendMessage(`Đã tìm thấy ${data.recommendations.length} gia sư phù hợp với yêu cầu của bạn. Vui lòng xem bên phải.`, false);
-        } else {
-            console.log('No recommendations found');
-            appendMessage("Không tìm thấy gia sư phù hợp trong hệ thống. Vui lòng thử lại với yêu cầu khác.", false);
-        }
-    } catch (error) {
-        console.error('Error:', error);
-        appendMessage('Xin lỗi, đã có lỗi xảy ra khi tổng kết.', false);
-    } finally {
-        if (loadingElement) {
-            loadingElement.remove();
-        }
-        removeLoading();
-    }
-});
-
-// Hàm cập nhật đề xuất gia sư
-function updateRecommendations(recommendations) {
-    const recommendationsDiv = document.getElementById('recommendations');
-    if (!recommendationsDiv) {
-        console.error('Element #recommendations not found');
-        return;
-    }
-    
-    // Xóa nội dung cũ
-    recommendationsDiv.innerHTML = '';
-
-    if (!recommendations || recommendations.length === 0) {
-        recommendationsDiv.innerHTML = `
-            <div class="text-center p-8">
-                <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-                <h3 class="mt-2 text-sm font-medium text-gray-900">Không tìm thấy gia sư phù hợp</h3>
-                <p class="mt-1 text-sm text-gray-500">Vui lòng cung cấp thêm thông tin về nhu cầu của bạn.</p>
-            </div>
-        `;
-        return;
-    }
-
-    console.log('Rendering recommendations:', recommendations);
-
-    // Cập nhật tiêu đề section
-    try {
-        const recommendationTitle = document.querySelector('.recommendation-section h2');
-        if (recommendationTitle) {
-            recommendationTitle.textContent = `Đề Xuất Gia Sư (${recommendations.length})`;
-            recommendationTitle.classList.add('highlight-result');
-            setTimeout(() => {
-                recommendationTitle.classList.remove('highlight-result');
-            }, 3000);
-        }
-    } catch (e) {
-        console.log('Error updating recommendation title:', e);
-    }
-
-    try {
-        recommendations.forEach((tutor, index) => {
-            const tutorCard = document.createElement('div');
-            tutorCard.className = 'bg-white p-4 rounded-xl shadow-md hover:shadow-lg transition-all duration-200 recommendation-card mb-4';
-            tutorCard.style.setProperty('--index', index);
-            
-            const matchingPercent = Math.round(tutor.matching_score * 100);
-            const formattedPrice = new Intl.NumberFormat('vi-VN', { 
-                style: 'currency', 
-                currency: 'VND' 
-            }).format(tutor.hourly_rate);
-
-            tutorCard.innerHTML = `
-                <div class="flex items-center space-x-4">
-                    <img src="${tutor.avatar || '/images/default-avatar.png'}" 
-                         alt="${tutor.name}" 
-                         class="h-12 w-12 rounded-full object-cover">
-                    <div class="flex-1 min-w-0">
-                        <p class="text-sm font-medium text-gray-900 truncate">
-                            ${tutor.name}
-                        </p>
-                        <p class="text-sm text-gray-500 truncate">
-                            ${tutor.subjects ? tutor.subjects.join(', ') : ''}
-                        </p>
+            function renderTutor(item) {
+                const matchingPercent = Math.round(item.matching_score * 100);
+                const formattedPrice = new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(item.hourly_rate);
+                return `
+                    <div class="flex items-center space-x-4">
+                        <div class="flex-shrink-0">
+                            <img src="${item.avatar || '/images/default-avatar.png'}" alt="${item.name}" class="h-12 w-12 rounded-lg object-cover">
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <h4 class="text-sm font-semibold text-gray-900 truncate">${item.name}</h4>
+                            <p class="text-sm text-blue-600 mt-1">
+                                ${formattedPrice}/giờ
+                                <span class="ml-2 text-green-600">${matchingPercent}% phù hợp</span>
+                            </p>
+                        </div>
                     </div>
-                    <div class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${matchingPercent >= 90 ? 'bg-green-100 text-green-800' : 'bg-blue-100 text-blue-800'}">
-                        ${matchingPercent}% phù hợp
+                    <div class="mt-3 text-sm text-gray-600">
+                        ${item.reason}
                     </div>
-                </div>
-
-                <div class="mt-3 text-sm text-gray-600">
-                    ${tutor.reason || 'Gia sư phù hợp với yêu cầu của bạn'}
-                </div>
-
-                <div class="mt-4 flex justify-between items-center">
-                    <div class="flex items-center">
-                        <svg class="h-5 w-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
-                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                        </svg>
-                        <span class="ml-1 text-sm text-gray-600">${tutor.rating || '5.0'}/5.0</span>
+                    <div class="mt-4">
+                        <a href="/tutors/${item.id}" class="inline-flex justify-center rounded-lg text-sm font-semibold py-2.5 px-4 bg-blue-600 text-white hover:bg-blue-500 w-full">
+                            <span>Xem hồ sơ</span>
+                            <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                            </svg>
+                        </a>
                     </div>
-                    <span class="text-sm font-medium text-gray-900">${formattedPrice}/giờ</span>
-                </div>
+                `;
+            }
 
-                <a href="/tutors/${tutor.id}" 
-                   class="mt-4 block w-full text-center px-4 py-2 border border-transparent text-sm font-medium rounded-lg text-white bg-blue-600 hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-200">
-                    Xem chi tiết
-                </a>
-            `;
-            
-            recommendationsDiv.appendChild(tutorCard);
-        });
-    } catch (err) {
-        console.error('Error processing recommendations:', err);
-        recommendationsDiv.innerHTML = `
-            <div class="text-center p-8">
-                <svg class="mx-auto h-12 w-12 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-                </svg>
-                <h3 class="mt-2 text-sm font-medium text-gray-900">Đã xảy ra lỗi khi hiển thị gia sư</h3>
-                <p class="mt-1 text-sm text-gray-500">Vui lòng thử lại sau.</p>
-            </div>
-        `;
-    }
-}
+            // Set section title
+            const resultType = recommendations[0]?.type || 'tutor';
+            const recommendationTitle = document.querySelector('.recommendation-section h2');
+            if (recommendationTitle) {
+                let titleText = 'Kết Quả';
+                if (resultType === 'job_post') {
+                    titleText = `Tin Đăng Tuyển (${recommendations.length})`;
+                } else if (resultType === 'tutor') {
+                    titleText = `Đề Xuất Gia Sư (${recommendations.length})`;
+                } else if (resultType === 'support') {
+                    titleText = 'Thông Tin Hỗ Trợ';
+                } else if (resultType === 'math_solution') {
+                    titleText = 'Hướng Dẫn Giải Bài';
+                }
+                recommendationTitle.textContent = titleText;
+                recommendationTitle.classList.add('highlight-result');
+                setTimeout(() => {
+                    recommendationTitle.classList.remove('highlight-result');
+                }, 3000);
+            }
+
+            const currentTutorId = window.App?.tutorId;
+            // Render cards
+            recommendations.forEach((item, index) => {
+                const card = document.createElement('div');
+                card.className = 'bg-white p-4 rounded-xl shadow-md hover:shadow-lg transition-all duration-200 recommendation-card mb-4';
+                card.style.setProperty('--index', index);
+                let html = '';
+                const type = item.budget_min !== undefined ? 'job_post' : item.reason && item.reason.includes('hotline') ? 'support' : item.reason && item.reason.includes('bài toán') ? 'math_solution' : 'tutor';
+                if (type === 'job_post') html = renderJobPost(item, currentTutorId);
+                else if (type === 'support') html = renderSupport(item);
+                else if (type === 'academic_question') html = renderAcademicAnswer(item);
+                else html = renderTutor(item);
+                card.innerHTML = html;
+                recommendationsDiv.appendChild(card);
+                card.scrollIntoView({ behavior: 'smooth' });
+            });
+        }
     });
 </script>
 @endpush
