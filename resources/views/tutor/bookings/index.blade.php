@@ -84,7 +84,11 @@
                                         </button>
                                     </form>
                                 @endif
-                            
+                                
+                                {{-- Nút lịch sử Lịch sử thay đổi --}}
+                                <button type="button" onclick="showReasonHistory({{ $booking->id }})" class="text-red-600 hover:text-white hover:bg-red-600 border border-red-600 font-semibold rounded px-3 py-1 mr-3 transition-colors duration-150">
+                                    Lịch sử thay đổi ({{ $booking->reasons->count() }})
+                                </button>
                             </td>
                         </tr>
                     @empty
@@ -159,6 +163,9 @@
                                         Xác nhận hoàn thành
                                     </button>
                                 </form>
+                                <button type="button" onclick="showReasonHistory({{ $booking->id }})" class="text-red-600 hover:text-white hover:bg-red-600 border border-red-600 font-semibold rounded px-3 py-1 mr-3 transition-colors duration-150">
+                                    Lịch sử thay đổi ({{ $booking->reasons->count() }})
+                                </button>
                             </td>
                         </tr>
                     @empty
@@ -230,6 +237,9 @@
                                 <a href="{{ route('tutor.bookings.show', $booking) }}" class="text-indigo-600 hover:text-indigo-900 mr-3">
                                     Chi tiết
                                 </a>
+                                <button type="button" onclick="showReasonHistory({{ $booking->id }})" class="text-red-600 hover:text-white hover:bg-red-600 border border-red-600 font-semibold rounded px-3 py-1 mr-3 transition-colors duration-150">
+                                    Lịch sử thay đổi ({{ $booking->reasons->count() }})
+                                </button>
                             </td>
                         </tr>
                     @empty
@@ -247,4 +257,59 @@
         </div>
     </div>
 </div>
-@endsection 
+
+<div id="reason-history-modal" class="fixed z-50 inset-0 overflow-y-auto hidden">
+    <div class="flex items-center justify-center min-h-screen px-4">
+        <div class="fixed inset-0 transition-opacity" aria-hidden="true">
+            <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
+        </div>
+        <div class="bg-white rounded-lg overflow-hidden shadow-xl transform transition-all sm:max-w-lg w-full z-50">
+            <div class="px-4 py-4 border-b border-gray-200 flex justify-between items-center">
+                <h3 class="text-lg font-medium text-gray-900">Lịch sử Lịch sử thay đổi</h3>
+                <button onclick="closeReasonHistory()" class="text-gray-400 hover:text-gray-600">&times;</button>
+            </div>
+            <div class="px-4 py-4" id="reason-history-content" style="max-height:500px; overflow-y:auto;">
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function showReasonHistory(bookingId) {
+    fetch(`/tutor/bookings/${bookingId}/reasons`)
+        .then(res => res.json())
+        .then(data => {
+            let html = '';
+            if (data.length === 0) {
+                html = '<div class="text-gray-500">Không có lịch sử thay đổi.</div>';
+            } else {
+                html = '<ul class="divide-y divide-gray-200">';
+                data.forEach(item => {
+                    let isNew = false;
+                    if (item.created_at_iso) {
+                        const created = new Date(item.created_at_iso);
+                        const now = new Date();
+                        isNew = (now - created) < 24*60*60*1000; // 1 ngày
+
+                        console.log({created, now, diff: now - created, isNew});
+                    }
+                    html += `<li class='py-2'>
+                        <span class='font-semibold'>${item.created_at}</span>
+                        ${isNew ? "<span class='ml-2 px-2 py-0.5 bg-red-500 text-red-600 text-xs rounded align-middle'>Mới</span>" : ""}
+                        <br><span class='text-gray-700'>Trạng thái: <b>${item.status_vi || item.status || ''}</b></span>
+                        <br><span class='text-gray-700'>Lý do: ${item.reason}</span>
+                        ${item.notes ? `<br><span class='text-gray-700'>Ghi chú: ${item.notes}</span>` : ''}
+                        ${item.response_note ? `<br><span class='text-gray-700'>Phản hồi: ${item.response_note}</span>` : ''}
+                    </li>`;
+                });
+                html += '</ul>';
+            }
+            document.getElementById('reason-history-content').innerHTML = html;
+            document.getElementById('reason-history-modal').classList.remove('hidden');
+        });
+}
+function closeReasonHistory() {
+    document.getElementById('reason-history-modal').classList.add('hidden');
+}
+</script>
+@endsection

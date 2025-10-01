@@ -14,20 +14,20 @@ class BookingController extends Controller
     public function index()
     {
         $tutor = Auth::user()->tutor;
-        $upcomingBookings = Booking::with(['student', 'subject'])
+        $upcomingBookings = Booking::with(['student', 'subject', 'reasons'])
             ->where('tutor_id', $tutor->id)
             ->where('status', Booking::STATUS_CONFIRMED)
             ->where('start_time', '>', now())
             ->orderBy('start_time')
             ->paginate(5, ['*'], 'upcoming');
 
-        $pastBookings = Booking::with(['student', 'subject'])
+        $pastBookings = Booking::with(['student', 'subject', 'reasons'])
             ->where('tutor_id', $tutor->id)
             ->whereIn('status', [Booking::STATUS_COMPLETED, Booking::STATUS_CANCELLED])
             ->orderBy('start_time', 'desc')
             ->paginate(5, ['*'], 'past');
 
-        $pendingCompletionBookings = Booking::with(['student', 'subject'])
+        $pendingCompletionBookings = Booking::with(['student', 'subject', 'reasons'])
             ->where('tutor_id', $tutor->id)
             ->where('status', Booking::STATUS_CONFIRMED)
             ->where('end_time', '<', now())
@@ -152,4 +152,32 @@ class BookingController extends Controller
         return redirect()->route('tutor.bookings.show', $booking)
             ->with('success', 'Cảm ơn bạn đã xác nhận hoàn thành buổi học');
     }
-} 
+    
+    /**
+     * Trả về danh sách Lịch sử thay đổi của một booking (JSON).
+     */
+    public function reasons($bookingId)
+    {
+        $tutor = Auth::user()->tutor;
+        $booking = \App\Models\Booking::with(['reasons', 'reasons.requester'])->where('tutor_id', $tutor->id)->findOrFail($bookingId);
+        $reasons = $booking->reasons->sortByDesc('created_at')->values()->map(function($item) {
+            // Việt hóa status
+            $statusMap = [
+            'pending' => 'Chờ duyệt',
+            'accepted' => 'Đã chấp nhận',
+            'rejected' => 'Từ chối'
+            ];
+            return [
+            'reason' => $item->reason,
+            'created_at' => $item->created_at->format('d/m/Y H:i'),
+            'created_at_iso' => $item->created_at->toIso8601String(),
+            'requester' => $item->requester ? $item->requester->name : 'Hệ thống',
+            'status' => $item->status,
+            'status_vi' => $statusMap[$item->status] ?? $item->status,
+            'notes' => $item->notes,
+            'response_note' => $item->response_note,
+            ];
+        });
+        return response()->json($reasons);
+    }
+}

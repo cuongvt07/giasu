@@ -179,6 +179,9 @@ Route::middleware(['auth', 'tutor'])->prefix('tutor')->name('tutor.')->group(fun
     Route::post('/bookings/{booking}/confirm-completion', [TutorBookingController::class, 'confirmCompletion'])->name('bookings.confirm-completion');
     Route::post('/bookings/{booking}/report-issue', [TutorBookingController::class, 'reportIssue'])->name('bookings.report-issue');
 
+    // Route API cho lịch sử Lịch sử thay đổi booking
+    Route::get('/bookings/{booking}/reasons', [TutorBookingController::class, 'reasons'])->name('bookings.reasons');
+
     // quản lý tin đăng tuyển gia sư
     Route::get('/my-jobs', [App\Http\Controllers\Tutor\MyJobsController::class, 'index'])->name('jobs.index');
 

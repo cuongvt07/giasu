@@ -176,4 +176,12 @@ class Booking extends Model
     {
         return now()->gt($this->end_time);
     }
-} 
+    
+    /**
+     * Quan hệ: Booking có nhiều lý do thay đổi.
+     */
+    public function reasons()
+    {
+        return $this->hasMany(\App\Models\BookingRescheduleRequest::class, 'booking_id');
+    }
+}
