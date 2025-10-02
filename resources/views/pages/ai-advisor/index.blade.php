@@ -69,7 +69,7 @@
             </div>
         </div>
 
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div class="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
                 <!-- Chat Section -->
                 <div class="lg:col-span-2 space-y-8">
@@ -159,7 +159,7 @@
                                                 d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
                                         </svg>
                                     </button>
-                                    <button type="button" id="summarize-btn"
+                                    <button type="button" id="summarize-btn" style="display: none;"
                                         class="inline-flex items-center justify-center rounded-xl bg-green-600 px-4 py-3 text-sm font-semibold text-white shadow-sm hover:bg-green-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600 transition-all duration-200">
                                         <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -269,10 +269,48 @@
             return loadingDiv;
         }
 
+        function showRecommendationsLoading() {
+            const recommendationsDiv = document.getElementById('recommendations');
+            recommendationsDiv.innerHTML = `
+                <div class="space-y-4 animate-fade-in">
+                    <!-- Loading skeleton cards -->
+                    ${Array(3).fill(0).map((_, i) => `
+                        <div class="bg-white border border-gray-200 rounded-2xl shadow-sm p-6" style="animation-delay: ${i * 0.1}s">
+                            <div class="flex items-center space-x-4 mb-4">
+                                <div class="skeleton h-12 w-12 rounded-lg"></div>
+                                <div class="flex-1 space-y-2">
+                                    <div class="skeleton h-4 w-3/4 rounded"></div>
+                                    <div class="skeleton h-3 w-1/2 rounded"></div>
+                                </div>
+                            </div>
+                            <div class="space-y-2">
+                                <div class="skeleton h-3 w-full rounded"></div>
+                                <div class="skeleton h-3 w-5/6 rounded"></div>
+                                <div class="skeleton h-3 w-4/6 rounded"></div>
+                            </div>
+                            <div class="mt-4 pt-4 border-t">
+                                <div class="skeleton h-10 w-full rounded-lg"></div>
+                            </div>
+                        </div>
+                    `).join('')}
+                    <div class="text-center py-4">
+                        <div class="inline-flex items-center space-x-2 text-blue-600">
+                            <svg class="animate-spin h-5 w-5" fill="none" viewBox="0 0 24 24">
+                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                            </svg>
+                            <span class="text-sm font-medium">Đang tìm kiếm kết quả phù hợp...</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
         function removeLoading() {
             const loadingMessages = document.querySelectorAll('.loading-message');
             loadingMessages.forEach(msg => msg.remove());
         }
+
 
         function appendMessage(message, isUser = false) {
             const messageDiv = document.createElement('div');
@@ -387,6 +425,8 @@
                 }
                 return;
             }
+
+            showRecommendationsLoading();
 
             const loadingElement = showLoading();
             appendMessage("Đang tìm kiếm kết quả phù hợp... Vui lòng đợi trong giây lát.", false);
@@ -623,6 +663,22 @@
             function renderTutor(item) {
                 const matchingPercent = Math.round(item.matching_score * 100);
                 const formattedPrice = new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(item.hourly_rate);
+
+                // Chỉ render nút xem hồ sơ nếu có tutorId trong window.App
+                const profileLink = (window.App && window.App.tutorId)
+                    ? `
+                        <div class="mt-4">
+                            <a href="/tutors/${item.id}" 
+                            class="inline-flex justify-center rounded-lg text-sm font-semibold py-2.5 px-4 bg-blue-600 text-white hover:bg-blue-500 w-full">
+                                <span>Xem hồ sơ</span>
+                                <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                                </svg>
+                            </a>
+                        </div>
+                    `
+                    : '';
+
                 return `
                     <div class="flex items-center space-x-4">
                         <div class="flex-shrink-0">
@@ -639,14 +695,7 @@
                     <div class="mt-3 text-sm text-gray-600">
                         ${item.reason}
                     </div>
-                    <div class="mt-4">
-                        <a href="/tutors/${item.id}" class="inline-flex justify-center rounded-lg text-sm font-semibold py-2.5 px-4 bg-blue-600 text-white hover:bg-blue-500 w-full">
-                            <span>Xem hồ sơ</span>
-                            <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                            </svg>
-                        </a>
-                    </div>
+                    ${profileLink}
                 `;
             }
 
