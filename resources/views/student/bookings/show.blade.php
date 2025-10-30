@@ -64,6 +64,30 @@
                                 @endswitch
                             </dd>
                         </div>
+                        @php
+                            $hasPayments = $booking->relationLoaded('payments')
+                                ? $booking->payments->isNotEmpty()
+                                : \App\Models\Payment::where('booking_id', $booking->id)->exists();
+
+                            $paymentMethodLabel = $hasPayments ? 'Thanh toán online (VNPay)' : 'Thanh toán sau buổi học';
+                        @endphp
+
+                        <div>
+                            <dt class="text-sm font-medium text-gray-500">Trạng thái thanh toán</dt>
+                            <dd class="mt-1">
+                                @if($booking->payment_status === \App\Models\Booking::PAYMENT_STATUS_PAID)
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Đã thanh toán</span>
+                                @elseif($booking->payment_status === \App\Models\Booking::PAYMENT_STATUS_PENDING)
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">Chờ thanh toán</span>
+                                @elseif($booking->payment_status === \App\Models\Booking::PAYMENT_STATUS_REFUNDED || $booking->payment_status === \App\Models\Booking::PAYMENT_STATUS_PARTIAL_REFUNDED)
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-100 text-gray-800">Đã hoàn tiền</span>
+                                @else
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-50 text-gray-600">{{ ucfirst($booking->payment_status ?? 'chưa rõ') }}</span>
+                                @endif
+
+                                <div class="mt-2 text-sm text-gray-700">Phương thức: {{ $paymentMethodLabel }}</div>
+                            </dd>
+                        </div>
 
                         <div>
                             <dt class="text-sm font-medium text-gray-500">Thời gian bắt đầu</dt>

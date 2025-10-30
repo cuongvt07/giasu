@@ -114,47 +114,43 @@ class StudentBookingController extends Controller
             'selected_date.date' => 'Ngày học không hợp lệ',
             'time_slot.required' => 'Vui lòng chọn khung giờ học',
         ]);
-        
+
         // Tách thời gian bắt đầu và kết thúc từ time_slot (format: 'HH:MM_HH:MM')
         $timeSlotParts = explode('_', $validated['time_slot']);
         if (count($timeSlotParts) !== 2) {
             return back()->with('error', 'Định dạng thời gian không hợp lệ');
         }
-        
+
         $startTime = Carbon::parse($validated['selected_date'] . ' ' . $timeSlotParts[0]);
         $endTime = Carbon::parse($validated['selected_date'] . ' ' . $timeSlotParts[1]);
-        
+
         // Đảm bảo endTime > startTime
         if ($endTime->lessThanOrEqualTo($startTime)) {
             return back()->with('error', 'Thời gian kết thúc phải sau thời gian bắt đầu');
         }
-        
-        // SỬA LỖI: Tính số giờ từ thời gian bắt đầu đến kết thúc
-        // Trước đây: $minutes = $endTime->diffInMinutes($startTime);
+
+        // Tính số phút và giờ học
         $minutes = $startTime->diffInMinutes($endTime);
         $hours = floor($minutes / 60);
-        
-        // Nếu có phút lẻ (từ 30 phút trở lên), thêm 0.5 giờ
         if ($minutes % 60 >= 30) {
             $hours += 0.5;
         }
-      
+
         // Lấy giá của môn học cụ thể nếu có, nếu không thì dùng giá mặc định của gia sư
         $subject = $tutor->subjects()->findOrFail($validated['subject_id']);
         $pricePerHour = $subject->pivot->price_per_hour ?? $tutor->hourly_rate;
-        
         $totalAmount = $pricePerHour * $hours;
-        
-        // Log để kiểm tra
-        \Illuminate\Support\Facades\Log::info('Tính toán Đặt Lịch Ca Dạy GS', [
-            'start_time' => $startTime->format('H:i'),
-            'end_time' => $endTime->format('H:i'),
-            'minutes' => $minutes,
+
+        // Log để debug
+        Log::info('Tạo booking', [
+            'start_time' => $startTime->toDateTimeString(),
+            'end_time' => $endTime->toDateTimeString(),
             'hours' => $hours,
             'price_per_hour' => $pricePerHour,
             'total_amount' => $totalAmount
         ]);
-        
+
+        // Tạo booking (chưa tạo payment!)
         $booking = Booking::create([
             'student_id' => Auth::id(),
             'tutor_id' => $tutor->id,
@@ -167,10 +163,10 @@ class StudentBookingController extends Controller
             'price_per_hour' => $pricePerHour,
             'total_amount' => $totalAmount,
         ]);
-        
-        // Chuyển hướng đến trang thanh toán
+
+        // Chuyển hướng đến trang chọn phương thức thanh toán
         return redirect()->route('payment.create', $booking)
-            ->with('success', 'Đã tạo Đặt Lịch Ca Dạy GS thành công, vui lòng hoàn tất thanh toán');
+            ->with('success', 'Đã tạo lịch học. Vui lòng chọn phương thức thanh toán.');
     }
 
     public function show(Booking $booking)
@@ -261,6 +257,58 @@ class StudentBookingController extends Controller
         // Thông báo cho học sinh và chuyển hướng
         return redirect()->route('student.bookings.show', $booking)
             ->with('success', 'Cảm ơn bạn đã xác nhận hoàn thành buổi học.');
+    }
+
+    public function confirmPayment(Request $request, Booking $booking)
+    {
+        // Kiểm tra quyền sở hữu booking
+        if ($booking->student_id !== Auth::id()) {
+            abort(403, 'Bạn không có quyền thực hiện hành động này');
+        }
+
+        $validated = $request->validate([
+            'payment_method' => 'required|string|in:vnpay,after',
+            'payment_note' => 'nullable|string|max:1000',
+            'display_notes' => 'nullable|string|max:1000',
+        ]);
+
+        $method = $validated['payment_method'];
+
+        if ($method === 'after') {
+            $updateData = [
+                'status' => Booking::STATUS_PENDING,
+                'student_confirmed' => true,
+            ];
+
+            // Nếu người dùng có nhập ghi chú hiển thị
+            if (!empty($validated['display_notes'])) {
+                $updateData['notes'] = $validated['display_notes'];
+            }
+
+            // Ghi chú cho admin (ghi đè hoặc nối thêm)
+            $existing = trim($booking->admin_notes ?? '');
+            if (!empty($validated['payment_note'])) {
+                $updateData['admin_notes'] = trim($existing . "\n" . $validated['payment_note']);
+            } else {
+                $updateData['admin_notes'] = trim($existing . "\n" . "payment_method: after");
+            }
+
+            // Cập nhật booking mà không kích hoạt các sự kiện
+            $booking->withoutEvents(function () use ($booking, $updateData) {
+                $booking->update($updateData);
+            });
+
+            return redirect()->route('student.bookings.show', $booking)
+                ->with('success', 'Đã ghi nhận và xác nhận buổi học. Phương thức: Thanh toán sau khi hoàn thành.');
+        }
+
+        if ($method === 'vnpay') {
+            // Với vnpay thì chuyển hướng đến trang thanh toán VNPay
+            return redirect()->route('payment.create', $booking);
+        }
+
+        // Trường hợp không hợp lệ (fallback)
+        abort(400, 'Phương thức thanh toán không hợp lệ');
     }
     
     /**

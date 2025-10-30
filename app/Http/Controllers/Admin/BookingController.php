@@ -98,35 +98,48 @@ class BookingController extends Controller
     
     /**
      * Xác nhận thanh toán thủ công cho một buổi học
+     * Nếu là thanh toán sau buổi học, chỉ cho phép khi buổi học đã hoàn thành.
+     * Nếu là thanh toán qua VNPay, xác nhận ngay khi có callback.
      */
     public function confirmPayment(Request $request, Booking $booking)
     {
+        $method = $request->input('payment_method', 'admin'); // 'admin' hoặc 'after' hoặc 'vnpay'
+
+
         if ($booking->payment_status == Booking::PAYMENT_STATUS_PAID) {
             return back()->with('info', 'Buổi học này đã được thanh toán trước đó');
         }
-        
+
+        // Nếu là thanh toán sau buổi học, chỉ cho phép khi đã hoàn thành
+        if ($method === 'after') {
+            if ($booking->status != Booking::STATUS_COMPLETED) {
+                return back()->with('error', 'Chỉ có thể thanh toán sau khi buổi học đã hoàn thành.');
+            }
+        }
+
         $booking->update([
-            'payment_status' => Booking::PAYMENT_STATUS_PAID
+            'payment_status' => Booking::PAYMENT_STATUS_PAID,
+            'paid_method' => $method // cần thêm cột này trong bảng nếu muốn lưu
         ]);
-        
+
         // Tạo bản ghi thanh toán mới
         \App\Models\Payment::create([
             'booking_id' => $booking->id,
-            'vnp_txn_ref' => 'ADMIN-' . time(),
+            'vnp_txn_ref' => strtoupper($method) . '-' . time(),
             'amount' => $booking->total_amount,
             'status' => 'completed',
-            'payment_method' => 'admin',
+            'payment_method' => $method,
             'paid_at' => now(),
-            'notes' => 'Thanh toán xác nhận bởi Admin'
+            'notes' => $method === 'after' ? 'Thanh toán sau khi hoàn thành buổi học' : 'Thanh toán xác nhận bởi Admin/VNPay'
         ]);
-        
+
         // Nếu buổi học đang ở trạng thái pending, chuyển sang confirmed
         if ($booking->status == Booking::STATUS_PENDING) {
             $booking->update([
                 'status' => Booking::STATUS_CONFIRMED
             ]);
         }
-        
+
         return redirect()->route('admin.bookings.show', $booking)
             ->with('success', 'Đã xác nhận thanh toán cho buổi học này');
     }
@@ -202,4 +215,4 @@ class BookingController extends Controller
         return redirect()->route('admin.bookings.index')
             ->with('success', 'Đặt Lịch Ca Dạy GS đã được xóa thành công.');
     }
-} 
+}

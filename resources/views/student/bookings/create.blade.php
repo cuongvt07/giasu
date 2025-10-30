@@ -185,29 +185,27 @@
                             </div>
 
                             <!-- Tổng tiền -->
+                            <div class="mt-8 border-t border-gray-200 pt-6">
+                                <div class="flex justify-between items-center bg-gray-50 p-4 rounded-lg">
+                                    <span class="text-base font-medium text-gray-700">Tổng tiền:</span>
+                                    <div>
+                                        <span id="total_amount" class="text-xl font-semibold text-indigo-600">0đ</span>
+                                        <div class="text-xs text-gray-500" id="hour_detail"></div>
+                                    </div>
+                                </div>
+                            </div>
 
-<!-- Tổng tiền -->
-<div class="mt-8 border-t border-gray-200 pt-6">
-    <div class="flex justify-between items-center bg-gray-50 p-4 rounded-lg">
-        <span class="text-base font-medium text-gray-700">Tổng tiền:</span>
-        <div>
-            <span id="total_amount" class="text-xl font-semibold text-indigo-600">0đ</span>
-            <div class="text-xs text-gray-500" id="hour_detail"></div>
-        </div>
-    </div>
-</div>
-
-<div class="mt-6 flex justify-end">
-    <a href="{{ route('tutors.show', $tutor) }}" class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 mr-3">
-        Quay lại
-    </a>
-    <button type="submit" class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors duration-200" id="bookingSubmitBtn" disabled>
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" viewBox="0 0 20 20" fill="currentColor">
-            <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd" />
-        </svg>
-        Đặt Lịch Ca Dạy GS và thanh toán
-    </button>
-</div>
+                            <div class="mt-6 flex justify-end">
+                                <a href="{{ route('tutors.show', $tutor) }}" class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 mr-3">
+                                    Quay lại
+                                </a>
+                                <button type="submit" class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors duration-200" id="bookingSubmitBtn" disabled>
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd" />
+                                    </svg>
+                                    Đặt Lịch Ca Dạy GS và thanh toán
+                                </button>
+                            </div>
                         </form>
                     </div>
                 @endforeach

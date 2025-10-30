@@ -120,13 +120,25 @@
         <div class="space-y-6">
             <div class="bg-gray-50 p-4 rounded-md border border-gray-200">
                 <div class="flex items-center">
-                    <input id="payment-vnpay" name="payment-method" type="radio" checked class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300">
+                    <input id="payment-vnpay" name="payment-method" value="vnpay" type="radio" checked class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300">
                     <label for="payment-vnpay" class="ml-3 block text-sm font-medium text-gray-700">
                         Thanh toán qua VNPay (Thẻ ATM, Thẻ tín dụng, Ví điện tử)
                     </label>
                 </div>
                 <div class="mt-2 flex flex-wrap gap-2">
                     <img src="{{ asset('images/vnpay.png') }}" alt="VNPay" class="h-8 object-contain">
+                </div>
+            </div>
+            
+            <div class="bg-green-50 p-4 rounded-md border border-green-200">
+                <div class="flex items-center">
+                    <input id="payment-after" name="payment-method" value="after" type="radio" class="h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300">
+                    <label for="payment-after" class="ml-3 block text-sm font-medium text-gray-700">
+                        Thanh toán sau khi hoàn thành buổi học (Chỉ áp dụng cho học sinh đã xác thực)
+                    </label>
+                </div>
+                <div class="mt-2 text-sm text-green-700">
+                    <strong>Lưu ý:</strong> Bạn sẽ thanh toán sau khi buổi học kết thúc và được xác nhận hoàn thành. Gia sư sẽ nhận được thông báo khi bạn hoàn tất thanh toán.
                 </div>
             </div>
             
@@ -149,15 +161,83 @@
                 <a href="{{ route('student.bookings.index') }}" class="inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                     Quay lại
                 </a>
-                
-                <a href="{{ $vnpUrl }}" class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
-                        <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd" />
-                    </svg>
-                    Thanh toán ngay {{ format_vnd($booking->total_amount) }}
-                </a>
+                <form id="payment-form" action="{{ route('student.bookings.confirm-payment', $booking) }}" method="POST" class="inline">
+                    @csrf
+                    <input type="hidden" id="payment_method_input" name="payment_method" value="{{ request('payment_method', 'vnpay') }}">
+                    <input type="hidden" id="payment_note_input" name="payment_note" value="">
+
+                    <input type="hidden" name="start_time" value="{{ $booking->start_time->toDateTimeString() }}">
+                    <input type="hidden" name="end_time" value="{{ $booking->end_time->toDateTimeString() }}">
+                    <input type="hidden" name="tutor_id" value="{{ $booking->tutor_id }}">
+                    <input type="hidden" name="subject_id" value="{{ $booking->subject_id }}">
+                    <input type="hidden" name="price_per_hour" value="{{ $booking->price_per_hour }}">
+                    <input type="hidden" name="total_amount" value="{{ $booking->total_amount }}">
+                    <input type="hidden" name="display_notes" value="{{ addslashes($booking->notes ?? '') }}">
+
+                    <button id="pay-after-btn" type="submit" class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 {{ request('payment_method','vnpay') === 'after' ? '' : 'hidden' }}">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd" />
+                        </svg>
+                        Thanh toán sau khi hoàn thành
+                    </button>
+
+                    <a id="vnpay-link" href="{{ $vnpUrl }}" class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 {{ request('payment_method','vnpay') === 'after' ? 'hidden' : '' }}">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd" />
+                        </svg>
+                        Thanh toán ngay {{ format_vnd($booking->total_amount) }}
+                    </a>
+                </form>
             </div>
         </div>
     </div>
 </div>
-@endsection 
+@endsection
+
+@push('scripts')
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const radios = document.querySelectorAll('input[name="payment-method"]');
+    const input = document.getElementById('payment_method_input');
+    const payAfterBtn = document.getElementById('pay-after-btn');
+    const vnpayLink = document.getElementById('vnpay-link');
+    const paymentNoteInput = document.getElementById('payment_note_input');
+    const paymentForm = document.getElementById('payment-form');
+
+    if (!radios || !input || !payAfterBtn || !vnpayLink) return;
+
+    function updateUI(value) {
+        input.value = value;
+        if (value === 'after') {
+            payAfterBtn.classList.remove('hidden');
+            vnpayLink.classList.add('hidden');
+        } else {
+            payAfterBtn.classList.add('hidden');
+            vnpayLink.classList.remove('hidden');
+        }
+    }
+
+    radios.forEach(r => {
+        r.addEventListener('change', function (e) {
+            updateUI(e.target.value);
+        });
+    });
+
+    // before submit: if payment method is 'after', set a traceable note
+    if (paymentForm && paymentNoteInput) {
+        paymentForm.addEventListener('submit', function (e) {
+            const method = document.getElementById('payment_method_input').value;
+            if (method === 'after') {
+                // embed who clicked and when (server-rendered student name inserted)
+                const studentName = "{{ addslashes(Auth::user()->name ?? '') }}";
+                paymentNoteInput.value = `Thanh toán sau được chọn bởi: ${studentName} lúc ${new Date().toISOString()}`;
+            }
+        });
+    }
+
+    // Initialize based on currently checked radio
+    const checked = document.querySelector('input[name="payment-method"]:checked');
+    if (checked) updateUI(checked.value);
+});
+</script>
+@endpush

@@ -137,6 +137,8 @@ Route::prefix('student')->name('student.')->middleware(['auth'])->group(function
     Route::post('/bookings/{booking}/cancel', [StudentBookingController::class, 'cancel'])->name('bookings.cancel');
     Route::patch('/bookings/{booking}/cancel', [StudentBookingController::class, 'cancel']);
     Route::post('/bookings/{booking}/confirm-completion', [StudentBookingController::class, 'confirmCompletion'])->name('bookings.confirm-completion');
+        // Thanh toán (student) - xử lý form gửi phương thức thanh toán (vnpay/after)
+        Route::post('/bookings/{booking}/confirm-payment', [StudentBookingController::class, 'confirmPayment'])->name('bookings.confirm-payment');
     Route::post('/bookings/{booking}/rate', [StudentBookingController::class, 'rateBooking'])->name('bookings.rate');
     
     Route::get('/manager/jobs', [StudentJobController::class, 'jobsUser'])->name('manager.jobs');
