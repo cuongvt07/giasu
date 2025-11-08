@@ -412,7 +412,30 @@ class TutorController extends Controller
                 DB::raw('GROUP_CONCAT(applications.tutor_id) as applied_tutor_ids')
             )
             ->where('tutor_posts.status', '=', 'pending')
-            ->groupBy('tutor_posts.id', 'subjects.name', 'class_levels.name'); // cần groupBy hết các field không aggregate
+            ->groupBy(
+                'tutor_posts.id',
+                'tutor_posts.user_id',
+                'tutor_posts.title',
+                'tutor_posts.subject_id',
+                'tutor_posts.class_level_id',
+                'tutor_posts.mode',
+                'tutor_posts.location',
+                'tutor_posts.sessions_per_week',
+                'tutor_posts.session_length_min',
+                'tutor_posts.budget_min',
+                'tutor_posts.budget_max',
+                'tutor_posts.budget_unit',
+                'tutor_posts.deadline_at',
+                'tutor_posts.goal',
+                'tutor_posts.requirements',
+                'tutor_posts.published_at',
+                'tutor_posts.status',
+                'tutor_posts.is_active',
+                'tutor_posts.created_at',
+                'tutor_posts.updated_at',
+                'subjects.name',
+                'class_levels.name'
+            );
 
         // Filter môn học
         if ($request->filled('subject')) {
