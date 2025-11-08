@@ -23,18 +23,20 @@
             headers: {
                 'Content-Type': 'application/json',
                 'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                'Accept': 'application/json',
             },
             body: JSON.stringify({ job_id: job.id }),
         })
-        .then(res => {
-            if (!res.ok) throw new Error('Ứng tuyển thất bại');
-            return res.json();
-        })
+        .then(res => res.json())
         .then(data => {
-            this.showMessage('Ứng tuyển thành công!', 'success');
-            this.applyJob = null;
-            this.selectedJob = null;
-            window.location.reload();
+            if (data.success) {
+                this.showMessage(data.message || 'Ứng tuyển thành công!', 'success');
+                this.applyJob = null;
+                this.selectedJob = null;
+                setTimeout(() => window.location.reload(), 1500);
+            } else {
+                this.showMessage(data.message || 'Đã xảy ra lỗi khi ứng tuyển.', 'error');
+            }
         })
         .catch(err => {
             this.showMessage('Đã xảy ra lỗi khi ứng tuyển.', 'error');

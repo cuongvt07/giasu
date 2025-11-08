@@ -13,7 +13,7 @@ class TutorPost extends Model
     use HasFactory;
 
     protected $table = 'tutor_posts';
-    protected $fillable = [
+protected $fillable = [
         'user_id', 'subject_id', 'class_level_id', 'goal', 'description', 'budget_min', 'budget_max', 'budget_unit', 'sessions_per_week', 'session_length_min', 'schedule_notes', 'mode', 'address_line', 'student_count', 'student_age', 'special_notes', 'qualifications', 'min_experience_yr', 'contact_phone', 'contact_email', 'deadline_at', 'status', 'published_at', 'created_at', 'updated_at'
     ];
 
