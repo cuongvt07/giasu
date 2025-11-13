@@ -412,7 +412,36 @@ class TutorController extends Controller
                 DB::raw('GROUP_CONCAT(applications.tutor_id) as applied_tutor_ids')
             )
             ->where('tutor_posts.status', '=', 'pending')
-            ->groupBy('tutor_posts.id', 'subjects.name', 'class_levels.name'); // cần groupBy hết các field không aggregate
+            ->groupBy(
+                'tutor_posts.id',
+                'tutor_posts.user_id',
+                'tutor_posts.subject_id',
+                'tutor_posts.class_level_id',
+                'tutor_posts.goal',
+                'tutor_posts.description',
+                'tutor_posts.budget_min',
+                'tutor_posts.budget_max',
+                'tutor_posts.budget_unit',
+                'tutor_posts.sessions_per_week',
+                'tutor_posts.session_length_min',
+                'tutor_posts.schedule_notes',
+                'tutor_posts.mode',
+                'tutor_posts.address_line',
+                'tutor_posts.student_count',
+                'tutor_posts.student_age',
+                'tutor_posts.special_notes',
+                'tutor_posts.qualifications',
+                'tutor_posts.min_experience_yr',
+                'tutor_posts.contact_phone',
+                'tutor_posts.contact_email',
+                'tutor_posts.deadline_at',
+                'tutor_posts.status',
+                'tutor_posts.published_at',
+                'tutor_posts.created_at',
+                'tutor_posts.updated_at',
+                'subjects.name',
+                'class_levels.name'
+            );
 
         // Filter môn học
         if ($request->filled('subject')) {
@@ -468,34 +497,75 @@ class TutorController extends Controller
 
     public function applyJob(Request $request)
     {
-        $request->validate([
-            'job_id' => 'required|exists:tutor_posts,id',
-        ]);
+        try {
+            // Kiểm tra đăng nhập
+            if (!Auth::check()) {
+                return response()->json(['success' => false, 'message' => 'Vui lòng đăng nhập để ứng tuyển.'], 401);
+            }
 
-        $job = DB::table('tutor_posts')->where('id', $request->job_id)->first();
-        if (!$job) {
-            return response()->json(['message' => 'Tin tuyển gia sư không tồn tại.'], 404);
+            // Kiểm tra có phải gia sư không
+            $tutor = Auth::user()->tutor;
+            if (!$tutor) {
+                return response()->json(['success' => false, 'message' => 'Chỉ tài khoản gia sư mới có thể ứng tuyển.'], 403);
+            }
+
+            // Validate
+            $validator = \Validator::make($request->all(), [
+                'job_id' => 'required|exists:tutor_posts,id',
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Dữ liệu không hợp lệ.',
+                    'errors' => $validator->errors()
+                ], 422);
+            }
+
+            $job = DB::table('tutor_posts')->where('id', $request->job_id)->first();
+            if (!$job) {
+                return response()->json(['success' => false, 'message' => 'Tin tuyển gia sư không tồn tại.'], 404);
+            }
+
+            // Kiểm tra đã ứng tuyển chưa
+            $existing = DB::table('tutor_applications')
+                ->where('tutor_post_id', $request->job_id)
+                ->where('tutor_id', Auth::id())
+                ->first();
+
+            if ($existing) {
+                return response()->json(['success' => false, 'message' => 'Bạn đã ứng tuyển bài này rồi!'], 409);
+            }
+
+            // Tạo đơn ứng tuyển
+            DB::table('tutor_applications')->insert([
+                'tutor_post_id' => $request->job_id,
+                'tutor_id'      => Auth::id(),
+                'status'        => 'pending',
+                'note'          => $request->note ?? null,
+                'created_at'    => now(),
+                'updated_at'    => now(),
+            ]);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Ứng tuyển thành công! Vui lòng chờ thông báo từ quản lý.'
+            ], 200);
+
+        } catch (\Exception $e) {
+            Log::error('Error in applyJob', [
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
+                'user_id' => Auth::id(),
+                'job_id' => $request->job_id ?? null
+            ]);
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Đã xảy ra lỗi khi ứng tuyển. Vui lòng thử lại sau.',
+                'error' => $e->getMessage()
+            ], 500);
         }
-
-        $existing = DB::table('tutor_applications')
-            ->where('tutor_post_id', $request->job_id)
-            ->where('tutor_id', Auth::id())
-            ->first();
-
-        if ($existing) {
-            return response()->json(['message' => 'Bạn đã ứng tuyển bài này rồi!'], 409);
-        }
-
-        DB::table('tutor_applications')->insert([
-            'tutor_post_id' => $request->job_id,
-            'tutor_id'      => Auth::id(),
-            'status'        => 'pending',
-            'note'          => $request->note,
-            'created_at'    => now(),
-            'updated_at'    => now(),
-        ]);
-
-        return response()->json(['message' => 'Ứng tuyển thành công! Vui lòng chờ thông báo từ quản lý.'], 200);
     }
 
 }
