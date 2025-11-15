@@ -128,9 +128,9 @@
                 </div>
             </div>
 
-            <!-- Lịch sử Đặt Lịch Ca Dạy GS -->
+            <!-- Lịch sử Kết nối gia sư hỗ trợ nhanh -->
             <div class="mt-8">
-                <h3 class="text-lg font-medium text-gray-900 mb-4">Lịch Sử Đặt Lịch Ca Dạy GS Ca Dạy</h3>
+                <h3 class="text-lg font-medium text-gray-900 mb-4">Lịch Sử Kết nối gia sư hỗ trợ nhanh quản lý lịch rảnh</h3>
                 <div class="overflow-x-auto">
                     <table class="min-w-full divide-y divide-gray-200">
                         <thead class="bg-gray-50">

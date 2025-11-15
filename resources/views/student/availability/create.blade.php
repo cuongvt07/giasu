@@ -7,10 +7,10 @@
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-indigo-600 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                 </svg>
-                Thêm ca dạy
+                Thêm quản lý lịch rảnh
             </h2>
             <p class="mt-1 max-w-2xl text-sm text-gray-600">
-                Thiết lập khung giờ bạn có thể học để gia sư dễ dàng Đặt Lịch Ca Dạy GS phù hợp
+                Thiết lập khung giờ bạn có thể học để gia sư dễ dàng Kết nối gia sư hỗ trợ nhanh phù hợp
             </p>
         </div>
 
@@ -92,7 +92,7 @@
                     Hủy
                 </a>
                 <button type="submit" class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                    Lưu ca dạy
+                    Lưu quản lý lịch rảnh
                 </button>
             </div>
         </form>

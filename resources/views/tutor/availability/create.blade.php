@@ -4,7 +4,7 @@
     <div class="bg-white shadow overflow-hidden sm:rounded-lg">
         <div class="px-4 py-5 sm:px-6">
             <h2 class="text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:truncate">
-                Thêm ca dạy Mới
+                Thêm quản lý lịch rảnh Mới
             </h2>
             <p class="mt-1 max-w-2xl text-sm text-gray-500">
                 Thiết lập khung giờ bạn có thể dạy học
@@ -74,7 +74,7 @@
                             Hủy
                         </a>
                         <button type="submit" class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                            Thêm ca dạy
+                            Thêm quản lý lịch rảnh
                         </button>
                     </div>
                 </dl>

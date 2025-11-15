@@ -21,43 +21,73 @@
         <!-- Navigation -->
         <nav class="bg-white border-b border-gray-200">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="flex justify-between h-16">
-                    <!-- Logo -->
+                <div class="flex justify-between h-32">
                     <div class="flex-shrink-0 flex items-center">
-                        <a href="{{ route('home') }}" class="text-2xl font-bold text-indigo-600">
-                            Gia Sư Online
+                        <a href="{{ route('home') }}" class="flex items-center space-x-2">
+                            <img src="https://shop.noithatvinplus.vn/wp-content/uploads/2025/11/1197368731297420539.jpg" 
+                                alt="Logo" 
+                                class="h-24 w-auto">
+
+                            <span class="text-2xl font-bold text-indigo-600 leading-tight">
+                                Trung tâm gia sư<br>Trí tuệ Việt
+                            </span>
                         </a>
                     </div>
 
                     <!-- Navigation Links -->
-                    <div class="hidden sm:ml-6 sm:flex sm:space-x-8">
-                        <a href="{{ route('tutors.index') }}" class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium leading-5 text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out">
-                            Tìm Gia Sư
-                        </a>
-                        <a href="{{ route('subjects.index') }}" class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium leading-5 text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out">
-                            Môn Học
-                        </a>
-                        @php
-                            // Kiểm tra user có phải là gia sư hay không
-                            $isTutor = false;
-                            if (auth()->check()) {
-                                try {
-                                    $isTutor = auth()->user()->tutor()->exists();
-                                } catch(\Exception $e) {
-                                    // Không làm gì nếu có lỗi
-                                }
-                            }
-                        @endphp
-                        @if(!$isTutor)
-                        <a href="{{ route('ai-advisor') }}" class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium leading-5 text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out">
-                            Tư Vấn AI
-                        </a>
-                        @endif
+<!-- Navigation Links -->
+<div class="hidden sm:ml-6 sm:flex sm:space-x-8 items-center">
 
-                        <a href="{{ route('tutors.jobs.post') }}" class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium leading-5 text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out">
-                            Tin Tuyển Gia Sư
-                        </a>
-                    </div>
+    <a href="{{ route('home') }}" 
+        class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 transition">
+        Trang chủ
+    </a>
+    <!-- Giới thiệu -->
+    <a href="{{ route('about-us') }}" 
+        class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 transition">
+        Giới thiệu
+    </a>
+
+    <!-- Dropdown Gia Sư -->
+    <div x-data="{ open:false }" class="relative">
+        <button 
+            @click="open = !open" 
+            class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 transition">
+            Gia sư
+            <svg class="ml-1 w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" 
+                      d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.24 4.24a.75.75 0 01-1.06 0L5.21 8.27a.75.75 0 01.02-1.06z" />
+            </svg>
+        </button>
+
+        <div x-show="open" 
+             @click.away="open=false"
+             class="absolute left-0 mt-2 w-40 bg-white shadow-lg rounded-md py-2 z-50">
+            <a href="{{ route('tutors.index') }}" 
+                class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Tìm gia sư</a>
+
+            <a href="{{ route('tutors.jobs.post') }}" 
+                class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Tin tuyển gia sư</a>
+        </div>
+    </div>
+
+    <!-- Tư vấn AI -->
+    @php
+        $isTutor = false;
+        if (auth()->check()) {
+            try { $isTutor = auth()->user()->tutor()->exists(); } catch(\Exception $e) {}
+        }
+    @endphp
+
+    @if(!$isTutor)
+    <a href="{{ route('ai-advisor') }}" 
+        class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 transition">
+        Tư vấn AI
+    </a>
+    @endif
+
+</div>
+
 
                     <!-- User Menu -->
                     <div class="hidden sm:ml-6 sm:flex sm:items-center">

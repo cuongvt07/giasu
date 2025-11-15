@@ -13,14 +13,14 @@
                     <svg class="flex-shrink-0 h-6 w-6 text-indigo-500 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
-                    <span>Làm thế nào để Đặt Lịch Ca Dạy GS học với gia sư?</span>
+                    <span>Làm thế nào để Kết nối gia sư hỗ trợ nhanh học với gia sư?</span>
                 </h4>
                 <div class="pl-8 text-gray-700">
-                    <p>Để Đặt Lịch Ca Dạy GS học với gia sư {{ $tutor->user->name }}, bạn có thể:</p>
+                    <p>Để Kết nối gia sư hỗ trợ nhanh học với gia sư {{ $tutor->user->name }}, bạn có thể:</p>
                     <ul class="list-disc pl-5 mt-2 space-y-1 text-sm">
-                        <li>Nhấn vào nút "Đặt Lịch Ca Dạy GS học" ở đầu trang</li>
+                        <li>Nhấn vào nút "Kết nối gia sư hỗ trợ nhanh học" ở đầu trang</li>
                         <li>Chọn môn học, thời gian và địa điểm phù hợp</li>
-                        <li>Xác nhận thông tin và hoàn tất Đặt Lịch Ca Dạy GS</li>
+                        <li>Xác nhận thông tin và hoàn tất Kết nối gia sư hỗ trợ nhanh</li>
                     </ul>
                 </div>
             </div>

@@ -49,7 +49,7 @@ class StudentAvailability extends Model
     ];
 
     /**
-     * Lấy học sinh sở hữu ca dạy này
+     * Lấy học sinh sở hữu quản lý lịch rảnh này
      */
     public function student()
     {
@@ -57,7 +57,7 @@ class StudentAvailability extends Model
     }
 
     /**
-     * Kiểm tra xem một ca dạy có trùng với lịch học đã đặt không
+     * Kiểm tra xem một quản lý lịch rảnh có trùng với lịch học đã đặt không
      */
     public function hasBookingConflicts()
     {
@@ -67,7 +67,7 @@ class StudentAvailability extends Model
             ->where('status', '!=', 'cancelled')
             ->where('day_of_week', $this->day_of_week);
             
-        // Nếu ca dạy có ngày cụ thể, chỉ kiểm tra lịch học cho ngày đó
+        // Nếu quản lý lịch rảnh có ngày cụ thể, chỉ kiểm tra lịch học cho ngày đó
         if ($this->date) {
             $query->whereDate('start_time', $this->date);
         }
@@ -109,7 +109,7 @@ class StudentAvailability extends Model
     }
     
     /**
-     * Kiểm tra xem ca dạy có khả dụng không (active)
+     * Kiểm tra xem quản lý lịch rảnh có khả dụng không (active)
      */
     public function isAvailable()
     {

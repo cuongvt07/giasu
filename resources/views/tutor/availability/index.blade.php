@@ -8,10 +8,10 @@
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-indigo-600 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                     </svg>
-                    Quản Lý ca dạy
+                    Quản Lý quản lý lịch rảnh
                 </h2>
                 <p class="mt-1 max-w-2xl text-sm text-gray-600">
-                    Thiết lập thời gian bạn có thể dạy học để học sinh dễ dàng Đặt Lịch Ca Dạy GS
+                    Thiết lập thời gian bạn có thể dạy học để học sinh dễ dàng Kết nối gia sư hỗ trợ nhanh
                 </p>
             </div>
 
@@ -20,7 +20,7 @@
                     <svg class="-ml-1 mr-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
                     </svg>
-                    Thêm ca dạy
+                    Thêm quản lý lịch rảnh
                 </a>
           
             </div>
@@ -39,7 +39,7 @@
             </nav>
         </div>
 
-        <!-- Danh sách ca dạy (tab mặc định) -->
+        <!-- Danh sách quản lý lịch rảnh (tab mặc định) -->
         <div id="content-list" class="block">
             @if($availabilities->isEmpty())
                 <div class="text-center py-12 bg-gray-50 rounded-lg m-6">
@@ -48,16 +48,16 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
                         </svg>
                     </div>
-                    <h3 class="mt-4 text-lg font-medium text-gray-900">Không có ca dạy</h3>
+                    <h3 class="mt-4 text-lg font-medium text-gray-900">Không có quản lý lịch rảnh</h3>
                     <p class="mt-2 text-base text-gray-600 max-w-md mx-auto">
-                        Bắt đầu bằng cách thêm ca dạy cho các khung giờ bạn có thể dạy học. Điều này giúp học sinh dễ dàng tìm thấy và Đặt Lịch Ca Dạy GS với bạn.
+                        Bắt đầu bằng cách thêm quản lý lịch rảnh cho các khung giờ bạn có thể dạy học. Điều này giúp học sinh dễ dàng tìm thấy và Kết nối gia sư hỗ trợ nhanh với bạn.
                     </p>
                     <div class="mt-6 flex justify-center gap-3">
                         <a href="{{ route('tutor.availability.create') }}" class="inline-flex items-center px-5 py-3 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-all duration-300 transform hover:scale-105">
                             <svg class="-ml-1 mr-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
                             </svg>
-                            Thêm ca dạy
+                            Thêm quản lý lịch rảnh
                         </a>
                         <a href="{{ route('tutor.availability.quick') }}" class="inline-flex items-center px-5 py-3 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-all duration-300 transform hover:scale-105">
                             <svg class="-ml-1 mr-2 h-5 w-5 text-indigo-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -74,7 +74,7 @@
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
                             </svg>
-                            Danh sách ca dạy của bạn
+                            Danh sách quản lý lịch rảnh của bạn
                         </h3>
                         <span class="text-indigo-600 bg-indigo-100 px-3 py-1 rounded-full text-sm">
                             {{ $availabilities->count() }} khung giờ
@@ -147,7 +147,7 @@
                                         <form action="{{ route('tutor.availability.destroy', $availability->id) }}" method="POST" class="inline-block">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="text-red-600 hover:text-red-900 bg-red-50 px-3 py-1 rounded-md inline-flex items-center transition-colors" onclick="return confirm('Bạn có chắc muốn xóa ca dạy này?')">
+                                            <button type="submit" class="text-red-600 hover:text-red-900 bg-red-50 px-3 py-1 rounded-md inline-flex items-center transition-colors" onclick="return confirm('Bạn có chắc muốn xóa quản lý lịch rảnh này?')">
                                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                                                 </svg>

@@ -81,7 +81,7 @@
         </div>
     </div>
 
-    <!-- Thống kê Đặt Lịch Ca Dạy GS -->
+    <!-- Thống kê Kết nối gia sư hỗ trợ nhanh -->
     <div class="bg-white rounded-lg shadow p-6">
         <div class="flex items-center">
             <div class="p-3 rounded-full bg-red-600 bg-opacity-75">
@@ -90,7 +90,7 @@
                 </svg>
             </div>
             <div class="ml-4">
-                <p class="mb-2 text-sm font-medium text-gray-600">Tổng Đặt Lịch Ca Dạy GS Ca Học Gia Sư</p>
+                <p class="mb-2 text-sm font-medium text-gray-600">Tổng Kết nối gia sư hỗ trợ nhanh Ca Học Gia Sư</p>
                 <p class="text-lg font-semibold text-gray-700">{{ $totalBookings }}</p>
             </div>
         </div>
@@ -184,7 +184,7 @@
     </div>
 </div>
 
-<!-- Đặt Lịch Ca Dạy GS hôm nay -->
+<!-- Kết nối gia sư hỗ trợ nhanh hôm nay -->
 <!-- Báo cáo tình trạng hợp đồng -->
 <div class="bg-white rounded-lg shadow mb-8">
     <div class="px-6 py-4 border-b border-gray-200">
@@ -231,7 +231,7 @@
 @endpush
 <div class="bg-white rounded-lg shadow mb-8">
     <div class="px-6 py-4 border-b border-gray-200">
-        <h2 class="text-lg font-medium text-gray-900">Đặt Lịch Ca Dạy GS Hôm Nay</h2>
+        <h2 class="text-lg font-medium text-gray-900">Kết nối gia sư hỗ trợ nhanh Hôm Nay</h2>
     </div>
     <div class="overflow-x-auto">
     <div style="max-height: 480px; overflow-y: auto;">
@@ -279,7 +279,7 @@
                 @empty
                 <tr>
                     <td colspan="5" class="px-6 py-4 text-center text-gray-500">
-                        Không có Đặt Lịch Ca Dạy GS nào hôm nay
+                        Không có Kết nối gia sư hỗ trợ nhanh nào hôm nay
                     </td>
                 </tr>
                 @endforelse
@@ -353,10 +353,10 @@
         </div>
     </div>
 
-    <!-- Biểu đồ Đặt Lịch Ca Dạy GS theo môn học -->
+    <!-- Biểu đồ Kết nối gia sư hỗ trợ nhanh theo môn học -->
     <div class="bg-white rounded-lg shadow">
         <div class="px-6 py-4 border-b border-gray-200">
-            <h2 class="text-lg font-medium text-gray-900">Đặt Lịch Ca Dạy GS Theo Môn Học</h2>
+            <h2 class="text-lg font-medium text-gray-900">Kết nối gia sư hỗ trợ nhanh Theo Môn Học</h2>
         </div>
         <div class="p-6">
             <canvas id="bookingsBySubjectChart"></canvas>
@@ -393,14 +393,14 @@
         }
     });
 
-    // Biểu đồ Đặt Lịch Ca Dạy GS theo môn học
+    // Biểu đồ Kết nối gia sư hỗ trợ nhanh theo môn học
     const bookingsBySubjectCtx = document.getElementById('bookingsBySubjectChart').getContext('2d');
     new Chart(bookingsBySubjectCtx, {
         type: 'bar',
         data: {
             labels: {!! json_encode($bookingsBySubjectChart['labels']) !!},
             datasets: [{
-                label: 'Số lượng Đặt Lịch Ca Dạy GS',
+                label: 'Số lượng Kết nối gia sư hỗ trợ nhanh',
                 data: {!! json_encode($bookingsBySubjectChart['data']) !!},
                 backgroundColor: 'rgba(79, 70, 229, 0.2)',
                 borderColor: 'rgb(79, 70, 229)',

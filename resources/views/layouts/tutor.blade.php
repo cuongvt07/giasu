@@ -63,22 +63,30 @@
                         <svg class="mr-3 h-5 w-5 {{ request()->routeIs('tutor.schedule.*') ? 'text-white' : 'text-gray-500 group-hover:text-indigo-500' }}" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
                         </svg>
-                        ca dạy
+                        quản lý lịch rảnh
                     </a>
 
-                    <a href="{{ route('tutor.jobs.index') }}" class="group flex items-center py-3 px-4 text-sm font-medium rounded-lg {{ request()->routeIs('tutor.schedule.*') ? 'text-white bg-gradient-to-r from-indigo-600 to-purple-600 shadow-md' : 'text-gray-700 hover:bg-gray-50' }}">
-                        <svg class="mr-3 h-5 w-5 {{ request()->routeIs('tutor.schedule.*') ? 'text-white' : 'text-gray-500 group-hover:text-indigo-500' }}" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                        </svg>
-                        Quản lý tin tuyển dụng 
-                    </a>
-
-                    <a href="{{ route('contracts.my') }}" class="group flex items-center py-3 px-4 text-sm font-medium rounded-lg {{ request()->routeIs('tutor.schedule.*') ? 'text-white bg-gradient-to-r from-indigo-600 to-purple-600 shadow-md' : 'text-gray-700 hover:bg-gray-50' }}">
-                        <svg class="mr-3 h-5 w-5 {{ request()->routeIs('tutor.schedule.*') ? 'text-white' : 'text-gray-500 group-hover:text-indigo-500' }}" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                        </svg>
-                        Quản lý hợp đồng gia sư
-                    </a>
+                    <div x-data="{ open: false }" class="relative">
+                        <button @click="open = !open" class="group flex items-center justify-between w-full py-3 px-4 text-sm font-medium rounded-lg {{ (request()->routeIs('tutor.jobs.*') || request()->routeIs('contracts.my')) ? 'text-white bg-gradient-to-r from-indigo-600 to-purple-600 shadow-md' : 'text-gray-700 hover:bg-gray-50' }}">
+                            <div class="flex items-center">
+                                <svg class="mr-3 h-5 w-5 {{ (request()->routeIs('tutor.jobs.*') || request()->routeIs('contracts.my')) ? 'text-white' : 'text-gray-500 group-hover:text-indigo-500' }}" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                                </svg>
+                                Quản lý ứng tuyển
+                            </div>
+                            <svg class="h-4 w-4 {{ (request()->routeIs('tutor.jobs.*') || request()->routeIs('contracts.my')) ? 'text-white' : 'text-gray-500' }}" fill="none" viewBox="0 0 24 24" stroke="currentColor" :class="{ 'rotate-180': open }">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                            </svg>
+                        </button>
+                        <div x-show="open" x-transition:enter="transition ease-out duration-100" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="transform opacity-100 scale-100" x-transition:leave-end="transform opacity-0 scale-95" class="mt-1 space-y-1 pl-8">
+                            <a href="{{ route('tutor.jobs.index') }}" class="group flex items-center py-2 px-4 text-sm font-medium rounded-lg {{ request()->routeIs('tutor.jobs.*') ? 'text-indigo-600 bg-indigo-50' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50' }}">
+                                Quản lý tin tuyển dụng
+                            </a>
+                            <a href="{{ route('contracts.my') }}" class="group flex items-center py-2 px-4 text-sm font-medium rounded-lg {{ request()->routeIs('contracts.my') ? 'text-indigo-600 bg-indigo-50' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50' }}">
+                                Quản lý hợp đồng gia sư
+                            </a>
+                        </div>
+                    </div>
 
                     <a href="{{ route('tutor.earnings.index') }}" class="group flex items-center py-3 px-4 text-sm font-medium rounded-lg {{ request()->routeIs('tutor.earnings.*') ? 'text-white bg-gradient-to-r from-indigo-600 to-purple-600 shadow-md' : 'text-gray-700 hover:bg-gray-50' }}">
                         <svg class="mr-3 h-5 w-5 {{ request()->routeIs('tutor.earnings.*') ? 'text-white' : 'text-gray-500 group-hover:text-indigo-500' }}" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -155,7 +163,7 @@
                         </div>
                         
                         <!-- Navigation -->
-                        <nav class="mt-6 px-4 space-y-1.5">
+                        <nav class="mt-6 px-4 space-y-1.5" x-data="{ dropdownOpen: false }">
                             <a href="{{ route('tutor.dashboard') }}" class="group flex items-center py-3 px-4 text-sm font-medium rounded-lg {{ request()->routeIs('tutor.dashboard') ? 'text-white bg-gradient-to-r from-indigo-600 to-purple-600 shadow-md' : 'text-gray-700 hover:bg-gray-50' }}">
                                 <svg class="mr-3 h-5 w-5 {{ request()->routeIs('tutor.dashboard') ? 'text-white' : 'text-gray-500 group-hover:text-indigo-500' }}" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
@@ -174,8 +182,30 @@
                                 <svg class="mr-3 h-5 w-5 {{ request()->routeIs('tutor.schedule.*') ? 'text-white' : 'text-gray-500 group-hover:text-indigo-500' }}" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
                                 </svg>
-                                ca dạy
+                                quản lý lịch rảnh
                             </a>
+
+                            <div x-data="{ open: false }" class="relative">
+                                <button @click="open = !open" class="group flex items-center justify-between w-full py-3 px-4 text-sm font-medium rounded-lg {{ (request()->routeIs('tutor.jobs.*') || request()->routeIs('contracts.my')) ? 'text-white bg-gradient-to-r from-indigo-600 to-purple-600 shadow-md' : 'text-gray-700 hover:bg-gray-50' }}">
+                                    <div class="flex items-center">
+                                        <svg class="mr-3 h-5 w-5 {{ (request()->routeIs('tutor.jobs.*') || request()->routeIs('contracts.my')) ? 'text-white' : 'text-gray-500 group-hover:text-indigo-500' }}" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                                        </svg>
+                                        Quản lý ứng tuyển
+                                    </div>
+                                    <svg class="h-4 w-4 {{ (request()->routeIs('tutor.jobs.*') || request()->routeIs('contracts.my')) ? 'text-white' : 'text-gray-500' }}" fill="none" viewBox="0 0 24 24" stroke="currentColor" :class="{ 'rotate-180': open }">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                                    </svg>
+                                </button>
+                                <div x-show="open" x-transition:enter="transition ease-out duration-100" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="transform opacity-100 scale-100" x-transition:leave-end="transform opacity-0 scale-95" class="mt-1 space-y-1 pl-8">
+                                    <a href="{{ route('tutor.jobs.index') }}" class="group flex items-center py-2 px-4 text-sm font-medium rounded-lg {{ request()->routeIs('tutor.jobs.*') ? 'text-indigo-600 bg-indigo-50' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50' }}">
+                                        Quản lý tin tuyển dụng
+                                    </a>
+                                    <a href="{{ route('contracts.my') }}" class="group flex items-center py-2 px-4 text-sm font-medium rounded-lg {{ request()->routeIs('contracts.my') ? 'text-indigo-600 bg-indigo-50' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50' }}">
+                                        Quản lý hợp đồng gia sư
+                                    </a>
+                                </div>
+                            </div>
 
                             <a href="{{ route('tutor.earnings.index') }}" class="group flex items-center py-3 px-4 text-sm font-medium rounded-lg {{ request()->routeIs('tutor.earnings.*') ? 'text-white bg-gradient-to-r from-indigo-600 to-purple-600 shadow-md' : 'text-gray-700 hover:bg-gray-50' }}">
                                 <svg class="mr-3 h-5 w-5 {{ request()->routeIs('tutor.earnings.*') ? 'text-white' : 'text-gray-500 group-hover:text-indigo-500' }}" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -237,7 +267,7 @@
                         @elseif(request()->routeIs('tutor.bookings.*'))
                             <h1 class="text-lg font-semibold text-gray-800">Lịch Dạy</h1>
                         @elseif(request()->routeIs('tutor.schedule.*'))
-                            <h1 class="text-lg font-semibold text-gray-800">ca dạy</h1>
+                            <h1 class="text-lg font-semibold text-gray-800">quản lý lịch rảnh</h1>
                         @elseif(request()->routeIs('tutor.earnings.*'))
                             <h1 class="text-lg font-semibold text-gray-800">Thu Nhập</h1>
                         @elseif(request()->routeIs('tutor.profile.*'))

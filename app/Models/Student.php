@@ -35,7 +35,7 @@ class Student extends Model
     }
 
     /**
-     * Lấy danh sách ca dạy của học sinh
+     * Lấy danh sách quản lý lịch rảnh của học sinh
      */
     public function availabilities()
     {

@@ -22,14 +22,14 @@
                                     <div class="rounded-lg bg-gray-50 p-5">
                                         <h3 class="text-lg font-medium text-gray-900 mb-2">Nền tảng Kết nối Gia sư là gì?</h3>
                                         <div class="text-gray-600">
-                                            <p>Nền tảng Kết nối Gia sư là một dịch vụ trực tuyến giúp kết nối học sinh/phụ huynh với các gia sư chất lượng cao. Chúng tôi cung cấp một nền tảng an toàn, tiện lợi và đáng tin cậy để bạn có thể tìm kiếm, Đặt Lịch Ca Dạy GS và thanh toán các buổi học với gia sư phù hợp với nhu cầu học tập của bạn.</p>
+                                            <p>Nền tảng Kết nối Gia sư là một dịch vụ trực tuyến giúp kết nối học sinh/phụ huynh với các gia sư chất lượng cao. Chúng tôi cung cấp một nền tảng an toàn, tiện lợi và đáng tin cậy để bạn có thể tìm kiếm, Kết nối gia sư hỗ trợ nhanh và thanh toán các buổi học với gia sư phù hợp với nhu cầu học tập của bạn.</p>
                                         </div>
                                     </div>
                                     
                                     <div class="rounded-lg bg-gray-50 p-5">
                                         <h3 class="text-lg font-medium text-gray-900 mb-2">Làm thế nào để bắt đầu sử dụng dịch vụ?</h3>
                                         <div class="text-gray-600">
-                                            <p>Để bắt đầu sử dụng dịch vụ, bạn chỉ cần đăng ký một tài khoản trên trang web của chúng tôi. Sau khi đăng ký, bạn có thể tìm kiếm gia sư theo môn học, cấp học hoặc các tiêu chí khác, xem hồ sơ chi tiết của gia sư, và Đặt Lịch Ca Dạy GS học với gia sư mà bạn chọn.</p>
+                                            <p>Để bắt đầu sử dụng dịch vụ, bạn chỉ cần đăng ký một tài khoản trên trang web của chúng tôi. Sau khi đăng ký, bạn có thể tìm kiếm gia sư theo môn học, cấp học hoặc các tiêu chí khác, xem hồ sơ chi tiết của gia sư, và Kết nối gia sư hỗ trợ nhanh học với gia sư mà bạn chọn.</p>
                                         </div>
                                     </div>
                                     
@@ -48,7 +48,7 @@
                                 
                                 <div class="mt-6 space-y-6">
                                     <div class="rounded-lg bg-gray-50 p-5">
-                                        <h3 class="text-lg font-medium text-gray-900 mb-2">Làm thế nào để tìm gia sư phù hợp?</h3>
+                                        <h3 class="text-lg font-medium text-gray-900 mb-2">Làm thế nào để Kết nối gia sư uy tín và hiệu quả?</h3>
                                         <div class="text-gray-600">
                                             <p>Bạn có thể sử dụng công cụ tìm kiếm của chúng tôi để lọc gia sư theo môn học, cấp học, giá cả, và các tiêu chí khác. Mỗi gia sư đều có hồ sơ chi tiết bao gồm kinh nghiệm, trình độ học vấn, và đánh giá từ học sinh trước đó để giúp bạn đưa ra quyết định.</p>
                                         </div>
@@ -70,15 +70,15 @@
                                 </div>
                             </div>
                             
-                            <!-- Nhóm câu hỏi: Đặt Lịch Ca Dạy GS và thanh toán -->
+                            <!-- Nhóm câu hỏi: Kết nối gia sư hỗ trợ nhanh và thanh toán -->
                             <div>
-                                <h2 class="text-xl font-semibold text-gray-900 border-b border-gray-200 pb-2 mb-4">Đặt Lịch Ca Dạy GS và thanh toán</h2>
+                                <h2 class="text-xl font-semibold text-gray-900 border-b border-gray-200 pb-2 mb-4">Kết nối gia sư hỗ trợ nhanh và thanh toán</h2>
                                 
                                 <div class="mt-6 space-y-6">
                                     <div class="rounded-lg bg-gray-50 p-5">
-                                        <h3 class="text-lg font-medium text-gray-900 mb-2">Làm thế nào để Đặt Lịch Ca Dạy GS học với gia sư?</h3>
+                                        <h3 class="text-lg font-medium text-gray-900 mb-2">Làm thế nào để Kết nối gia sư hỗ trợ nhanh học với gia sư?</h3>
                                         <div class="text-gray-600">
-                                            <p>Sau khi tìm được gia sư phù hợp, bạn có thể xem lịch trống của gia sư và chọn thời gian phù hợp để Đặt Lịch Ca Dạy GS. Bạn cần điền thông tin về môn học, mục tiêu học tập và các yêu cầu cụ thể. Sau khi gửi yêu cầu, gia sư sẽ xác nhận và buổi học sẽ được lên lịch.</p>
+                                            <p>Sau khi tìm được gia sư phù hợp, bạn có thể xem lịch trống của gia sư và chọn thời gian phù hợp để Kết nối gia sư hỗ trợ nhanh. Bạn cần điền thông tin về môn học, mục tiêu học tập và các yêu cầu cụ thể. Sau khi gửi yêu cầu, gia sư sẽ xác nhận và buổi học sẽ được lên lịch.</p>
                                         </div>
                                     </div>
                                     

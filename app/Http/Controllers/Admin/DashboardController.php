@@ -37,7 +37,7 @@ class DashboardController extends Controller
         $applicationPerPost = $totalApprovedPosts > 0 ? round($totalApplications / $totalApprovedPosts, 2) : 0;
         $closedContractPerPost = $totalApprovedPosts > 0 ? round($totalClosedContracts / $totalApprovedPosts, 2) : 0;
 
-        // Lấy danh sách Đặt Lịch Ca Dạy GS hôm nay
+        // Lấy danh sách Kết nối gia sư hỗ trợ nhanh hôm nay
         $todayBookings = Booking::with(['student', 'tutor.user', 'subject'])
             ->whereDate('start_time', Carbon::today())
             ->get();
@@ -64,7 +64,7 @@ class DashboardController extends Controller
             'data' => $tutorRegistrationData->pluck('total'),
         ];
 
-        // Thống kê Đặt Lịch Ca Dạy GS theo môn học
+        // Thống kê Kết nối gia sư hỗ trợ nhanh theo môn học
         $bookingsBySubjectData = Booking::select('subjects.name', DB::raw('count(*) as total'))
             ->join('subjects', 'bookings.subject_id', '=', 'subjects.id')
             ->groupBy('subjects.id', 'subjects.name')

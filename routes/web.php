@@ -144,7 +144,7 @@ Route::prefix('student')->name('student.')->middleware(['auth'])->group(function
     
 
 
-    // Quản lý ca dạy học sinh
+    // Quản lý quản lý lịch rảnh học sinh
     Route::get('/availability', [App\Http\Controllers\Student\AvailabilityController::class, 'index'])->name('availability.index');
     Route::get('/availability/create', [App\Http\Controllers\Student\AvailabilityController::class, 'create'])->name('availability.create');
     Route::post('/availability', [App\Http\Controllers\Student\AvailabilityController::class, 'store'])->name('availability.store');
@@ -180,12 +180,12 @@ Route::middleware(['auth', 'tutor'])->prefix('tutor')->name('tutor.')->group(fun
     Route::post('/bookings/{booking}/report-issue', [TutorBookingController::class, 'reportIssue'])->name('bookings.report-issue');
 
     // Route API cho lịch sử Lịch sử thay đổi booking
-    Route::get('/bookings/{booking}/reasons', [TutorBookingController::class, 'reasons'])->name('bookings.reasons');
+    Route::get('/bookings/{booking}/reasons', [TutorBookingController::class, 'reasons'])->name('tutor.bookings.reasons');
 
     // quản lý tin đăng tuyển gia sư
     Route::get('/my-jobs', [App\Http\Controllers\Tutor\MyJobsController::class, 'index'])->name('jobs.index');
 
-    // ca dạy - Sử dụng AvailabilityController
+    // quản lý lịch rảnh - Sử dụng AvailabilityController
     Route::get('/schedule', [App\Http\Controllers\Tutor\AvailabilityController::class, 'index'])->name('schedule.index');
     Route::get('/schedule/quick', [App\Http\Controllers\Tutor\AvailabilityController::class, 'quickCreate'])->name('schedule.quick');
     Route::post('/schedule/quick-store', [App\Http\Controllers\Tutor\AvailabilityController::class, 'quickStore'])->name('schedule.quick-store');
@@ -195,7 +195,7 @@ Route::middleware(['auth', 'tutor'])->prefix('tutor')->name('tutor.')->group(fun
     Route::put('/schedule/{availability}', [App\Http\Controllers\Tutor\AvailabilityController::class, 'update'])->name('schedule.update');
     Route::delete('/schedule/{availability}', [App\Http\Controllers\Tutor\AvailabilityController::class, 'destroy'])->name('schedule.destroy');
     
-    // ca dạy - Sử dụng route resource cho AvailabilityController mới
+    // quản lý lịch rảnh - Sử dụng route resource cho AvailabilityController mới
     Route::get('/availability', [App\Http\Controllers\Tutor\AvailabilityController::class, 'index'])->name('availability.index');
     Route::get('/availability/create', [App\Http\Controllers\Tutor\AvailabilityController::class, 'create'])->name('availability.create');
     Route::post('/availability', [App\Http\Controllers\Tutor\AvailabilityController::class, 'store'])->name('availability.store');

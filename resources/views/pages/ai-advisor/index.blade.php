@@ -104,7 +104,7 @@
                                                                 stroke-width="2"
                                                                 d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                                                         </svg>
-                                                        Tìm gia sư phù hợp với nhu cầu của bạn
+                                                        Kết nối gia sư uy tín và hiệu quả với nhu cầu của bạn
                                                     </li>
                                                     <li class="flex items-center text-sm">
                                                         <svg class="h-5 w-5 text-blue-500 mr-2" fill="none"

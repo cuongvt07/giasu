@@ -72,7 +72,7 @@ class Tutor extends Model
     }
 
     /**
-     * Lấy ca dạy của gia sư
+     * Lấy quản lý lịch rảnh của gia sư
      */
     public function availabilities()
     {

@@ -38,7 +38,7 @@ class ScheduleController extends Controller
 
         $tutor = Auth::user()->tutor;
         
-        // Kiểm tra xem ca dạy có bị trùng không
+        // Kiểm tra xem quản lý lịch rảnh có bị trùng không
         $existingSchedule = $tutor->schedules()
             ->where('day_of_week', $request->day_of_week)
             ->where(function($query) use ($request) {
@@ -47,7 +47,7 @@ class ScheduleController extends Controller
             })->first();
 
         if ($existingSchedule) {
-            return back()->with('error', 'ca dạy này bị trùng với lịch đã có.');
+            return back()->with('error', 'quản lý lịch rảnh này bị trùng với lịch đã có.');
         }
 
         $tutor->schedules()->create([
@@ -56,17 +56,17 @@ class ScheduleController extends Controller
             'end_time' => $request->end_time,
         ]);
 
-        return back()->with('success', 'Đã thêm ca dạy thành công.');
+        return back()->with('success', 'Đã thêm quản lý lịch rảnh thành công.');
     }
 
     public function destroy(Schedule $schedule)
     {
-        // Kiểm tra xem ca dạy có thuộc về gia sư hiện tại không
+        // Kiểm tra xem quản lý lịch rảnh có thuộc về gia sư hiện tại không
         if ($schedule->tutor_id !== Auth::user()->tutor->id) {
-            return back()->with('error', 'Bạn không có quyền xóa ca dạy này.');
+            return back()->with('error', 'Bạn không có quyền xóa quản lý lịch rảnh này.');
         }
 
         $schedule->delete();
-        return back()->with('success', 'Đã xóa ca dạy thành công.');
+        return back()->with('success', 'Đã xóa quản lý lịch rảnh thành công.');
     }
 } 

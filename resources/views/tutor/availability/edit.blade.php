@@ -4,7 +4,7 @@
     <div class="bg-white shadow overflow-hidden sm:rounded-lg">
         <div class="px-4 py-5 sm:px-6">
             <h2 class="text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:truncate">
-                Chỉnh Sửa ca dạy
+                Chỉnh Sửa quản lý lịch rảnh
             </h2>
             <p class="mt-1 max-w-2xl text-sm text-gray-500">
                 Cập nhật khung giờ dạy học

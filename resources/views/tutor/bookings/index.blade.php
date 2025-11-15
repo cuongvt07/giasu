@@ -265,7 +265,7 @@
         </div>
         <div class="bg-white rounded-lg overflow-hidden shadow-xl transform transition-all sm:max-w-lg w-full z-50">
             <div class="px-4 py-4 border-b border-gray-200 flex justify-between items-center">
-                <h3 class="text-lg font-medium text-gray-900">Lịch sử Lịch sử thay đổi</h3>
+                <h3 class="text-lg font-medium text-gray-900">Lịch sử thay đổi</h3>
                 <button onclick="closeReasonHistory()" class="text-gray-400 hover:text-gray-600">&times;</button>
             </div>
             <div class="px-4 py-4" id="reason-history-content" style="max-height:500px; overflow-y:auto;">
@@ -276,8 +276,13 @@
 
 <script>
 function showReasonHistory(bookingId) {
-    fetch(`/tutor/bookings/${bookingId}/reasons`)
-        .then(res => res.json())
+    fetch(`{{ url('tutor/bookings') }}/${bookingId}/reasons`)
+        .then(res => {
+            if (!res.ok) {
+                throw new Error(`HTTP error! status: ${res.status}`);
+            }
+            return res.json();
+        })
         .then(data => {
             let html = '';
             if (data.length === 0) {
@@ -305,6 +310,11 @@ function showReasonHistory(bookingId) {
                 html += '</ul>';
             }
             document.getElementById('reason-history-content').innerHTML = html;
+            document.getElementById('reason-history-modal').classList.remove('hidden');
+        })
+        .catch(error => {
+            console.error('Error fetching reason history:', error);
+            document.getElementById('reason-history-content').innerHTML = '<div class="text-red-500">Có lỗi xảy ra khi tải lịch sử thay đổi.</div>';
             document.getElementById('reason-history-modal').classList.remove('hidden');
         });
 }

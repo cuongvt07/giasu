@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Gia Sư Online') }}</title>
+    <title>{{ config('app.name', 'Trung tâm gia sư Trí tuệ Việt') }}</title>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -27,7 +27,7 @@
                     <!-- Logo -->
                     <div class="flex-shrink-0 flex items-center">
                         <a href="{{ route('home') }}" class="text-2xl font-bold text-indigo-600">
-                            Gia Sư Online
+                            Trung tâm gia sư<br>Trí tuệ Việt
                         </a>
                     </div>
 

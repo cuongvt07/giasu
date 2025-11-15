@@ -181,7 +181,7 @@
                                     x-model="formData.budget_min"
                                     class="w-full border border-gray-200 rounded-lg px-3 py-2 
                                             focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
-                                    placeholder="150000" />
+                                    placeholder="VD: 150000" />
                             </div>
                             <div>
                                 <label class="block text-sm font-medium text-gray-600 mb-1">Tối đa</label>
@@ -190,7 +190,7 @@
                                     x-model="formData.budget_max"
                                     class="w-full border border-gray-200 rounded-lg px-3 py-2 
                                             focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
-                                    placeholder="200000" />
+                                    placeholder="VD: 200000" />
                             </div>
                             <div class="col-span-2">
                                 <label class="block text-sm font-medium text-gray-600 mb-1">Đơn vị</label>
@@ -225,7 +225,7 @@
                                    x-model="formData.sessions_per_week"
                                    min="1" max="7"
                                    class="w-full border-2 border-gray-200 rounded-lg px-4 py-3 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all"
-                                   placeholder="2" />
+                                   placeholder="VD: 2" />
                         </div>
 
                         <div>
@@ -400,7 +400,7 @@
                                        x-model="formData.min_experience_yr"
                                        min="0"
                                        class="w-full border border-gray-200 rounded-lg px-3 py-2 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
-                                       placeholder="1" />
+                                       placeholder="VD:1" />
                             </div>
                         </div>
                     </div>

@@ -7,7 +7,7 @@
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center">
                     <h1 class="text-4xl font-extrabold text-white sm:text-5xl md:text-6xl">
-                        Tìm Gia Sư Phù Hợp
+                        Kết nối gia sư uy tín và hiệu quả
                     </h1>
                     <p class="mt-3 max-w-md mx-auto text-base text-indigo-100 sm:text-lg md:mt-5 md:text-xl md:max-w-3xl">
                         Khám phá đội ngũ gia sư chất lượng cao, được tuyển chọn kỹ càng để đồng hành cùng hành trình học tập của bạn.

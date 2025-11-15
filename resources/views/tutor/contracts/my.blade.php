@@ -6,7 +6,7 @@
     <!-- Hero Section -->
     <div class="bg-white border-b border-gray-200 py-10">
         <div class="max-w-7xl mx-auto px-4 text-center">
-            <h1 class="text-4xl font-extrabold text-gray-900 font-serif">Hợp Đồng & Tin Đăng Tôi Đã Apply</h1>
+            <h1 class="text-4xl font-extrabold text-gray-900">Hợp Đồng & Tin Đăng Tôi Đã Apply</h1>
             <p class="mt-3 text-gray-600 max-w-2xl mx-auto">
                 Danh sách các hợp đồng bạn tham gia và các tin đăng bạn đã apply nhưng chưa được chọn.
             </p>

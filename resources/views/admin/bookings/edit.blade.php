@@ -1,16 +1,16 @@
 @extends('layouts.admin')
 
-@section('page_title', 'Chỉnh Sửa Đặt Lịch Ca Dạy GS')
+@section('page_title', 'Chỉnh Sửa Kết nối gia sư hỗ trợ nhanh')
 
 @section('content')
 <div class="max-w-3xl mx-auto">
     <div class="bg-white shadow rounded-lg">
         <div class="px-6 py-4 border-b border-gray-200">
-            <h2 class="text-xl font-semibold text-gray-900">Chỉnh Sửa Trạng Thái Đặt Lịch Ca Dạy GS</h2>
+            <h2 class="text-xl font-semibold text-gray-900">Chỉnh Sửa Trạng Thái Kết nối gia sư hỗ trợ nhanh</h2>
         </div>
 
         <div class="p-6">
-            <!-- Thông tin Đặt Lịch Ca Dạy GS -->
+            <!-- Thông tin Kết nối gia sư hỗ trợ nhanh -->
             <div class="mb-8 bg-gray-50 p-4 rounded-lg">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
