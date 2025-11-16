@@ -7,6 +7,7 @@
     isApplying: false,
     flashMessage: null,
     flashType: 'success',
+    isAdmin: {{ auth()->guard('admin')->check() ? 'true' : 'false' }},
 
     showMessage(msg, type = 'success') {
         this.flashMessage = msg;
@@ -347,11 +348,11 @@
                         </div>
                         <div>
                             <dt class="font-medium text-gray-600">Điện thoại liên hệ:</dt>
-                            <dd x-text="selectedJob.contact_phone"></dd>
+                            <dd x-text="isAdmin === 'true' ? selectedJob.contact_phone : '*****'"></dd>
                         </div>
                         <div>
                             <dt class="font-medium text-gray-600">Email liên hệ:</dt>
-                            <dd x-text="selectedJob.contact_email || '—'"></dd>
+                            <dd x-text="isAdmin === 'true' ? (selectedJob.contact_email || '—') : '*****'"></dd>
                         </div>
                         <div>
                             <dt class="font-medium text-gray-600">Hạn chót:</dt>
