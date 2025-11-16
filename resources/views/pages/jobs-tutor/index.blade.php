@@ -206,7 +206,7 @@
 
                             @php
                                 $user = auth()->user();
-                                $tutorId = $user?->tutor?->user_id; // Lấy ID gia sư nếu có
+                                $tutorId = $user?->tutor?->id; // Lấy ID gia sư nếu có
                                 $appliedIds = $post->applied_tutor_ids ?? [];
                             @endphp
 
@@ -373,7 +373,7 @@
 
                     @php
                         $user = auth()->user();
-                        $tutorId = $user?->tutor?->user_id;
+                        $tutorId = $user?->tutor?->id;
                     @endphp
                     @auth
                         <template x-if="selectedJob">

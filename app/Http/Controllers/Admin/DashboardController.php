@@ -9,29 +9,49 @@ use App\Models\Subject;
 use App\Models\Booking;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-    // Thống kê cơ bản
-    $totalUsers = User::count();
-    $totalTutors = Tutor::count();
-    $totalSubjects = Subject::count();
-    $totalBookings = Booking::count();
+        $date_from = $request->date_from ? Carbon::parse($request->date_from)->startOfDay() : null;
+        $date_to = $request->date_to ? Carbon::parse($request->date_to)->endOfDay() : null;
 
-    // Thống kê tin đăng phụ huynh đã duyệt
-    $totalApprovedPosts = \App\Models\TutorPost::count();
+        // Thống kê cơ bản
+        $totalUsers = User::when($date_from && $date_to, function($q) use ($date_from, $date_to) {
+            return $q->whereBetween('created_at', [$date_from, $date_to]);
+        })->count();
 
-    // Thống kê tổng số hợp đồng
-    $totalContracts = \App\Models\Contract::count();
+        $totalTutors = Tutor::when($date_from && $date_to, function($q) use ($date_from, $date_to) {
+            return $q->whereBetween('created_at', [$date_from, $date_to]);
+        })->count();
+
+        $totalSubjects = Subject::count(); // Subjects probably don't have date filter
+
+        $totalBookings = Booking::when($date_from && $date_to, function($q) use ($date_from, $date_to) {
+            return $q->whereBetween('created_at', [$date_from, $date_to]);
+        })->count();
+
+        // Thống kê tin đăng phụ huynh đã duyệt
+        $totalApprovedPosts = \App\Models\TutorPost::when($date_from && $date_to, function($q) use ($date_from, $date_to) {
+            return $q->whereBetween('created_at', [$date_from, $date_to]);
+        })->count();
+
+        // Thống kê tổng số hợp đồng
+        $totalContracts = \App\Models\Contract::when($date_from && $date_to, function($q) use ($date_from, $date_to) {
+            return $q->whereBetween('created_at', [$date_from, $date_to]);
+        })->count();
 
         // Thống kê hiệu quả kết nối
         // Lượt ứng tuyển (số lượng apply trên tất cả tin đăng)
-        $totalApplications = \App\Models\TutorPost::withCount('applications')->get()->sum('applications_count');
+        $totalApplications = \App\Models\TutorPost::withCount('applications')->when($date_from && $date_to, function($q) use ($date_from, $date_to) {
+            return $q->whereBetween('tutor_posts.created_at', [$date_from, $date_to]);
+        })->get()->sum('applications_count');
+
         // Lượt hợp đồng đã chốt (có system_verified_at)
-        $totalClosedContracts = \App\Models\Contract::count();
+        $totalClosedContracts = \App\Models\Contract::when($date_from && $date_to, function($q) use ($date_from, $date_to) {
+            return $q->whereBetween('created_at', [$date_from, $date_to]);
+        })->count();
 
         // Tính tỉ lệ
         $applicationPerPost = $totalApprovedPosts > 0 ? round($totalApplications / $totalApprovedPosts, 2) : 0;
@@ -39,23 +59,43 @@ class DashboardController extends Controller
 
         // Lấy danh sách Kết nối gia sư hỗ trợ nhanh hôm nay
         $todayBookings = Booking::with(['student', 'tutor.user', 'subject'])
-            ->whereDate('start_time', Carbon::today())
+            ->when($date_from && $date_to, function($q) use ($date_from, $date_to) {
+                return $q->whereBetween('start_time', [$date_from, $date_to]);
+            }, function($q) {
+                return $q->whereDate('start_time', Carbon::today());
+            })
             ->get();
             
         // Thống kê doanh thu và thu nhập
         $platformStats = [
-            'total_platform_fee' => \App\Models\TutorEarning::whereIn('status', ['completed', 'processing'])->sum('platform_fee'),
-            'pending_payments' => \App\Models\TutorEarning::where('status', 'pending')->sum('amount'),
-            'completed_payments' => \App\Models\TutorEarning::where('status', 'completed')->sum('amount'),
-            'total_earnings' => \App\Models\TutorEarning::sum('total_amount'),
+            'total_platform_fee' => \App\Models\TutorEarning::when($date_from && $date_to, function($q) use ($date_from, $date_to) {
+                return $q->whereBetween('created_at', [$date_from, $date_to]);
+            })->whereIn('status', ['completed', 'processing'])->sum('platform_fee'),
+            'pending_payments' => \App\Models\TutorEarning::when($date_from && $date_to, function($q) use ($date_from, $date_to) {
+                return $q->whereBetween('created_at', [$date_from, $date_to]);
+            })->where('status', 'pending')->sum('amount'),
+            'completed_payments' => \App\Models\TutorEarning::when($date_from && $date_to, function($q) use ($date_from, $date_to) {
+                return $q->whereBetween('created_at', [$date_from, $date_to]);
+            })->where('status', 'completed')->sum('amount'),
+            'total_earnings' => \App\Models\TutorEarning::when($date_from && $date_to, function($q) use ($date_from, $date_to) {
+                return $q->whereBetween('created_at', [$date_from, $date_to]);
+            })->sum('total_amount'),
         ];
 
-        // Thống kê đăng ký gia sư theo thời gian (7 ngày gần nhất)
-        $tutorRegistrationData = Tutor::select(DB::raw('DATE(created_at) as date'), DB::raw('count(*) as total'))
-            ->where('created_at', '>=', Carbon::now()->subDays(7))
-            ->groupBy('date')
-            ->orderBy('date')
-            ->get();
+        // Thống kê đăng ký gia sư theo thời gian
+        if ($date_from && $date_to) {
+            $tutorRegistrationData = Tutor::select(DB::raw('DATE(created_at) as date'), DB::raw('count(*) as total'))
+                ->whereBetween('created_at', [$date_from, $date_to])
+                ->groupBy('date')
+                ->orderBy('date')
+                ->get();
+        } else {
+            $tutorRegistrationData = Tutor::select(DB::raw('DATE(created_at) as date'), DB::raw('count(*) as total'))
+                ->where('created_at', '>=', Carbon::now()->subDays(7))
+                ->groupBy('date')
+                ->orderBy('date')
+                ->get();
+        }
 
         $tutorRegistrationChart = [
             'labels' => $tutorRegistrationData->pluck('date')->map(function($date) {
@@ -67,6 +107,9 @@ class DashboardController extends Controller
         // Thống kê Kết nối gia sư hỗ trợ nhanh theo môn học
         $bookingsBySubjectData = Booking::select('subjects.name', DB::raw('count(*) as total'))
             ->join('subjects', 'bookings.subject_id', '=', 'subjects.id')
+            ->when($date_from && $date_to, function($q) use ($date_from, $date_to) {
+                return $q->whereBetween('bookings.created_at', [$date_from, $date_to]);
+            })
             ->groupBy('subjects.id', 'subjects.name')
             ->orderByDesc('total')
             ->limit(10)
@@ -79,22 +122,46 @@ class DashboardController extends Controller
         
         // Lấy các khoản thanh toán gia sư chờ xử lý
         $pendingEarnings = \App\Models\TutorEarning::with(['tutor.user', 'booking.subject'])
+            ->when($date_from && $date_to, function($q) use ($date_from, $date_to) {
+                return $q->whereBetween('tutor_earnings.created_at', [$date_from, $date_to]);
+            })
             ->where('status', 'pending')
             ->latest()
             ->take(5)
             ->get();
 
-        $contracts_signed_student = \App\Models\Contract::whereNotNull('signed_student_at')->whereNull('signed_tutor_at')->whereNull('system_verified_at')->with(['tutorPost', 'student', 'tutor'])->latest()->take(20)->get();
-        $contracts_signed_tutor = \App\Models\Contract::whereNotNull('signed_tutor_at')->whereNull('signed_student_at')->whereNull('system_verified_at')->with(['tutorPost', 'student', 'tutor'])->latest()->take(20)->get();
-        $contracts_both_signed = \App\Models\Contract::whereNotNull('signed_student_at')->whereNotNull('signed_tutor_at')->whereNull('system_verified_at')->with(['tutorPost', 'student', 'tutor'])->latest()->take(20)->get();
-        $contracts_admin_signed = \App\Models\Contract::whereNotNull('system_verified_at')->with(['tutorPost', 'student', 'tutor'])->latest()->take(20)->get();
+        $contracts_signed_student = \App\Models\Contract::when($date_from && $date_to, function($q) use ($date_from, $date_to) {
+            return $q->whereBetween('contracts.created_at', [$date_from, $date_to]);
+        })->whereNotNull('signed_student_at')->whereNull('signed_tutor_at')->whereNull('system_verified_at')->with(['tutorPost', 'student', 'tutor'])->latest()->take(20)->get();
 
+        $contracts_signed_tutor = \App\Models\Contract::when($date_from && $date_to, function($q) use ($date_from, $date_to) {
+            return $q->whereBetween('contracts.created_at', [$date_from, $date_to]);
+        })->whereNotNull('signed_tutor_at')->whereNull('signed_student_at')->whereNull('system_verified_at')->with(['tutorPost', 'student', 'tutor'])->latest()->take(20)->get();
+
+        $contracts_both_signed = \App\Models\Contract::when($date_from && $date_to, function($q) use ($date_from, $date_to) {
+            return $q->whereBetween('contracts.created_at', [$date_from, $date_to]);
+        })->whereNotNull('signed_student_at')->whereNotNull('signed_tutor_at')->whereNull('system_verified_at')->with(['tutorPost', 'student', 'tutor'])->latest()->take(20)->get();
+
+        $contracts_admin_signed = \App\Models\Contract::when($date_from && $date_to, function($q) use ($date_from, $date_to) {
+            return $q->whereBetween('contracts.created_at', [$date_from, $date_to]);
+        })->whereNotNull('system_verified_at')->with(['tutorPost', 'student', 'tutor'])->latest()->take(20)->get();
 
         // Đếm số lượng hợp đồng cho từng tab
-        $count_signed_student = \App\Models\Contract::whereNotNull('signed_student_at')->whereNull('signed_tutor_at')->whereNull('system_verified_at')->count();
-        $count_signed_tutor = \App\Models\Contract::whereNotNull('signed_tutor_at')->whereNull('signed_student_at')->whereNull('system_verified_at')->count();
-        $count_both_signed = \App\Models\Contract::whereNotNull('signed_student_at')->whereNotNull('signed_tutor_at')->whereNull('system_verified_at')->count();
-        $count_admin_signed = \App\Models\Contract::whereNotNull('system_verified_at')->count();
+        $count_signed_student = \App\Models\Contract::when($date_from && $date_to, function($q) use ($date_from, $date_to) {
+            return $q->whereBetween('created_at', [$date_from, $date_to]);
+        })->whereNotNull('signed_student_at')->whereNull('signed_tutor_at')->whereNull('system_verified_at')->count();
+
+        $count_signed_tutor = \App\Models\Contract::when($date_from && $date_to, function($q) use ($date_from, $date_to) {
+            return $q->whereBetween('created_at', [$date_from, $date_to]);
+        })->whereNotNull('signed_tutor_at')->whereNull('signed_student_at')->whereNull('system_verified_at')->count();
+
+        $count_both_signed = \App\Models\Contract::when($date_from && $date_to, function($q) use ($date_from, $date_to) {
+            return $q->whereBetween('created_at', [$date_from, $date_to]);
+        })->whereNotNull('signed_student_at')->whereNotNull('signed_tutor_at')->whereNull('system_verified_at')->count();
+
+        $count_admin_signed = \App\Models\Contract::when($date_from && $date_to, function($q) use ($date_from, $date_to) {
+            return $q->whereBetween('created_at', [$date_from, $date_to]);
+        })->whereNotNull('system_verified_at')->count();
 
         return view('admin.dashboard', compact(
             'totalUsers',

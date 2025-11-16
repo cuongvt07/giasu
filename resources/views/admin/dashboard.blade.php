@@ -3,6 +3,23 @@
 @section('page_title', 'Tổng Quan')
 
 @section('content')
+<form method="GET" action="{{ route('admin.dashboard') }}" class="mb-8 bg-white p-4 rounded-lg shadow">
+    <div class="flex items-end space-x-4">
+        <div>
+            <label for="date_from" class="block text-sm font-medium text-gray-700">Từ ngày</label>
+            <input type="date" name="date_from" id="date_from" value="{{ request('date_from') }}" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
+        </div>
+        <div>
+            <label for="date_to" class="block text-sm font-medium text-gray-700">Đến ngày</label>
+            <input type="date" name="date_to" id="date_to" value="{{ request('date_to') }}" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
+        </div>
+        <div>
+            <button type="submit" class="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                Lọc
+            </button>
+        </div>
+    </div>
+</form>
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
     <!-- Thống kê người dùng -->
     <div class="bg-white rounded-lg shadow p-6">
@@ -229,7 +246,7 @@
     });
 </script>
 @endpush
-<div class="bg-white rounded-lg shadow mb-8">
+<!-- <div class="bg-white rounded-lg shadow mb-8">
     <div class="px-6 py-4 border-b border-gray-200">
         <h2 class="text-lg font-medium text-gray-900">Kết nối gia sư hỗ trợ nhanh Hôm Nay</h2>
     </div>
@@ -287,10 +304,10 @@
     </table>
     </div>
     </div>
-</div>
+</div> -->
 
 <!-- Khoản thanh toán đang chờ xử lý -->
-<div class="bg-white rounded-lg shadow mb-8">
+<!-- <div class="bg-white rounded-lg shadow mb-8">
     <div class="px-6 py-4 border-b border-gray-200 flex justify-between items-center">
         <h2 class="text-lg font-medium text-gray-900">Thanh Toán Gia Sư Chờ Xử Lý</h2>
         <a href="{{ route('admin.earnings.index') }}" class="text-sm font-medium text-indigo-600 hover:text-indigo-500">Xem tất cả</a>
@@ -339,7 +356,7 @@
     </table>
     </div>
     </div>
-</div>
+</div> -->
 
 <!-- Biểu đồ -->
 <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">

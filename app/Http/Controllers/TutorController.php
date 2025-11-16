@@ -530,7 +530,7 @@ class TutorController extends Controller
             // Kiểm tra đã ứng tuyển chưa
             $existing = DB::table('tutor_applications')
                 ->where('tutor_post_id', $request->job_id)
-                ->where('tutor_id', Auth::id())
+                ->where('tutor_id', $tutor->id)
                 ->first();
 
             if ($existing) {
@@ -540,7 +540,7 @@ class TutorController extends Controller
             // Tạo đơn ứng tuyển
             DB::table('tutor_applications')->insert([
                 'tutor_post_id' => $request->job_id,
-                'tutor_id'      => Auth::id(),
+                'tutor_id'      => $tutor->id,
                 'status'        => 'pending',
                 'note'          => $request->note ?? null,
                 'created_at'    => now(),
