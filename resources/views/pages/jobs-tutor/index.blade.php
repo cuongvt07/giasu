@@ -7,7 +7,7 @@
     isApplying: false,
     flashMessage: null,
     flashType: 'success',
-    isAdmin: {{ auth()->guard('admin')->check() ? 'true' : 'false' }},
+    isAdmin: {{ (auth()->check() && auth()->user()->is_admin) ? 'true' : 'false' }},
 
     showMessage(msg, type = 'success') {
         this.flashMessage = msg;
