@@ -22,14 +22,12 @@ class Tutor extends Model
         'hourly_rate',
         'is_verified',
         'status',
-        'total_teaching_hours',
-        'rating'
+        'total_teaching_hours'
     ];
 
     protected $casts = [
         'is_verified' => 'boolean',
-        'hourly_rate' => 'decimal:2',
-        'rating' => 'decimal:2'
+        'hourly_rate' => 'decimal:2'
     ];
 
     public function user()
@@ -80,10 +78,18 @@ class Tutor extends Model
     }
 
     /**
-     * Lấy thông tin thu nhập của gia sư
+     * Tính rating trung bình từ tất cả reviews
      */
-    public function earnings()
+    public function getRatingAttribute()
     {
-        return $this->hasMany(TutorEarning::class);
+        return $this->reviews()->avg('rating') ?? 0;
+    }
+
+    /**
+     * Đếm số review
+     */
+    public function getReviewsCountAttribute()
+    {
+        return $this->reviews()->count();
     }
 }

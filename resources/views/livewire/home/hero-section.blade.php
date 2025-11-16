@@ -25,6 +25,7 @@
                                 Kết nối gia sư hỗ trợ nhanh
                             </a>
                         </div>
+                        @auth
                         <div class="mt-3 sm:mt-0 sm:ml-3">
                             <a href="#"
                             @click.prevent="openPost = true"
@@ -32,6 +33,7 @@
                                 Đăng tin tìm gia sư
                             </a>
                         </div>
+                        @endauth
                     </div>
                     @guest
                     <div class="mt-3 text-center lg:text-left">

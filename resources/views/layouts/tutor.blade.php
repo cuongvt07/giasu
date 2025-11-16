@@ -63,7 +63,7 @@
                         <svg class="mr-3 h-5 w-5 {{ request()->routeIs('tutor.schedule.*') ? 'text-white' : 'text-gray-500 group-hover:text-indigo-500' }}" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
                         </svg>
-                        quản lý lịch rảnh
+                        Quản lý lịch rảnh
                     </a>
 
                     <div x-data="{ open: false }" class="relative">

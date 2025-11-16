@@ -283,7 +283,7 @@
 
         <div class="mt-6">
             <a href="{{ route('tutor.schedule.index') }}" class="block w-full text-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                Quản lý quản lý lịch rảnh
+                Quản lý lịch rảnh
             </a>
         </div>
     </div>

@@ -23,17 +23,35 @@
                     <h2 class="text-xl font-semibold text-gray-900 mb-6">Bộ Lọc Tìm Kiếm</h2>
                     <form action="{{ route('tutors.index') }}" method="GET" class="space-y-6">
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                            <!-- Class Level Filter -->
+                            <!-- Subject Filter -->
                             <div class="space-y-2">
-                                <label for="class_level_id" class="block text-sm font-medium text-gray-700">Cấp Học</label>
-                                <select id="class_level_id" name="class_level_id" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 rounded-md shadow-sm">
-                                    <option value="">Tất cả cấp học</option>
-                                    @foreach($classLevels as $level)
-                                        <option value="{{ $level->id }}" {{ request('class_level_id') == $level->id ? 'selected' : '' }}>
-                                            {{ $level->name }}
-                                        </option>
-                                    @endforeach
-                                </select>
+                                <label class="block text-sm font-medium text-gray-700">Môn học</label>
+                                <div class="relative">
+                                    <button type="button" id="subject-dropdown-btn" class="relative w-full bg-white border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                                        <span class="block truncate" id="subject-selected-text">
+                                            @if(request('subjects'))
+                                                {{ count(request('subjects')) }} môn học đã chọn
+                                            @else
+                                                Chọn môn học
+                                            @endif
+                                        </span>
+                                        <span class="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
+                                            <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                                            </svg>
+                                        </span>
+                                    </button>
+                                    <div id="subject-dropdown" class="absolute z-10 mt-1 w-full bg-white shadow-lg max-h-60 rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto hidden">
+                                        @foreach($subjects as $subject)
+                                            <label class="flex items-center px-3 py-2 hover:bg-gray-100 cursor-pointer">
+                                                <input type="checkbox" name="subjects[]" value="{{ $subject->id }}" 
+                                                       {{ in_array($subject->id, request('subjects', [])) ? 'checked' : '' }}
+                                                       class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded subject-checkbox">
+                                                <span class="ml-3 block font-normal truncate">{{ $subject->name }}</span>
+                                            </label>
+                                        @endforeach
+                                    </div>
+                                </div>
                             </div>
 
                             <!-- Price Range -->
@@ -77,7 +95,8 @@
                                 <select id="sort_by" name="sort_by" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 rounded-md shadow-sm">
                                     <option value="">Tất cả</option>
                                     <option value="rating" {{ request('sort_by') == 'rating' ? 'selected' : '' }}>Đánh giá cao nhất</option>
-                                    <option value="hourly_rate" {{ request('sort_by') == 'hourly_rate' ? 'selected' : '' }}>Học phí thấp nhất</option>
+                                    <option value="hourly_rate" {{ request('sort_by') == 'hourly_rate' ? 'selected' : '' }}>Học phí giảm dần</option>
+                                    <option value="hourly_rate_desc" {{ request('sort_by') == 'hourly_rate_desc' ? 'selected' : '' }}>Học phí tăng dần</option>
                                     <option value="total_teaching_hours" {{ request('sort_by') == 'total_teaching_hours' ? 'selected' : '' }}>Kinh nghiệm nhiều nhất</option>
                                 </select>
                             </div>
@@ -203,4 +222,44 @@
             @endif
         </div>
     </div>
-@endsection 
+@endsection
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const dropdownBtn = document.getElementById('subject-dropdown-btn');
+    const dropdown = document.getElementById('subject-dropdown');
+    const selectedText = document.getElementById('subject-selected-text');
+    const checkboxes = document.querySelectorAll('.subject-checkbox');
+
+    // Toggle dropdown
+    dropdownBtn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        dropdown.classList.toggle('hidden');
+    });
+
+    // Close dropdown when clicking outside
+    document.addEventListener('click', function(e) {
+        if (!dropdownBtn.contains(e.target) && !dropdown.contains(e.target)) {
+            dropdown.classList.add('hidden');
+        }
+    });
+
+    // Update selected text when checkboxes change
+    function updateSelectedText() {
+        const checkedBoxes = document.querySelectorAll('.subject-checkbox:checked');
+        if (checkedBoxes.length === 0) {
+            selectedText.textContent = 'Chọn môn học';
+        } else {
+            selectedText.textContent = checkedBoxes.length + ' môn học đã chọn';
+        }
+    }
+
+    // Add event listeners to checkboxes
+    checkboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', updateSelectedText);
+    });
+
+    // Initialize selected text
+    updateSelectedText();
+});
+</script> 

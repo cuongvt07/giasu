@@ -9,14 +9,14 @@
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <!-- Lịch dạy -->
             <div>
-                <h4 class="text-lg font-semibold text-gray-800 mb-4 flex items-center">
+                <!-- <h4 class="text-lg font-semibold text-gray-800 mb-4 flex items-center">
                     <svg class="w-5 h-5 mr-2 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
                     </svg>
                     Lịch dạy thường xuyên
-                </h4>
+                </h4> -->
                 
-                @if($schedules && count($schedules) > 0)
+                <!-- @if($schedules && count($schedules) > 0)
                     <div class="overflow-hidden bg-gray-50 border border-gray-200 rounded-lg">
                         <table class="min-w-full divide-y divide-gray-200">
                             <thead class="bg-gray-100">
@@ -68,14 +68,14 @@
                         <h3 class="mt-2 text-sm font-medium text-gray-900">Chưa có lịch dạy</h3>
                         <p class="mt-1 text-sm text-gray-500">Gia sư chưa cập nhật lịch dạy thường xuyên.</p>
                     </div>
-                @endif
+                @endif -->
 
                 <!-- quản lý lịch rảnh sắp tới -->
                 <h4 class="text-lg font-semibold text-gray-800 mt-8 mb-4 flex items-center">
                     <svg class="w-5 h-5 mr-2 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                     </svg>
-                    quản lý lịch rảnh sắp tới
+                    Quản lý lịch rảnh sắp tới
                 </h4>
 
                 @if($availabilities && count($availabilities) > 0)

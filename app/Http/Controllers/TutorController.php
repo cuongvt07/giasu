@@ -25,11 +25,11 @@ class TutorController extends Controller
         Log::info('TutorController@index - Số lượng tutor trước khi lọc: ' . $query->count());
         
         // Lọc theo môn học
-        if ($request->subject_id) {
+        if ($request->subjects && is_array($request->subjects)) {
             $query->whereHas('subjects', function ($q) use ($request) {
-                $q->where('subjects.id', $request->subject_id);
+                $q->whereIn('subjects.id', $request->subjects);
             });
-            Log::info('TutorController@index - Lọc theo subject_id: ' . $request->subject_id);
+            Log::info('TutorController@index - Lọc theo subjects: ' . implode(',', $request->subjects));
             Log::info('TutorController@index - Số lượng sau khi lọc theo môn học: ' . $query->count());
         }
         
@@ -55,12 +55,12 @@ class TutorController extends Controller
             Log::info('TutorController@index - Số lượng sau khi lọc theo giá tối đa: ' . $query->count());
         }
         
-        // Lọc theo đánh giá
-        if ($request->rating) {
-            $query->where('rating', '>=', $request->rating);
-            Log::info('TutorController@index - Lọc theo rating: ' . $request->rating);
-            Log::info('TutorController@index - Số lượng sau khi lọc theo đánh giá: ' . $query->count());
-        }
+        // Lọc theo đánh giá - tạm bỏ vì rating giờ là accessor
+        // if ($request->rating) {
+        //     $query->where('rating', '>=', $request->rating);
+        //     Log::info('TutorController@index - Lọc theo rating: ' . $request->rating);
+        //     Log::info('TutorController@index - Số lượng sau khi lọc theo đánh giá: ' . $query->count());
+        // }
         
         // Chỉ lấy gia sư đã được kích hoạt và xác minh
         $query->where('status', '=', 'active')
@@ -73,7 +73,11 @@ class TutorController extends Controller
         // Sắp xếp
         if ($request->sort_by) {
             // Nếu có tùy chọn sắp xếp, áp dụng sắp xếp theo tùy chọn
-            $query->orderBy($request->sort_by, $request->sort_order ?? 'desc');
+            if ($request->sort_by === 'hourly_rate_desc') {
+                $query->orderBy('hourly_rate', 'desc');
+            } else {
+                $query->orderBy($request->sort_by, $request->sort_order ?? 'desc');
+            }
         } else {
             // Nếu không có tùy chọn sắp xếp, sử dụng sắp xếp mặc định, ở đây là theo ID
             $query->orderBy('id', 'desc');
@@ -94,7 +98,7 @@ class TutorController extends Controller
     public function show(Tutor $tutor)
     {
         $reviews = $tutor->reviews()->with(['student', 'booking.subject'])->latest()->paginate(5);
-        $reviewsCount = $tutor->reviews()->count();
+        $reviewsCount = $tutor->reviews_count;
         
         // Lấy lịch dạy của gia sư
         $schedules = $tutor->schedules()->get();
