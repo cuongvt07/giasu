@@ -92,7 +92,7 @@
         </div>
 
         <!-- CLOSED -->
-        <div class="p-6 border-t border-gray-200">
+        <div class="p-6 border-t border-gray-200" style="display: none;">
             <h3 class="text-lg font-medium text-gray-900 mb-4">Đã Hoàn Thành (Hợp đồng có hiệu lực)</h3>
             @include('admin.manageJobs.partials.table', [
                 'bookings' => $closedJobs,
