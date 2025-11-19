@@ -17,12 +17,12 @@
                     <div class="mt-5 sm:mt-8 sm:flex sm:justify-center lg:justify-start">
                         <div class="rounded-md shadow">
                             <a href="{{ route('ai-advisor') }}" class="w-full flex items-center justify-center px-4 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 md:py-4 md:text-lg md:px-4">
-                               Tư vấn cùng AI
+                               Chat cùng AI
                             </a>
                         </div>
                         <div class="mt-3 sm:mt-0 sm:ml-3">
                             <a href="{{ route('tutors.index') }}" class="w-full flex items-center justify-center px-4 py-3 border border-transparent text-base font-medium rounded-md text-indigo-700 bg-indigo-100 hover:bg-indigo-200 md:py-4 md:text-lg md:px-4">
-                                Kết nối gia sư hỗ trợ nhanh
+                                Kết nối gia sư nhanh
                             </a>
                         </div>
                         @auth
@@ -30,7 +30,7 @@
                             <a href="#"
                             @click.prevent="openPost = true"
                             class="w-full flex items-center justify-center px-4 py-3 border border-transparent text-base font-medium rounded-md text-indigo-700 bg-indigo-100 hover:bg-indigo-200 md:py-4 md:text-lg md:px-4">
-                                Đăng tin tìm gia sư
+                                Đăng tin tuyển gia sư
                             </a>
                         </div>
                         @endauth

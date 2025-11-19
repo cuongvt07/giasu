@@ -482,7 +482,7 @@ class TutorController extends Controller
             $query->orderByDesc('tutor_posts.published_at');
         }
 
-        $dataJobs = $query->paginate(10)->withQueryString();
+        $dataJobs = $query->paginate(12)->withQueryString();
 
         // Convert chuỗi "1,2,3" thành array [1,2,3]
         $dataJobs->getCollection()->transform(function ($post) {
