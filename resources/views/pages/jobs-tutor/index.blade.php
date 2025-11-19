@@ -59,7 +59,7 @@
         <!-- Hero Section -->
         <div class="bg-white border-b border-gray-200 py-10">
             <div class="max-w-7xl mx-auto px-4 text-center">
-                <h1 class="text-4xl font-extrabold text-gray-900 font-serif">Danh Sách Tin Tuyển Gia Sư</h1>
+                <h1 class="text-4xl font-extrabold text-gray-900 ">Danh Sách Tin Tuyển Gia Sư</h1>
                 <p class="mt-3 text-gray-600 max-w-2xl mx-auto">
                     Tổng hợp các nhu cầu tìm gia sư từ phụ huynh & học sinh – chọn job phù hợp để ứng tuyển.
                 </p>
@@ -165,7 +165,7 @@
                     <div
                         class="bg-white border border-gray-200 rounded-2xl shadow-sm hover:shadow-md transition p-6 flex flex-col">
                         <div class="flex items-center justify-between mb-3">
-                            <h3 class="text-lg font-bold text-gray-900 font-serif">
+                            <h3 class="text-lg font-bold text-gray-900 ">
                                 {{ $post->subject_name }} - {{ $post->class_level_name }}
                             </h3>
                             <span
