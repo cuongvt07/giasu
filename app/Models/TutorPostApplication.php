@@ -1,4 +1,6 @@
 <?php
+// ...existing code...
+<?php
 
 namespace App\Models;
 
@@ -10,10 +12,11 @@ class TutorPostApplication extends Model
     use HasFactory;
 
     protected $table = 'tutor_applications';
+
     protected $fillable = [
         'tutor_post_id',
-        'user_id',
-        'message',
+        'tutor_id',
+        'note',
         'status',
         'created_at',
         'updated_at',
@@ -24,8 +27,8 @@ class TutorPostApplication extends Model
         return $this->belongsTo(TutorPost::class, 'tutor_post_id');
     }
 
-    public function user()
+    public function tutor()
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsTo(\App\Models\Tutor::class, 'tutor_id');
     }
 }
