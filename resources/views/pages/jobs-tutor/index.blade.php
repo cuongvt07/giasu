@@ -82,7 +82,7 @@
                                     class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                                     <option value="">Tất cả</option>
                                     @foreach($subjects as $s)
-                                        <option value="{{ $s }}" {{ request('subject') == $s->name ? 'selected' : '' }}>
+                                        <option value="{{ $s->id }}" @if(request('subject') == $s->id || request('subject') == $s->name) selected @endif>
                                             {{ $s->name }}</option>
                                     @endforeach
                                 </select>

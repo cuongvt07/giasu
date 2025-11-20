@@ -45,6 +45,7 @@ class ContractController extends Controller
 
     public function show($id)
     {
+        $tutorId = auth()->user()->tutor->id ?? null;
         $user = auth()->user();
 
         $contract = DB::table('contracts as c')
@@ -74,7 +75,7 @@ class ContractController extends Controller
         }
 
         $tutor = $user->tutor ?? null;
-        $isTutorForContract = $tutor && $tutor->id === $contract->tutor_id;
+        $isTutorForContract = $tutorId && $tutorId === $contract->tutor_id;
 
         if ($user->id !== $contract->student_id && !$isTutorForContract && !$user->is_admin) {
             abort(403, 'Bạn không có quyền xem hợp đồng này');
@@ -87,6 +88,7 @@ class ContractController extends Controller
     {
         $contract = DB::table('contracts')->where('id', $id)->firstOrFail();
         $user = auth()->user();
+        $tutorId = $user->tutor->id ?? null;
         $now = now();
 
         $updateData = [
@@ -97,7 +99,7 @@ class ContractController extends Controller
         $tutor = $user->tutor ?? null;
         if ($user->id == $contract->student_id) {
             $updateData['signed_student_at'] = $now;
-        } elseif ($tutor && $tutor->id == $contract->tutor_id) {
+        } elseif ($tutorId && $tutorId == $contract->tutor_id) {
             $updateData['signed_tutor_at'] = $now;
         } else {
             abort(403, 'Bạn không có quyền ký hợp đồng này');
@@ -105,7 +107,7 @@ class ContractController extends Controller
 
         // Kiểm tra trạng thái mới
         $studentSigned = $contract->signed_student_at || ($user->id == $contract->student_id);
-        $tutorSigned   = $contract->signed_tutor_at || ($tutor && $tutor->id == $contract->tutor_id);
+        $tutorSigned   = $contract->signed_tutor_at || ($tutorId && $tutorId == $contract->tutor_id);
         $systemSigned  = $contract->system_verified_at;
 
         if ($studentSigned && $tutorSigned && $systemSigned) {
