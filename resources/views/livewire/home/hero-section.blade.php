@@ -25,15 +25,14 @@
                                 Kết nối gia sư nhanh
                             </a>
                         </div>
-                        @auth
                         <div class="mt-3 sm:mt-0 sm:ml-3">
                             <a href="#"
-                            @click.prevent="openPost = true"
-                            class="w-full flex items-center justify-center px-4 py-3 border border-transparent text-base font-medium rounded-md text-indigo-700 bg-indigo-100 hover:bg-indigo-200 md:py-4 md:text-lg md:px-4">
+                            @auth @if(auth()->user()->isTutor()) onclick="return false;" @else @click.prevent="openPost = true" @endif @endauth
+                            @guest onclick="return false;" @endguest
+                            class="w-full flex items-center justify-center px-4 py-3 border border-transparent text-base font-medium rounded-md text-indigo-700 bg-indigo-100 hover:bg-indigo-200 md:py-4 md:text-lg md:px-4 @guest opacity-50 cursor-not-allowed @endguest">
                                 Đăng tin tuyển gia sư
                             </a>
                         </div>
-                        @endauth
                     </div>
                     @guest
                     <div class="mt-3 text-center lg:text-left">
