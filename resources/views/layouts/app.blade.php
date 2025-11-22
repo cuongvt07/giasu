@@ -24,10 +24,9 @@
                 <div class="flex justify-between h-32">
                     <div class="flex-shrink-0 flex items-center">
                         <a href="{{ route('home') }}" class="flex items-center space-x-2">
-                            <img src="https://shop.noithatvinplus.vn/wp-content/uploads/2025/11/1197368731297420539.jpg" 
+                            <img src="https://shop.noithatvinplus.vn/wp-content/uploads/2025/11/9805bc27fbe677b82ef7-scaled.jpg" 
                                 alt="Logo" 
                                 class="h-24 w-auto">
-
                             <span class="text-2xl font-bold text-indigo-600 leading-tight">
                                 Trung tâm gia sư<br>Trí tuệ Việt
                             </span>
@@ -62,7 +61,7 @@
 
         <div x-show="open" 
              @click.away="open=false"
-             class="absolute left-0 mt-2 w-40 bg-white shadow-lg rounded-md py-2 z-50">
+            class="absolute left-0 mt-2 bg-white shadow-lg rounded-md py-2 z-50" style="width: max-content;">
             <a href="{{ route('tutors.index') }}" 
                 class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Tìm gia sư</a>
 
@@ -84,9 +83,23 @@
         Tư vấn AI
     </a>
     @auth
-    <a href="{{ route('tutors.register') }}" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 mr-3">
-        Đăng ký trở thành gia sư
-    </a>
+        @php
+            $user = auth()->user();
+            $isTutor = false;
+            if ($user) {
+                try {
+                    $isTutor = $user->tutor()->exists();
+                } catch (\Exception $e) {
+                    // nếu có lỗi thì mặc định không cho ẩn (hoặc tùy chỉnh)
+                }
+            }
+        @endphp
+
+        @unless($isTutor)
+            <a href="{{ route('tutors.register') }}" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 mr-3">
+                Đăng ký trở thành gia sư
+            </a>
+        @endunless
     @endauth
 
 </div>

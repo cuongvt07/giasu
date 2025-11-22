@@ -448,8 +448,39 @@ class TutorController extends Controller
             );
 
         // Filter môn học
-        if ($request->filled('subject')) {
-            $query->where('subjects.name', $request->subject); 
+        $subjectParam = $request->input('subject');
+        // Handle JSON-encoded object in query string
+        if (!is_array($subjectParam) && is_string($subjectParam)) {
+            $trim = trim($subjectParam);
+            if ($trim !== '' && (str_starts_with($trim, '{') || str_starts_with($trim, '['))) {
+                $decoded = json_decode($subjectParam, true);
+                if (json_last_error() === JSON_ERROR_NONE && $decoded) {
+                    if (isset($decoded['id'])) {
+                        $subjectParam = $decoded['id'];
+                    } elseif (isset($decoded['name'])) {
+                        $subjectParam = $decoded['name'];
+                    } else {
+                        $subjectParam = $decoded;
+                    }
+                }
+            }
+        }
+
+        if ($subjectParam) {
+            if (is_array($subjectParam)) {
+                $numeric = array_values(array_filter($subjectParam, function ($v) { return is_numeric($v) || ctype_digit((string)$v); }));
+                if (!empty($numeric)) {
+                    $query->whereIn('tutor_posts.subject_id', $numeric);
+                } else {
+                    $query->whereIn('subjects.name', $subjectParam);
+                }
+            } else {
+                if (is_numeric($subjectParam) || ctype_digit((string)$subjectParam)) {
+                    $query->where('tutor_posts.subject_id', $subjectParam);
+                } else {
+                    $query->where('subjects.name', $subjectParam);
+                }
+            }
         }
 
         // Filter hình thức học
@@ -482,7 +513,7 @@ class TutorController extends Controller
             $query->orderByDesc('tutor_posts.published_at');
         }
 
-        $dataJobs = $query->paginate(10)->withQueryString();
+        $dataJobs = $query->paginate(12)->withQueryString();
 
         // Convert chuỗi "1,2,3" thành array [1,2,3]
         $dataJobs->getCollection()->transform(function ($post) {

@@ -372,22 +372,21 @@
             <div class="fade-up fade-delay-1">
                 <img src="https://randomuser.me/api/portraits/men/32.jpg"
                      class="w-36 h-36 rounded-full mx-auto shadow" />
-                <h3 class="mt-4 text-xl font-bold">Nguyễn Văn A</h3>
+                <h3 class="mt-4 text-xl font-bold">Nguyễn Văn Tùng</h3>
                 <p class="text-gray-600 mb-3">Đồng sáng lập & CEO</p>
                 <p class="text-gray-700 text-sm leading-relaxed max-w-md mx-auto">
-                    Với hơn 10 năm kinh nghiệm trong lĩnh vực công nghệ giáo dục, anh A mang đến tầm nhìn 
+                    Với hơn 10 năm kinh nghiệm trong lĩnh vực công nghệ giáo dục, anh Tùng mang đến tầm nhìn 
                     chiến lược và sự đổi mới không ngừng cho nền tảng. Anh tin rằng công nghệ có thể 
                     biến đổi hoàn toàn cách chúng ta học và dạy.
                 </p>
             </div>
-
             <div class="fade-up fade-delay-2">
                 <img src="https://randomuser.me/api/portraits/women/44.jpg"
                      class="w-36 h-36 rounded-full mx-auto shadow" />
-                <h3 class="mt-4 text-xl font-bold">Trần Thị B</h3>
+                <h3 class="mt-4 text-xl font-bold">Minh Ánh</h3>
                 <p class="text-gray-600 mb-3">Đồng sáng lập & COO</p>
                 <p class="text-gray-700 text-sm leading-relaxed max-w-md mx-auto">
-                    Chị B có kinh nghiệm sâu rộng trong vận hành và phát triển cộng đồng giáo dục. 
+                    Chị Minh Ánh có kinh nghiệm sâu rộng trong vận hành và phát triển cộng đồng giáo dục. 
                     Với sự tận tâm và nhiệt huyết, chị đảm bảo mọi hoạt động của nền tảng đều 
                     hướng đến lợi ích tốt nhất cho học sinh và gia sư.
                 </p>

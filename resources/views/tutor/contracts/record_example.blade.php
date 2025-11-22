@@ -77,7 +77,7 @@
                 @if($contract->signed_tutor_at)
                     <p class="mt-2 text-green-700">✅ Đã ký lúc {{ $contract->signed_tutor_at }}</p>
                 @else
-                    @if(auth()->id() == $contract->tutor_id)
+                    @if((auth()->user()->tutor->id ?? null) == $contract->tutor_id)
                         <form method="POST" action="{{ route('contracts.accept', $contract->id) }}" class="sign-form">
                             @csrf
                             <button type="submit" class="btn-sign">Ký hợp đồng</button>

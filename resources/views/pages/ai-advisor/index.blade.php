@@ -512,7 +512,7 @@
                 return `
                     <div class="bg-white border border-gray-200 rounded-2xl shadow-sm hover:shadow-md transition p-6 flex flex-col">
                         <div class="flex items-center justify-between mb-3">
-                            <h3 class="text-lg font-bold text-gray-900 font-serif">
+                            <h3 class="text-lg font-bold text-gray-900 ">
                                 ${item.subject || 'Môn học'} - ${item.class_level || 'Cấp học'}
                             </h3>
                             <span class="px-3 py-1 text-xs rounded-full ${
