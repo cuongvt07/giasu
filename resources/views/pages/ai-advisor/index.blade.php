@@ -62,7 +62,7 @@
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
                 <div class="text-center">
                     <h1 class="text-4xl tracking-tight font-extrabold text-white sm:text-5xl md:text-6xl">
-                        <span class="block">Hệ Thống Chatbox AI</span>
+                        <span class="block">Hệ Thống Chatbot AI</span>
                         <span class="block">Tư Vấn Thông Minh</span>
                     </h1>
                 </div>
